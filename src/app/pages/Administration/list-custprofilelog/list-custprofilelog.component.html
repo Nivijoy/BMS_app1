@@ -4,17 +4,35 @@
    </ngx-loading>
   <nb-card-header >
     List Cust ProfileLog
-    <!-- <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right;
-    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; padding-right: 3px;color:white;" (click)="search=!search;"><i class="fa fa-search" ></i></a> -->
+    <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right;
+    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; padding-right: 3px;color:white;cursor: pointer;" (click)="search=!search;"><i class="fa fa-search" ></i></a>
   </nb-card-header>
   <nb-card-body>
   <toaster-container [toasterconfig]></toaster-container>
-      <!-- <button *ngIf="!role.getmenurole(102)" class="btn btn-sm btn-success" [routerLink]="['/pages/business/add-business']">Add</button> -->
-    <hr style="border: 0px;">
+     <hr style="border: 0px;">
     <div class="modal-body" autocomplete="off" [hidden]='!search'>
       <div class="form-group row">
+        <div class="col-sm-2" *ngIf="role.getroleid()>777">
+          <label>ISP Name</label>
+          <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
+            (changed)="showProfileReseller();changeclear(1);" placeholder='Select Business' id="bus_name" [item]="bus">
+          </auto-completen>
+        </div>
+        <div class="col-sm-2" *ngIf="(role.getroleid()>=775)|| (role.getroleid() > 444)">
+          <label>Reseller Type</label>
+          <auto-completen [(ngModel)]="resel_type" addclass="form-control" (changed)="showResellerName();changeclear(2);user();"
+            optValues="menu_name" placeholder='Select Reseller Type' optId="role" [item]="profile">
+          </auto-completen>
+          <small style="color: blueviolet;">Select Profile</small>
+        </div>
+        <div class="col-sm-2" *ngIf="(role.getroleid()>=775)|| (role.getroleid() > 444)">
+          <label>Reseller Name</label>
+          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company" (changed)="user();changeclear(3);"
+            placeholder='Select Reseller' (keyUp)="showResellerName($event)" id="res_name" [item]="res1">
+          </auto-completen>
+        </div>
           <div class="col-sm-3">
-          <label>Username</label>
+          <label>Subscriber ProfileID</label>
             <auto-completen optValues="username" (keyup)="user($event.target.value)" placeholder='Select Username' [(ngModel)]="user_name" addclass="form-control"  optId="uid" [item]="proid">
            </auto-completen>       
          </div>
@@ -67,7 +85,9 @@
         <td>{{item.cust_name}}</td>
        <td>{{item.profile_id}}</td>
        <td>{{item.rfrom | date:'d MMM y h:mm:ss a'}}</td>
-       <td>{{item.rto | date :'d MMM y h:mm:ss a'}}</td>
+       <td *ngIf="item.rfrom != item.rto">{{item.rto | date :'d MMM y h:mm:ss a'}}</td>
+       <td *ngIf="item.rfrom == item.rto">{{today | date :'d MMM y h:mm:ss a'}}</td>
+
       </tr>
     </table>
   </div>

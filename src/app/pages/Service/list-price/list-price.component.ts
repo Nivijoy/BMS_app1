@@ -160,6 +160,7 @@ export class ListPriceComponent implements OnInit {
         param['PRICE'] = temp[i]['amount'];
         param['TIME UNIT TYPE'] = temp[i]['type'] == 1 ? temp[i]['time_unit'] == 1 ? temp[i]['time_unit'] + " " + 'Month' : temp[i]['time_unit'] + " " + 'Months' :
           temp[i]['time_unit'] == 1 ? temp[i]['time_unit'] + " " + 'Day' : temp[i]['time_unit'] + " " + 'Days';
+        param['ADDITIONAL DAYS'] = temp[i]['additional_days'];
         param['STATUS'] = temp[i]['status'] == 1 ? 'Active' : 'Inactive';
         tempdata[i] = param
       }

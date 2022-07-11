@@ -282,6 +282,8 @@ export class GstInvoicelistComponent implements OnInit {
         param['SERVICE TYPE'] = temp[i]['service_name'];
         param['SERVICE NAME'] = temp[i]['srvname'];
         param['SUB PLAN'] = temp[i]['sub_plan'];
+        param['TIME UNIT'] = temp[i]['unit_type'] == 0? temp[i]['time_unit'] + ' Days' : temp[i]['time_unit'] + ' Months';
+        param['ADDITIONAL DAYS'] = temp[i]['additional_days'];
         param['SUPPLIER GST'] = temp[i]['supplier_gst_number'];
         param['GST_No'] = temp[i]['recipient_gst_number'];
         param['State Code'] = temp[i]['state_code'];

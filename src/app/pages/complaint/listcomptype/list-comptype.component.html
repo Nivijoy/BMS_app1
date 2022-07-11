@@ -19,13 +19,13 @@
             <option *ngFor="let item of busname" [ngValue]="item.id">{{item.busname}}</option>
           </select>
         </div>
-        <div class="col-sm-3" >
+        <div class="col-sm-3" *ngIf="role.getroleid()>444" >
           <label>Reseller Type</label>
           <auto-completen [(ngModel)]="resel_type" addclass="form-control"
               (changed)="showResellerName();comptype()" optValues="menu_name" placeholder='Select Reseller Type' optId="role" [item]="profile">
           </auto-completen>
         </div>
-        <div class="col-sm-3" >
+        <div class="col-sm-3" *ngIf="role.getroleid()>444" >
           <label>Reseler Name</label>
           <auto-completen addclass="form-control" optValues="managername" [(ngModel)]="reseller"
              placeholder='Select Reseller' (changed)="comptype()" (keyUp)="showResellerName($event)" id="id" [item]="resell">

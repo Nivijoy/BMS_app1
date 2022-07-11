@@ -300,19 +300,26 @@
                     <div class="form-group row">
                       <div class="col-sm-4" *ngIf='EditSubsForm.value["subs_type"]!="1"'>
                         <label>Contract From <span style="color:red;">*</span></label>
-                        <input type="text" [nbDatepicker]="cont_from_date" formControlName="cont_from_date"
+                        <!-- <input type="text" [nbDatepicker]="cont_from_date" formControlName="cont_from_date"
                           placeholder="Contract Valid From"
                           [ngClass]="{'form-control' : true,'form-control-danger':EditSubsForm.controls.cont_from_date.invalid&&submit}" />
-                        <nb-datepicker #cont_from_date></nb-datepicker>
+                        <nb-datepicker #cont_from_date></nb-datepicker> -->
+                        <input type="date"  placeholder="Contract Valid From" formControlName="cont_from_date"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditSubsForm.controls.cont_from_date.invalid&&submit}" 
+                         class="form-control">
                         <small *ngIf="EditSubsForm.controls.cont_from_date.invalid&&submit"
                           class="form-text error">Contract From Date Is Required!</small>
                       </div>
                       <div class="col-sm-4" *ngIf='EditSubsForm.value["subs_type"]!="1"'>
                         <label>Contract Valid To <span style="color:red;">*</span></label>
-                        <input type="text" [nbDatepicker]="cont_to_date" formControlName="cont_to_date"
+                        <!-- <input type="text" [nbDatepicker]="cont_to_date" formControlName="cont_to_date"
                           placeholder="Contract Valid To"
                           [ngClass]="{'form-control' : true,'form-control-danger':EditSubsForm.controls.cont_to_date.invalid&&submit}" />
-                        <nb-datepicker #cont_to_date></nb-datepicker>
+                        <nb-datepicker #cont_to_date></nb-datepicker> -->
+                        <input type="date"  placeholder="Contract Valid To" formControlName="cont_to_date"
+                        [ngClass]="{'form-control' : true,'form-control-danger':EditSubsForm.controls.cont_to_date.invalid&&submit}" 
+                         class="form-control">
+
                         <small *ngIf="EditSubsForm.controls.cont_to_date.invalid&&submit"
                           class="form-text error">Contract To Date is Required!</small>
                       </div>

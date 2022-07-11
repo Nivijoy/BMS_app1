@@ -8,8 +8,11 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+ 
+
 export const environment = {
-  production: true,
+   production: false,
   // baseUrl: 'http://103.231.217.170:9091'
-  baseUrl:'http://192.168.4.231:9092'
+  baseUrl:'http://192.168.4.252:9092'
+  // baseUrl: URL.url
 };

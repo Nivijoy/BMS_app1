@@ -91,6 +91,7 @@
           <th>Tax Type</th>
           <th>Price</th>
           <th>Time Unit Type</th>
+          <th>Additional Days</th>
           <th>Status</th>
         </tr>
         <tr *ngFor="let item of datas">
@@ -107,6 +108,7 @@
           <td class="fas fa-rupee-sign"> {{item.amount}}</td>
           <td style="text-align: center;">{{item.type==1 ? item.time_unit==1 ?item.time_unit +" "+ "Month":
             item.time_unit+" "+ "Months" :item.time_unit==1 ? item.time_unit+" " + "Day": item.time_unit+" "+"Days" }}</td>
+          <td>{{item.additional_days}}</td>
           <td style="text-align: center;"><a [ngStyle]="{'color' :item.status==1 ? 'green' : 'red' }"
               [ngClass]="{'ion-close-round':item.status!=1? true:false,'ion-checkmark-round': item.status==1 ? true:false  }">
             </a></td>

@@ -33,7 +33,7 @@
                  placeholder='Select Reseller Type' optId="role" [item]="profile">
               </auto-completen>
            </div>
-           <div class="col-sm-2">
+           <div class="col-sm-2" *ngIf="role.getroleid() > 444">
               <label>Reseller Name</label>
               <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
                  (keyUp)="showResellerName($event)" (changed)="showUser();showService();showResellerBranch();changeclear(4);"

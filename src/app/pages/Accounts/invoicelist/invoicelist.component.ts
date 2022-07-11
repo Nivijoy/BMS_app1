@@ -291,6 +291,8 @@ export class InvoicelistComponent implements OnInit {
         param['SERVICE TYPE'] = temp[i]['service_name'];
         param['SERVICE NAME'] = temp[i]['srvname'];
         param['SUB PLAN'] = temp[i]['sub_plan'];
+        param['TIME UNIT'] = temp[i]['unit_type'] == 0? temp[i]['time_unit'] + ' Days' : temp[i]['time_unit'] + ' Months';
+        param['ADDITIONAL DAYS'] = temp[i]['additional_days'];
         param['PACK PRICE'] = temp[i]['invoice_amount'];
         param['TAX AMOUNT PRICE'] = temp[i]['tax_amount'];
         param['TOTAL PRICE'] = temp[i]['total_amount'];
