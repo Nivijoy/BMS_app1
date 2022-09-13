@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ResellerRevenueShareComponent } from './reseller-revenue-share/reseller-revenue-share.component';
 import { RenewalReportComponent } from './renewal-report/renewal-report.component';
+import { TopupreportComponent } from './topupreport/topupreport.component';
    
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { RenewalReportComponent } from './renewal-report/renewal-report.componen
    routedComponents,
    ResellerRevenueShareComponent,
    RenewalReportComponent,
+   TopupreportComponent,
      
   ],
    entryComponents : [

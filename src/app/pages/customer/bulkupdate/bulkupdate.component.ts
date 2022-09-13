@@ -83,7 +83,7 @@ export class BulkupdateComponent implements OnInit {
     this.busname = await this.busser.showBusName({})
   }
 
-
+  
   async showProfile($event = '') {
     if (this.bulkUpdateForm.value['bus_id']) {
       this.profile = await this.resser.showProfileReseller({ like: $event, rec_role: 1, bus_id: this.bulkUpdateForm.value['bus_id'] })

@@ -386,7 +386,7 @@ export class AddAdminuserComponent implements OnInit {
       }
     };
     if (this.AddAdminForm.invalid) {
-      // console.log("wrong", invalid)
+      console.log("wrong", invalid)
       this.submit = true;
       return;
     }
@@ -448,6 +448,7 @@ export class AddAdminuserComponent implements OnInit {
     await this.GroupName();
     await this.profile();
     await this.department();
+    await this.stateshow();
     await this.cityshow();
     await this.showReseller();
     await this.showallowman();
@@ -462,7 +463,7 @@ export class AddAdminuserComponent implements OnInit {
       this.id = param.id || null;
     })
     if (this.id) {
-      this.location.replaceState('/pages/administration/edit-adminuser')
+      this.location.replaceState('/#/pages/administration/edit-adminuser')
       await this.edit();
       this.AddAdminForm.get('Password').clearValidators();
       this.AddAdminForm.get('Password').updateValueAndValidity();

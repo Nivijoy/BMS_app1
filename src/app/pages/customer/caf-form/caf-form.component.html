@@ -4,6 +4,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+<div *ngIf="status == 0 || status ==3">
 <nb-card style="width: 100%">
     <div class="modal-body" style="width: 100%">
         <div id="main_cont" style="background-color: #FFFFFF;">
@@ -18,7 +19,7 @@
                                 style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{data?data.busname:'--'}}<br>
                             </span>
                             <span style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{bus_address ?
-                                bus_address:'--'}}}<br>
+                                bus_address:'--'}}<br>
                             </span>
                         </p>
                     </tbody>
@@ -60,7 +61,7 @@
                     <table style="border-bottom: 1px solid black; width:100%;">
                         <thead>
                             <tr>
-                                <th style="  text-align:left; font-weight: normal;">City
+                                <th style="     -align:left; font-weight: normal;">City
                                     &nbsp;:<b>{{data?data.city:''}}</b>&nbsp;&nbsp; </th>
                                 <th
                                     style=" text-align:left;  border-left: 1px solid black;height: 16px; font-weight: normal;">
@@ -117,7 +118,8 @@
                             <span
                                 style="border-left: 1px solid black;">&nbsp;<b>{{data?data.address:''}}</b>&nbsp;</span>
                         </div>
-                        <table style="border-bottom: 1px solid black; width:100%;">
+                        <!-- <table style="border-bottom: 1px solid black; width:100%;"> -->
+                            <table>
                             <thead>
                                 <tr>
                                     <th style="  text-align:left; font-weight: normal;">City
@@ -125,17 +127,14 @@
                                     <th
                                         style=" text-align:left;  border-left: 1px solid black;height: 16px; font-weight: normal;">
                                         State&nbsp;:<b>{{data?data.state:''}}</b>&nbsp;&nbsp; </th>
-                                    <!-- <th style="text-align:left;   border-left: 1px solid black;height: 16px; font-weight: normal;">PIN&nbsp;:624005
-                            &nbsp;&nbsp; 
-                         </th> -->
-                                    <th
+                                    <!-- <th
                                         style=" text-align:left; border-left: 1px solid black; font-weight: normal;white-space: break-spaces;line-break: anywhere;">
                                         Mobile
-                                        &nbsp;:<b>{{data?data.mobile:''}}</b>&nbsp; </th>
+                                        &nbsp;:<b>{{data?data.mobile:''}}</b>&nbsp; </th> -->
                                 </tr>
                             </thead>
                         </table>
-                        <table>
+                       <!--  <table>
                             <thead>
                                 <tr>
                                     <th style=" text-align:left;  height: 16px; font-weight: normal;">Telephone
@@ -145,7 +144,7 @@
                                         EMAIL&nbsp;:<b>{{data?data.email:''}}</b>
                                 </tr>
                             </thead>
-                        </table>
+                        </table> -->
                     </div>
                 </div>
                 <br>
@@ -240,7 +239,9 @@
                 </p>
                 <!-- <p style="text-align: center;">Thankyou for being Our Business Partner</p> -->
 
-                <br><br><br><br><br>
+                <br><br><br> 
+                <div class="page-break"></div>
+
                 <div style="text-align: center;"><b>BLUE LOTUS SUPPORT SERVICES PVT LTD.</b>
                     <br> <u> TERMS AND CONDITION</u>
                 </div>
@@ -597,6 +598,7 @@
                 </table> -->
                 <!--     </div> -->
                 <!-- TERMS AND CONDITION FETCH FROM DATABASE -->
+
                 <td style="font-size: 9px;" [innerHtml]="caftc"></td>
                 <table style="border-bottom: 1px solid black; width:100%;">
                     <tbody>
@@ -621,3 +623,28 @@
         </div>
     </div>
 </nb-card>
+</div>
+
+<div *ngIf="status == 1 || status == 2">
+    <nb-card>
+        <div id="main_cont" style="background-color: #FFFFFF;">
+            <div class="page" style="width:98%;height: 50%">
+        <div front class="front">
+           <img style="width:100%;height: 100%;display: block;"
+              [src]='pro_pic ? pro_pic.caf_photo:""' #cafFront />
+        </div>
+        <div class="page-break"></div>
+
+        <div back class="terms">
+           <img #cafBack style="width:100%;height:100%;display: block;"
+              [src]='pro_pic ? pro_pic.caf_tc:""' />
+        </div>
+        </div></div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-md btn-success" (click)="printcaf();">Print</button>
+             <button type="button" class="btn btn-md btn-danger"
+                (click)="activeModal.close();">Cancel</button>
+        </div>
+       </nb-card>
+</div>

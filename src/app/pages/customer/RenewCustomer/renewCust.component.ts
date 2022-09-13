@@ -63,7 +63,7 @@ export class RenewCustComponent implements OnInit {
     this.RenewSubsForm.get('pay_date').setValue(this.curentdate);
 
     // console.log('cdate',curentdate);
-    
+
     if (this.expirydate <= this.curentdate) {
       this.RenewSubsForm.get('schedule_date').setValue(this.curentdate);
       this.RenewSubsForm.get('renew_type').setValue(1);
@@ -87,7 +87,7 @@ export class RenewCustComponent implements OnInit {
       this.lastpack = await this.pack.filter(item => item.sstatus == 1).map(item => item.srvid);
       // this.RenewSubsForm.get('last_pack').setValue(this.lastpack)
       this.RenewSubsForm.get('srv_id').setValue(Number(this.lastpack))
-     await this.subplanshow();
+      await this.subplanshow();
     }
   }
 
@@ -112,6 +112,17 @@ export class RenewCustComponent implements OnInit {
     }
   }
 
+  ottValidation() {
+    let [mode] = this.pack.filter(x => x.srvid == this.RenewSubsForm.value['srv_id']).map(x => x.renewalmode)
+    if (mode == 1) {
+      this.RenewSubsForm.controls['ottplanid'].setValidators([Validators.required])
+    } else {
+      this.RenewSubsForm.controls['ottplanid'].clearValidators();
+      this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
+    }
+
+  }
+
   async showottplan($event = '') {
     this.ottplans = await this.serv.renewOtt({ reseller_id: this.reselData['id'], like: $event });
     console.log('ShowOttPlans', this.ottplans)
@@ -123,7 +134,6 @@ export class RenewCustComponent implements OnInit {
       return;
     }
 
-    console.log("inside", this.RenewSubsForm.value)
     if (this.packc[0].service_type == 3 || this.packc[0].service_type == 5 || this.packc[0].service_type == 7 || this.packc[0].service_type == 8) {
       if (window.confirm("Invoice cancellation is disabled for this services, Are you sure want to continue ?")) {
         await this.packrenewal();
@@ -263,7 +273,7 @@ export class RenewCustComponent implements OnInit {
     activemodal.result.then((data) => {
     });
   }
- 
+
   createForm() {
     this.RenewSubsForm = new FormGroup({
       last_pack: new FormControl(''),

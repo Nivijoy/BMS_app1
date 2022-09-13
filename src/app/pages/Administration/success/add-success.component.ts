@@ -36,6 +36,7 @@ export class AddSuccessComponent implements OnInit {
 		if(this.item[0]['error_msg'] == 0 && this.item['ott'] == 2){
 			this.router.navigate(['/pages/administration/list-ottplan']);
 		}
+		 
 	}
 
 	ngOnInit() {

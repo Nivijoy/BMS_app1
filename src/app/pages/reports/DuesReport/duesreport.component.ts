@@ -369,8 +369,10 @@ export class DuesReportComponent implements OnInit {
         param['ADDON RESELLER ₹'] = temp[i]['AONreseller_amt'];
 
         param['PAY STATUS'] = temp[i]['pay_status'] == 2 ? 'Paid' : 'Unpaid';
+        param['PAID AMOUNT'] = temp[i]['sub_payed_amt'];
+        param['BALANCE AMOUNT'] = temp[i]['topay']
         temp[i]['paydate'] = this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')
-        param['PAY DATE'] = temp[i]['pay_status'] == 2 ? temp[i]['paydate'] : '--';
+        param['PAY DATE'] = temp[i]['paydate'] ? temp[i]['paydate'] : '--';
         tempdata[i] = param
       }
       const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);

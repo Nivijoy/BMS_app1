@@ -61,6 +61,7 @@ export class RenewalReportComponent implements OnInit {
       await this.showUser();
       await this.showService();
       await this.showUser();
+      await this.showResellerBranch();  
     }
     if (this.role.getroleid() < 775) {
       await this.initiallist();

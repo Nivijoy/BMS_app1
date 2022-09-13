@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as FileSaver from 'file-saver';
-import * as JSXLSX from 'xlsx';
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddSuccessComponent } from '../success/add-success.component';
-import { Md5 } from 'ts-md5/dist/md5';
-import { RoleService, BusinessService, SelectService, AdminuserService } from '../../_service/indexService';
+import { RoleService, BusinessService, SelectService, AdminuserService, sumValidator } from '../../_service/indexService';
 
 @Component({
   selector: 'edit-business',
@@ -30,7 +24,7 @@ export class EditBusinessComponent implements OnInit {
     public role: RoleService,
     private adminser: AdminuserService,
     public activeModal: NgbModal,
-
+    private fb: FormBuilder
 
   ) { this.id = JSON.parse(localStorage.getItem('array')); }
 
@@ -207,6 +201,7 @@ export class EditBusinessComponent implements OnInit {
     //  console.log("outside",this.EditBusForm.value)
     if (this.EditBusForm.invalid || this.EditBusForm.value['passwrd'] != this.EditBusForm.value['conpass']) {
       this.submit = true;
+      window.alert('Please fill mandatory fields')
       return;
     }
     this.EditBusForm.value['disney_flag'] == true ? this.ott_name.push(1) : '';
@@ -255,7 +250,7 @@ export class EditBusinessComponent implements OnInit {
   }
 
   createForm() {
-    this.EditBusForm = new FormGroup({
+    this.EditBusForm = this.fb.group({
       bus_id: new FormControl(this.editdatas ? this.editdatas['busname'] : '', Validators.required),
       // user_name: new FormControl('',[Validators.required,Validators.pattern(".*\\S.*[a-z A-z 0-9 ]")]),//[Validators.required,Validators.pattern('^[0-9 A-Z a-z]')]
       username: new FormControl(this.editdatas ? this.editdatas['managername'] : ''),
@@ -265,7 +260,7 @@ export class EditBusinessComponent implements OnInit {
       serv_type: new FormControl(this.editdatas ? this.editdatas['service_type'] : '', Validators.required),
       // ott_name: new FormControl(this.editdatas ? this.editdatas['ott_platform'] : ''),
       // passwrd : new FormControl('',[Validators.required,Validators.pattern(".*\\S.*[a-zA-z0-9 ]")]),
-      // conpass : new FormControl('',Validators.required),
+      // conpass : new FormControl(''),
       subs_limit: new FormControl(this.editdatas ? this.editdatas['subscriber_limit'] : '0', Validators.required),
       bus_addr: new FormControl(this.editdatas ? this.editdatas['busaddr'] : '', Validators.required),
       email: new FormControl(this.editdatas ? this.editdatas['email'] : '', [Validators.required, Validators.pattern("[0-9 A-Z a-z ,.`!@#$%^&*]*[@]{1}[a-z A-Z]*[.]{1}[a-z A-Z]{2,3}([.]{1}[a-z A-Z]{2,3})?")]),
@@ -290,6 +285,12 @@ export class EditBusinessComponent implements OnInit {
       add_cgst: new FormControl(this.editdatas ? this.editdatas['AONcgst'] : ''),
       add_sgst: new FormControl(this.editdatas ? this.editdatas['AONsgst'] : ''),
       gst_id: new FormControl(this.editdatas ? this.editdatas['gst_inid'] : '', [Validators.required, Validators.pattern('^[A-Z a-z]{6}$')]),
+
+      tisp_share: new FormControl(this.editdatas ? this.editdatas['tisp_share'] : ''),
+      tresel_share: new FormControl(this.editdatas ? this.editdatas['tresel_share'] : ''),
+      
+      tsub_isp_share: new FormControl(this.editdatas ? this.editdatas['tsub_isp_share'] : ''),
+      tsub_dist_share: new FormControl(this.editdatas ? this.editdatas['tsub_dist_share'] : ''),
       //disney
       disney_flag: new FormControl(this.editdatas ? this.editdatas['disney'] == 0 ? false : true : ''),
       disney_igst: new FormControl(this.editdatas ? this.editdatas['disneyigst'] : ''),
@@ -340,6 +341,9 @@ export class EditBusinessComponent implements OnInit {
       ul_alert: new FormControl(this.editdatas ? this.editdatas['ul_alert'] : ''),
       tot_alert: new FormControl(this.editdatas ? this.editdatas['tt_alert'] : ''),
       ontime_alert: new FormControl(this.editdatas ? this.editdatas['ot_alert'] : ''),
+    },{
+      validator: sumValidator(100,'tisp_share','tresel_share','tsub_isp_share','tsub_dist_share')
+
     });
   }
 }

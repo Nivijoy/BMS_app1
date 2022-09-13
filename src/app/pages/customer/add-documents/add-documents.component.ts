@@ -57,15 +57,15 @@ export class DocpopComponent implements OnInit {
     //   this.AddDocForm.set('ProofID').clearValidators();
     //   this.AddDocForm.set('ProofID').updateValueAndValidity();
     // }
-    if(this.AddDocForm.invalid && (this.idflag == 2 || this.AddDocForm.value['same_proof'])){
+    if (this.AddDocForm.invalid && (this.idflag == 2 || this.AddDocForm.value['same_proof'])) {
       window.alert('Please Fill ProofID');
       return;
     }
-    this.loading = true; 
+    this.loading = true;
     const file = new FormData();
-    let username = this.item.proid,uid=this.item.uid;
+    let username = this.item.proid, uid = this.item.uid;
     file.append('username', username);
-    file.append('uid',uid);
+    file.append('uid', uid);
 
     if (this.addrflag == 2 || this.idflag == 2) {
       file.append('sameproof', String(this.AddDocForm.value['same_proof']))
@@ -87,7 +87,7 @@ export class DocpopComponent implements OnInit {
     }
     //Id Proof alone
     if (this.idflag == 2 && this.AddDocForm.value['same_proof'] == false) {
-      let filename = this.AddDocForm.value['Proof'] == 0 ? 'Aadhar' : this.AddDocForm.value['Proof'] == 1 ? 'Voter' : 'Pan'
+      let filename = this.AddDocForm.value['Proof'] == 0 ? 'Aadhar' : this.AddDocForm.value['Proof'] == 1 ? 'Voter' : this.AddDocForm.value['Proof'] == 2 ? 'Pan' : 'DL'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
       file.append('Proof', this.AddDocForm.value['Proof'])
       file.append('file', this.id_proof_file[0], first);
@@ -96,7 +96,7 @@ export class DocpopComponent implements OnInit {
         file.append('idproofType', String(2));
       } else file.append('idproofType', String(1))
       // file.append('id_proof', filename)
-      file.append('ProofID',this.AddDocForm.value['ProofID']);
+      file.append('ProofID', this.AddDocForm.value['ProofID']);
       file.append('id_status', String(1));
     }
     //Address & ID proofs are same
@@ -115,12 +115,12 @@ export class DocpopComponent implements OnInit {
       // file.append('addr_proof', filename)
       file.append('addr_status', String(1));
       file.append('id_status', String(1));
-      file.append('ProofID',this.AddDocForm.value['ProofID'])
+      file.append('ProofID', this.AddDocForm.value['ProofID'])
     }
     //Id proof & Address Proof are same
     //uploading id Proof
     if (this.idflag == 2 && this.AddDocForm.value['same_proof'] == true) {
-      let filename = this.AddDocForm.value['Proof'] == 0 ? 'Aadhar' : this.AddDocForm.value['Proof'] == 1 ? 'Ration' : 'Pan'
+      let filename = this.AddDocForm.value['Proof'] == 0 ? 'Aadhar' : this.AddDocForm.value['Proof'] == 1 ? 'Ration' : this.AddDocForm.value['Proof'] == 2 ? 'Pan' : 'DL'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
       file.append('addr_proof', this.AddDocForm.value['Proof'])
       file.append('file', this.id_proof_file[0], first);
@@ -131,13 +131,14 @@ export class DocpopComponent implements OnInit {
       // file.append('id_proof', filename)
       file.append('id_status', String(1));
       file.append('addr_status', String(1));
-      file.append('ProofID',this.AddDocForm.value['ProofID'])
+      file.append('ProofID', this.AddDocForm.value['ProofID'])
     }
     //caf form upload
     if (this.cafflag == 3) {
-      let filename = username + '-' + 'CAF';
+      let caf_file = username + '-' + 'CAF', caf_tc = username + '-' + 'T&C';
       file.append('caf_status', String(1));
-      file.append('file', this.caf_proof, filename);
+      file.append('file', this.caf_proof[0], caf_file);
+      file.append('file', this.caf_proof[1], caf_tc);
 
     }
     //cust profilepic upload
@@ -194,20 +195,39 @@ export class DocpopComponent implements OnInit {
     }
   }
 
-  upload2(files: FileList) {
-    this.caf_proof = files.item(0);
-    if (this.caf_proof) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.imagecafurl = this.sanitizer.bypassSecurityTrustUrl(event.target.result)
-        // log
+
+  upload2(event: any) {
+    this.caf_proof = event.target.files;
+    let filelength = event.target.files.length;
+    if (filelength > 1) {
+      for (let i = 0; i < filelength; i++) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.imagecafurl.push(event.target.result);
+        }
+        reader.readAsDataURL(event.target.files[i]);
       }
-      reader.readAsDataURL(this.caf_proof);
     } else {
       this.imagecafurl = '';
+      window.alert('Please upload both CAF and T&C')
     }
   }
 
+  /* 
+    upload2(files: FileList) {
+      this.caf_proof = files.item(0);
+      if (this.caf_proof) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.imagecafurl = this.sanitizer.bypassSecurityTrustUrl(event.target.result)
+          // log
+        }
+        reader.readAsDataURL(this.caf_proof);
+      } else {
+        this.imagecafurl = '';
+      }
+    }
+   */
   uploadpic(files: FileList) {
     this.subs_pic = files.item(0);
     if (this.subs_pic) {
@@ -231,7 +251,7 @@ export class DocpopComponent implements OnInit {
       same_proof: new FormControl(false),
       cafupproof: new FormControl(''),
       cust_pic: new FormControl(''),
-      ProofID:new FormControl('',Validators.required),
+      ProofID: new FormControl('', Validators.required),
     })
   }
 }

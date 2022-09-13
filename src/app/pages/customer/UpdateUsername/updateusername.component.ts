@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild,AfterViewInit } from '@angular/core';
 import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,15 +11,17 @@ import { CustService,UsernameValidator } from '../../_service/indexService';
 
 })
 
-export class UpdateUsernameComponent implements OnInit {
+export class UpdateUsernameComponent implements OnInit,AfterViewInit {
   submit: boolean = false; AddNasForm; datas; id; modalHeader; config;
-
+  @ViewChild('user') user: ElementRef;
   constructor(
     private activeModal: NgbActiveModal,
     private alert: ToasterService,
     private ser: CustService,
     private router: Router,
-  ) { this.id = JSON.parse(localStorage.getItem('details')) }
+  ) { 
+     this.id = JSON.parse(localStorage.getItem('details'))
+   }
 
   closeModal() {
     this.activeModal.close();
@@ -27,6 +29,9 @@ export class UpdateUsernameComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
+  }
+  ngAfterViewInit(): void {
+    this.user.nativeElement.focus();
   }
 
   async addUsername() {

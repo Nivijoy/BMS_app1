@@ -45,6 +45,9 @@ import { ResellerOttPlanComponent } from './reseller-ott-plan/reseller-ott-plan.
 import { InvoiceMailLogComponent } from './invoice-mail-log/invoice-mail-log.component';
 import { GstinvoiceMailLogComponent } from './gstinvoice-mail-log/gstinvoice-mail-log.component';
 import { MailLogComponent } from './mail-log/mail-log.component';
+import { UpdateShareComponent } from './update-share/update-share.component';
+import { ShareLogComponent } from './share-log/share-log.component';
+
 
 const routes: Routes = [{
   path: '',
@@ -96,6 +99,8 @@ const routes: Routes = [{
     { path: 'invoice-mail-log', component: InvoiceMailLogComponent },
     { path: 'gst-mail-log', component: GstinvoiceMailLogComponent },
     { path: 'user-mail-log', component: MailLogComponent },
+    { path: 'update-share', component: UpdateShareComponent },
+    { path: 'share-log', component: ShareLogComponent }
   ],
 }];
 
@@ -145,5 +150,11 @@ export const routedComponents = [
   InvoiceMailLogComponent,
   GstinvoiceMailLogComponent,
   MailLogComponent,
+  UpdateShareComponent,
+  SmstemplatesComponent,
+  EmailTemplatesComponent,
+  SmstemplateIspComponent,
+  ShareLogComponent
+
 
 ];

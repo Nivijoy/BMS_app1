@@ -42,7 +42,7 @@ export class OttMapComponent implements OnInit {
       ],
       this.ostatus = [
         { value: '1', title: 'Enable' },
-        { value: '2', title: 'Disable' },
+        { value: '0', title: 'Disable' },
       ],
 
       this.settings = {
@@ -123,7 +123,7 @@ export class OttMapComponent implements OnInit {
           status: {
             title: 'Status',
             valuePrepareFunction: (status: any) => {
-              return (status == 2 ? 'Disable' : 'Enable');
+              return (status == 0 ? 'Disable' : 'Enable');
             },
             editor: {
               type: 'list',

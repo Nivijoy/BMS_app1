@@ -92,10 +92,9 @@
         </tr>
         <tr *ngFor="let item of pagedItems">
           <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
-          <td *ngIf="role.getroleid()>444">{{item.role ==333? 'Deposit Reseller': item.role ==332? 'Deposit
-            Employee':item.role==555? 'Sub ISP Deposit':
-            item.role==554?'Sub ISP Deposit Employee': item.role==551? 'Sub Distributor Deposit': item.role ==550? 'Sub
-            Distributor Deposit Employee': '--'}}</td>
+          <td *ngIf="role.getroleid()>444">{{item.role ==333? 'Deposit Reseller': item.role ==332? 'Deposit Employee':item.role==555? 'Sub ISP Deposit':
+            item.role==554?'Sub ISP Deposit Employee': item.role==551? 'Sub Distributor Deposit':
+             item.role ==550? 'Sub Distributor Deposit Employee': item.role == 444 ? 'Bulk Reseller': item.role == 666 ? 'Sub Isp Bulk':item.role == 661 ? 'SUb Distributor Bulk':''}}</td>
           <td *ngIf="role.getroleid()>444">{{item.company}}</td>
           <td>{{item.before_balance_amt}}</td>
           <td>{{item.amt}}</td>

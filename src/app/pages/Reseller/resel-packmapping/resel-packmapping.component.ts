@@ -271,7 +271,7 @@ export class ResServiceMapComponent implements OnInit {
       this.ResPackmapForm.get('bus_id').setValue(this.role.getispid());
       await this.GroupName();
     }
-    if (this.role.getroleid() <= 775) {
+    if (this.role.getroleid() <= 666) {
       this.ResPackmapForm.get('groupid').setValue(this.role.getgrupid());
       this.ResPackmapForm.get('reseller').setValue(this.role.getresellerid());
       await this.resellername();

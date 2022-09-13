@@ -2876,26 +2876,6 @@ console.log('Opening',this.isOpening)
     });
   }
 
-  // filereader(file, callback) {
-  //   if (file) {
-  //     let fileReader = new FileReader(), filedata;
-  //     fileReader.onload = (e) => {
-  //       this.arrayBuffer = fileReader.result;
-  //       var data = new Uint8Array(this.arrayBuffer);
-  //       var arr = new Array();
-  //       for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-  //       var bstr = arr.join("");
-  //       var workbook = JSXLSX.read(bstr, { type: "binary" });
-  //       var first_sheet_name = workbook.SheetNames[0];
-  //       var worksheet = workbook.Sheets[first_sheet_name];
-  //       // console.log(JSXLSX.utils.sheet_to_json(worksheet,{raw:true}));
-  //       callback(JSXLSX.utils.sheet_to_json(worksheet, { raw: true }))
-  //     }
-  //     fileReader.readAsArrayBuffer(file);
-  //   } else {
-  //     callback([])
-  //   }
-  // }
 
   filereader(file, callback) {
     if (file) {
@@ -2909,8 +2889,7 @@ console.log('Opening',this.isOpening)
         var workbook = JSXLSX.read(bstr, { type: "binary" });
         var first_sheet_name = workbook.SheetNames[0];
         var worksheet = workbook.Sheets[first_sheet_name];
-        // console.log(JSXLSX.utils.sheet_to_json(worksheet,{raw:true}));
-        callback(JSXLSX.utils.sheet_to_json(worksheet, { raw: true }))
+         callback(JSXLSX.utils.sheet_to_json(worksheet, { raw: true }))
       }
       fileReader.readAsArrayBuffer(file);
     } else {

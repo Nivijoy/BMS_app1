@@ -39,4 +39,16 @@ export class UserLogService {
    async userDatausage(params) {
       return await this.http.post("/api/log/userDatausage",params).toPromise();
    }
+   async resellerShareLog(params){
+      return await this.http.post("/api/log/resellerShareLog",params).toPromise();
+   }
+   downloadFile(params){
+      return this.http.get(`/api/log/download`, {params, responseType: 'blob'}).catch(error => { 
+      return this.handleError(error);
+    });
+   
+   }
+   handleError(error: Response) {
+        return Observable.throwError(error);
+   }
 }

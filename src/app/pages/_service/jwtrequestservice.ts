@@ -12,8 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
         //Add Base Url
-        // console.log(request);
-        // console.log("Req URL",request.url);
+         // console.log("Req URL",request.url);
         request = request.clone({url: env.baseUrl+request.url});
         
         // add authorization header with jwt token if available

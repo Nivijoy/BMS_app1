@@ -220,7 +220,7 @@ export class EditCustComponent implements OnInit {
         invalid.push(name)
       }
     };
-    // console.log('Invalid', invalid);
+    console.log('Invalid', invalid);
     if (this.EditSubsForm.invalid) {
       this.submit = true;
       window.alert('Please fill all the fields marked with Asterisks*')

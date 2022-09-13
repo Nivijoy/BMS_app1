@@ -55,37 +55,40 @@ export class ResellerService {
   async changereselusername(params) {
     return await this.http.post("/api/reseller/changereselusername", params).toPromise();
   }
-  async showResellerName(params){
-    return await this.http.post("/api/reseller/showResellerName",params).toPromise();
+  async showResellerName(params) {
+    return await this.http.post("/api/reseller/showResellerName", params).toPromise();
   }
-  async getResellerName(params){
-    return await this.http.post("/api/reseller/getResellerName",params).toPromise();
+  async getResellerName(params) {
+    return await this.http.post("/api/reseller/getResellerName", params).toPromise();
   }
-  async showResellerBranch(params){
-    return await this.http.post( "/api/reseller/showResellerBranch",params).toPromise();
+  async showResellerBranch(params) {
+    return await this.http.post("/api/reseller/showResellerBranch", params).toPromise();
   }
-  async showProfileReseller(params){
-    return await this.http.post("/api/reseller/showProfileReseller",params).toPromise();
+  async showProfileReseller(params) {
+    return await this.http.post("/api/reseller/showProfileReseller", params).toPromise();
   }
-  async showResellerUnder(params){
-    return await this.http.post("/api/reseller/showResellerUnder",params).toPromise();
+  async showResellerUnder(params) {
+    return await this.http.post("/api/reseller/showResellerUnder", params).toPromise();
   }
-  async showCountResel(params){
-    return await this.http.post("/api/reseller/showcountResel",params).toPromise();
+  async showCountResel(params) {
+    return await this.http.post("/api/reseller/showcountResel", params).toPromise();
   }
-  async uploadResellerLogo(file){
-    return await this.http.post("/api/reseller/uploadResellerLogo",file).toPromise();
+  async uploadResellerLogo(file) {
+    return await this.http.post("/api/reseller/uploadResellerLogo", file).toPromise();
   }
-  async getResellerLogo(params){
-    return await this.http.get("/api/reseller/getResellerLogo",{params}).toPromise();
+  async getResellerLogo(params) {
+    return await this.http.get("/api/reseller/getResellerLogo", { params }).toPromise();
   }
   async getPayGateway(params) {
-    return await this.http.post("/api/reseller/getPayGateway",params).toPromise();
+    return await this.http.post("/api/reseller/getPayGateway", params).toPromise();
   }
   async listAggExp(params) {
-    return await this.http.post("/api/reseller/listAggExp",params).toPromise();
+    return await this.http.post("/api/reseller/listAggExp", params).toPromise();
   }
-  async updateResellerNas(params){
-    return await this.http.post("/api/reseller/updateResellerNas",params).toPromise();
+  async updateResellerNas(params) {
+    return await this.http.post("/api/reseller/updateResellerNas", params).toPromise();
+  }
+  async updatePackageShare(params) {
+    return await this.http.post("/api/reseller/updatePackageShare", params).toPromise();
   }
 }

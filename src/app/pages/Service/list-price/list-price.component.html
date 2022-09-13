@@ -57,6 +57,9 @@
           <h5>Total Count: {{count}}</h5>
         </label>
         <i (click)="download()" class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+        <button type="button" (click)="updateShare()"  class="btn btn-md btn-success "
+        style="float: right;cursor: pointer;background-color: royalblue;border-radius: unset;padding: 1px;margin:2px">
+        <i class="fas fa-download"></i>Share</button>
       </div>
     </div>
     <div class="pagination">

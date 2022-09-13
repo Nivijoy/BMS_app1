@@ -1,4 +1,4 @@
-import { Component, forwardRef, ElementRef, Input, ViewChild, OnInit, EventEmitter, Output, Renderer2,AfterViewInit } from '@angular/core';
+import { Component, forwardRef, ElementRef, Input, ViewChild, OnInit, EventEmitter, Output, Renderer2, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 
-export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,AfterViewInit {
+export class AutoCompleteNComponent implements ControlValueAccessor, OnInit, AfterViewInit {
   hidden = true; index = -1; oldValue = null;
   @ViewChild('dropDown') dropDown: ElementRef;
   @ViewChild('autocomplet') autocomplet: ElementRef;
@@ -25,6 +25,7 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,Afte
   // Initial Purose Only
   @Input() autofocus = false;
   @Input() disabled = false;
+  // @Input() manualSearch = false;
   @Input() optValues = 'name';
   @Input() optId = 'id';
   @Input() placeholder: string = '';
@@ -35,11 +36,11 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,Afte
   @Input() set name(value: string) {
     this._Name = value;
   }
-   @Input() MultiSelect: boolean = false;
+  @Input() MultiSelect: boolean = false;
   @Output() changed = new EventEmitter();
   @Output() keyUp = new EventEmitter();
   @Output() enter = new EventEmitter();
- 
+
   private textbox = '';
   private _ID = ''; private _Name = '';
   private items = []; private itemsFilter = [];
@@ -55,10 +56,10 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,Afte
     private _eref: ElementRef
   ) { }
   ngAfterViewInit(): void {
-    if(this.autofocus) this.autocomplet.nativeElement.focus();
+    if (this.autofocus) this.autocomplet.nativeElement.focus();
   }
   ngOnInit() {
-   
+
   }
 
 
@@ -106,45 +107,48 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,Afte
 
   onOutput(event = '') {
     let keycode = event['keyCode'] || 0, val = this.textbox;
-    // console.log('Auto event',keycode, event)
-    if (keycode === 8) {// Backspace
-      this.keyUp.emit(this.textbox)
-      this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
-      this.updateValue();
-      return;
-    } else if (keycode === 13 && this.index !== -1 && !this.MultiSelect) {// Enter
-      this.hidden = true;
-      val = this.textbox = this.itemsFilter[this.index][this.optValues];
-      const value = this.items[this.index];
-      this.updateValue(value);
-      this.enter.emit(value)
-      return;
-    } else if (keycode === 40 && this.index < this.items.length - 1) { //down
-      this.dropDown.nativeElement.scrollTop += this.index === -1 ? 0 : 40;
-      this.index++;
-      // Set Value Label In Future Like Placeholder
-      return;
-    } else if (keycode === 38 && this.index > -1) { // UP
-      this.dropDown.nativeElement.scrollTop -= 40;
-      this.index--;
-      // Set Value Label In Future Like Placeholder
-      return;
-    } else if (event && (
-      (keycode > 47 && keycode < 58) || // any keys
-      (keycode > 64 && keycode < 91) || // letter keys
-      (keycode > 95 && keycode < 112) || // numpad keys
-      (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-      (keycode > 218 && keycode < 223) ||
-      (keycode === 229)) // Allow android keyboard
-    ) {
-      this.keyUp.emit(this.textbox)
-      this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
-      this.index = -1;
-      this.dropDown.nativeElement.scrollTop = 0;
-      // const value = this.itemsFilter.find(x => (x[this.optValues] + '').toLowerCase() == (val + '').toLowerCase());
-      // this.updateValue(value);
-    }
-    // console.log(this.itemsFilter, 'itemsFilter', keycode);
+    //  if (this.manualSearch) {
+      if (keycode === 8) {// Backspace
+        this.keyUp.emit(this.textbox)
+        this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
+        this.updateValue();
+        return;
+      } else if (keycode === 13 && this.index !== -1 && !this.MultiSelect) {// Enter
+        this.hidden = true;
+        val = this.textbox = this.itemsFilter[this.index][this.optValues];
+        const value = this.items[this.index];
+        this.updateValue(value);
+        this.enter.emit(value)
+        return;
+      } else if (keycode === 40 && this.index < this.items.length - 1) { //down
+        this.dropDown.nativeElement.scrollTop += this.index === -1 ? 0 : 40;
+        this.index++;
+        // Set Value Label In Future Like Placeholder
+        return;
+      } else if (keycode === 38 && this.index > -1) { // UP
+        this.dropDown.nativeElement.scrollTop -= 40;
+        this.index--;
+        // Set Value Label In Future Like Placeholder
+        return;
+      } else if (event && (
+        (keycode > 47 && keycode < 58) || // any keys
+        (keycode > 64 && keycode < 91) || // letter keys
+        (keycode > 95 && keycode < 112) || // numpad keys
+        (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+        (keycode > 218 && keycode < 223) ||
+        (keycode === 229)) // Allow android keyboard
+      ) {
+        this.keyUp.emit(this.textbox)
+        this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
+        this.index = -1;
+        this.dropDown.nativeElement.scrollTop = 0;
+
+      }
+      // Manual search 
+    // } else {
+    //   this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
+
+    // }
 
   }
 
@@ -182,7 +186,7 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit,Afte
           return x
         }
       });
-     
+
     } else {
       this.oldValue = value;
       this.setValueBasedOnID(value);

@@ -16,6 +16,12 @@
                <button *ngIf="(data.acc_type!=3 && (!role.getmenurole(705)))" class="btn btn-xs btn-outline-primary "
                   (click)='renew_user(id,data.mrole,data.c_date,data.expiration)'><b>Renewal</b></button>
             </div>
+            <div style="padding: 2px;">
+               <button
+                  *ngIf="(data.acc_type!=3 && (!role.getmenurole(1065)) && data.srvdatatype ==2 
+              && ((data.limitdl == 1 && data.lcdllimit ==0) || (data.limitul == 1 && data.lcuplimit ==0) || (data.limitcomb ==1 && data.lclimitcomb == 0)) )"
+                  class="btn btn-xs btn-outline-primary " (click)='topup(id,data.reseller_id)'><b>Topup</b></button>
+            </div>
             <div style="padding: 2px;" *ngIf="(data.expiry_status==1 && role.getroleid()>=775)">
                <button class="btn btn-xs btn-outline-primary " (click)="cancelinv(data.inv_id,1)"><b>Cancel
                      Invoice</b></button>
@@ -485,13 +491,19 @@
                                           (data.address_photo_status==2||data.id_photo_status==2)) ? 'CAF Generated':'Pending'}}
                                        </th> -->
                                     <th (click)="cafform()"
-                                       style="cursor:pointer;color: darkblue;text-decoration: underline;" *ngIf="((data.address_photo_status==1 || data.id_photo_status==1) ||
+                                       style="cursor:pointer;color: darkblue;text-decoration: underline;" *ngIf="(data.caf_photo_status == 0 || data.caf_photo_status ==3 ) && ((data.address_photo_status==1 || data.id_photo_status==1) ||
                                        (data.address_photo_status==2||data.id_photo_status==2))">CAF Generated Click
                                        here to view</th>
+                                       <th (click)="cafform()"
+                                       style="cursor:pointer;color: darkblue;text-decoration: underline;" *ngIf="(data.caf_photo_status == 1 || data.caf_photo_status ==2 )">  Click
+                                       here to view Uploaded CAF</th>
                                     <th
                                        *ngIf="((data.address_photo_status==0 || data.id_photo_status==0) ||
                                        (data.address_photo_status==3||data.id_photo_status==3) || (data.address_photo_status==null || data.id_photo_status==null))">
                                        Pending</th>
+                                    <th *ngIf="data.caf_photo_status == 2">
+                                       <i style="color: #00ff81;" class="fa fa-check"></i>&nbsp;CAF Verified
+                                    </th>
                                     <th style=" padding: 1px;" class=" last" data-title="'Action'"
                                        *ngIf="data.address_photo_status==2 || data.id_photo_status==2">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -505,15 +517,17 @@
                                              <li (click)='cafform()' style="cursor: pointer;">&nbsp;
                                                 <i style="color: black" class="fa fa-eye"></i>&nbsp;View
                                              </li>
-                                             <li (click)='cafuploadproof(data.uid,data.cust_profile_id,3)'
-                                                style="cursor: pointer;">&nbsp;
+                                             <li *ngIf="(data.caf_photo_status == 0 || data.caf_photo_status ==3 )" (click)='cafuploadproof(data.uid,data.cust_profile_id,3)'
+                                                style="cursor: pointer;"  >&nbsp;
                                                 <i style="color: #00ff81;" class="fa fa-upload"></i>&nbsp;Upload
                                              </li>
-                                             <li (click)="docverify(5)" [hidden]="cafnotverify"
+                                             <!-- [hidden]="cafnotverify" -->
+                                             <li (click)="docverify(5)"  *ngIf="data.caf_photo_status == 1"
                                                 style="cursor: pointer;">&nbsp;
                                                 <i style="color: #00ff81;" class="fa fa-check"></i>&nbsp;Verified
                                              </li>
-                                             <li (click)="docverify(10)" [hidden]="cafverify" style="cursor: pointer;">
+                                             <!-- [hidden]="cafverify"  -->
+                                             <li (click)="docverify(10)"  *ngIf="data.caf_photo_status == 1" style="cursor: pointer;">
                                                 &nbsp;
                                                 <i style="color: red;" class="fas fa-sync"></i>&nbsp;Recollect
                                              </li>
@@ -553,8 +567,7 @@
                                  <tr>
                                     <th>Identity Proof</th>
                                     <th>
-                                       {{data.id_photo_status==1?'Collected':data.id_photo_status==2?'Verified':data.id_photo_status==3?'Recollect':'Not
-                                       Uploaded'}}</th>
+                                       {{data.id_photo_status==1?'Collected':data.id_photo_status==2?'Verified':data.id_photo_status==3?'Recollect':'Not Uploaded'}}</th>
                                     <th *ngIf="data.id_photo_status==0 || data.id_photo_status==3 || data.id_photo_status == null"
                                        style=" padding: 1px;" class=" last" data-title="'Action'">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -583,8 +596,7 @@
                                  <tr>
                                     <th>Customer Pic</th>
                                     <th>
-                                       {{data.user_photo_status==1?'Collected':data.user_photo_status==2?'Verified':data.user_photo_status==3?'Recollect':'Not
-                                       Uploaded'}}</th>
+                                       {{data.user_photo_status==1?'Collected':data.user_photo_status==2?'Verified':data.user_photo_status==3?'Recollect':'Not Uploaded'}}</th>
                                     <th *ngIf="data.user_photo_status==0 || data.user_photo_status==3 || data.user_photo_status ==null"
                                        style=" padding: 1px;" class=" last" data-title="'Action'">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -832,7 +844,7 @@
                         <th>Invoice Date</th>
                      </tr>
                      <tr *ngFor="let item of ottInvoiceData">
-                        <td *ngIf="role.getroleid()>775">{{item.invid}}</td>
+                        <td *ngIf="role.getroleid()>=775">{{item.invid}}</td>
                         <td *ngIf="role.getroleid()>=775">{{item.iolid}}</td>
                         <td>{{item.billno}}</td>
                         <td>{{item.ottplan_name}}</td>
@@ -908,6 +920,47 @@
                   </table>
                </ng-template>
             </ngb-tab>
+
+
+            <ngb-tab>
+               <ng-template ngbTabTitle>
+                  <div (click)="topupReport()">Topup History</div>
+               </ng-template>
+               <ng-template ngbTabContent>
+                  <table class="table table-hover table-striped">
+                     <tr style="background-color :  #01a7eee5;color:white;font-size: medium;">
+                        <th>ID</th>
+                        <th>Reseller</th>
+                        <th>Topup Name</th>
+                        <th>Limit</th>
+                        <th>Tax</th>
+                        <th>Price</th>
+                        <th>Paid Status</th>
+                        <th>Topup By</th>
+                        <th>Topup Status</th>
+
+                     </tr>
+                     <tr *ngFor="let item of topup_data">
+                        <td>{{item.id}}</td>
+                        <td>{{item.company}}</td>
+                        <td>{{item.top_name}}</td>
+                        <td>{{item.limit +" "+ (item.limit_size ==1 ? 'MB' : item.limit_size == 2 ? 'GB':
+                           item.limit_size == 3?'TB':
+                           'PB')}}</td>
+                        <td>{{item.tax_type == 0 ? 'Inclusive': 'Exclusive'}}</td>
+                        <td>{{item.top_amt | currency : 'INR':'symbol'}}</td>
+                        <td class="ion-icon"><a [ngStyle]="{'color': item.pay_status == 2 ? 'green': 'red'}"
+                              [ngClass]="{'ion-close-round': item.pay_status != 2 ? true : false,'ion-checkmark-round':item.pay_status ==2? true:false}"></a>
+                        </td>
+                        <td>{{item.managername}}</td>
+                        <td>{{item.cdate | date:'d MMM y h:mm:ss a'}}</td>
+                     </tr>
+                  </table>
+               </ng-template>
+            </ngb-tab>
+
+
+
             <ngb-tab title="Package History">
                <ng-template ngbTabContent>
                   <table class="table">
@@ -1290,7 +1343,7 @@
                         <th>SubPlan Name</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Validty</th>
+                        <th>Validity</th>
                         <th>Additional Days</th>
                         <th>Upload Limit</th>
                         <th>Download Limit</th>

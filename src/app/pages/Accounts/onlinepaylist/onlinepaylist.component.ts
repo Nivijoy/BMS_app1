@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
+import { ToasterService } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { PaymentReceived } from '../PaymentReceived/payment_received.component';
 import {
@@ -16,7 +15,7 @@ const EXCEL_EXTENSION = '.xlsx';
 import { DatePipe } from '@angular/common';
 import { PaystatusCheckComponent } from '../paystatus/paystatus.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
   selector: 'onlinepaylist',
@@ -26,9 +25,9 @@ import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 
 export class OnlinePaylistComponent implements OnInit {
   submit: boolean = false; addNas; data; search; bus_name; bus; group1; group_name; profile; resel_type;
-  res1; res_name; count; order_id; txnid; cdate : any; paydata; end_date : any; 
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25;totalOnlinePay;order;trans;opstatus;
-  dd:any;mm:any;
+  res1; res_name; count; order_id; txnid; cdate: any; paydata; end_date: any;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; totalOnlinePay; order; trans; opstatus;
+  dd: any; mm: any;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
@@ -49,19 +48,19 @@ export class OnlinePaylistComponent implements OnInit {
 
 
   ) {
-    let nowdate = new Date().toJSON().slice(0,10);
+    let nowdate = new Date().toJSON().slice(0, 10);
     //  this.dd = nowdate.getDate();
     //  this.mm = nowdate.getMonth();
     // let yyyy = nowdate.getFullYear();
     // if(this.dd <10){this.dd ='0'+this.dd } if(this.mm<10) {this.mm='0'+this.mm}
     // let today = yyyy+'-'+this.mm+'-'+this.dd;
     // console.log('Today',today)
-    
+
     // console.log('Nowdate', nowdate,'ISo string',nowdate.toISOString());
-    
+
     // this.cdate = this.end_date = nowdate.toISOString().slice(0, 10);
     this.cdate = this.end_date = nowdate;
-   }
+  }
   async ngOnInit() {
     localStorage.removeItem('array');
     await this.initiallist();
@@ -115,7 +114,7 @@ export class OnlinePaylistComponent implements OnInit {
       this.txnid = '';
       this.cdate = '';
       this.end_date = '';
-      this.opstatus='';
+      this.opstatus = '';
     }
     if (item == 2) {
       this.res_name = '';
@@ -123,14 +122,14 @@ export class OnlinePaylistComponent implements OnInit {
       this.txnid = '';
       this.cdate = '';
       this.end_date = '';
-      this.opstatus='';
+      this.opstatus = '';
     }
     if (item == 3) {
       this.order_id = '';
       this.txnid = '';
       this.cdate = '';
       this.end_date = '';
-      this.opstatus='';
+      this.opstatus = '';
     }
     if (item == 4) {
       this.txnid = '';
@@ -147,7 +146,7 @@ export class OnlinePaylistComponent implements OnInit {
     this.end_date = '';
     this.profile = '';
     this.res1 = '';
-    this.opstatus='';
+    this.opstatus = '';
     await this.initiallist();
     await this.showBusName();
     await this.showProfileReseller();
@@ -170,7 +169,7 @@ export class OnlinePaylistComponent implements OnInit {
         txnid: this.txnid,
         cdate: this.cdate,
         end_date: this.end_date,
-        opstatus:this.opstatus
+        opstatus: this.opstatus
 
         // res_id:this.reseller_under,
       })
@@ -207,7 +206,7 @@ export class OnlinePaylistComponent implements OnInit {
       txnid: this.txnid,
       cdate: this.cdate,
       end_date: this.end_date,
-      opstatus:this.opstatus
+      opstatus: this.opstatus
     })
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -251,9 +250,11 @@ export class OnlinePaylistComponent implements OnInit {
     if (gwid == 1) result = await this.payser.paystatus({ opid: item })   // Federal
     else if (gwid == 2) {
       result = await this.payser.pumstatus({ opid: item })  // payUMoney
+    }else{
+      result = await this.payser.paytmStatus({ opid: item})
     }
     if (result) {
-      console.log('Result',result)
+      console.log('Result', result)
       this.paydata = result[0];
       this.loading = false
       const activeModal = this.nasmodel.open(PaystatusCheckComponent, { size: 'lg', container: 'nb-layout' });
@@ -262,7 +263,7 @@ export class OnlinePaylistComponent implements OnInit {
       activeModal.result.then((data) => {
         this.initiallist();
       });
-    }else{
+    } else {
       this.loading = false
     }
     // setTimeout(() => {

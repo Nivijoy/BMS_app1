@@ -13,6 +13,7 @@ import { AuthGuard } from '../../pages/_service/guard';
 import { OttInvoiceListComponent } from './ottinvoicelist/ottinvoice-list.component';
 import { ResellerRevenueShareComponent } from './reseller-revenue-share/reseller-revenue-share.component';
 import { RenewalReportComponent } from './renewal-report/renewal-report.component';
+import { TopupreportComponent } from './topupreport/topupreport.component';
  
 
 const routes: Routes = [{
@@ -30,7 +31,8 @@ const routes: Routes = [{
     { path: 'dailysubs-count', component: DailySubsCountComponent },
     { path: 'ottinvoicelist', component: OttInvoiceListComponent },
     { path: 'reseller-revenue-share', component: ResellerRevenueShareComponent},
-    { path: 'renewalReport', component: RenewalReportComponent}
+    { path: 'renewalReport', component: RenewalReportComponent},
+    { path: 'topupreport', component: TopupreportComponent}
    ],
 
 }];
@@ -54,5 +56,6 @@ export const routedComponents = [
   SubscriberReportComponent,
   DailySubsCountComponent,
   OttInvoiceListComponent,
-  ResellerRevenueShareComponent
+  ResellerRevenueShareComponent,
+  TopupreportComponent
  ];

@@ -471,6 +471,7 @@ export class addService1Component implements OnInit {
       ser_valid: new FormControl(''),
       stprice_date: new FormControl(''),
       endprice_date: new FormControl(''),
+      renewalmode: new FormControl(''),
       priceDetails: new FormArray([
         this.createMaterial()
       ]),

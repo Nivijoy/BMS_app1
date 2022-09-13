@@ -12,13 +12,13 @@ import { DatePipe } from '@angular/common';
   selector: 'edit-service',
   templateUrl: './editService.component.html',
   styles: ['hr{border: 0px;}'],
-  styleUrls:['./editService.component.scss']
+  styleUrls: ['./editService.component.scss']
 })
 
 export class EditServiceComponent implements OnInit {
   submit: boolean = false; EditServiceForm; id; editdatas; busname; nasips;
   resell; buresellitems; nasresel; grup; reseldata; edititems; idnas; res_id; bulkService = [];
-  editprice; config; falback; svst_date; svend_date;carryover;expvalid;
+  editprice; config; falback; svst_date; svend_date; carryover; expvalid;
 
   constructor(
     private alert: ToasterService,
@@ -46,7 +46,7 @@ export class EditServiceComponent implements OnInit {
   }
 
   async busresell() {
-    this.buresellitems = await this.nasser.showGroupNas({ edit_flag:1,bus_id: this.EditServiceForm.value['bus_id'], groupid: this.EditServiceForm.value['groupid'], serassign_type: 2 });
+    this.buresellitems = await this.nasser.showGroupNas({ edit_flag: 1, bus_id: this.EditServiceForm.value['bus_id'], groupid: this.EditServiceForm.value['groupid'], serassign_type: 2 });
     await this.reselledit();
 
   }
@@ -166,10 +166,10 @@ export class EditServiceComponent implements OnInit {
       this.EditServiceForm.get('groupid').clearValidators();
       this.EditServiceForm.get('groupid').updateValueAndValidity();
     }
-    if (this.role.getroleid() >=775 || this.role.getroleid() == 666 || this.role.getroleid() == 665) {
+    if (this.role.getroleid() >= 775 || this.role.getroleid() == 666 || this.role.getroleid() == 665) {
       this.EditServiceForm.get('ser_validity').setValidators([Validators.required]);
-     }
-     if(this.role.getroleid() < 443){
+    }
+    if (this.role.getroleid() < 443) {
       this.EditServiceForm.get('ser_validity').setValue('1')
     }
   }
@@ -208,8 +208,8 @@ export class EditServiceComponent implements OnInit {
     if (this.role.getroleid() == 444 && this.EditServiceForm.value['Type'] == 0) {
       let pricedata = this.editprice
       for (var i = 0; i < pricedata.length; i++) {
-        this.priceDetails.push(this.createMaterial(pricedata[i]['srp_id'],pricedata[i]['sub_plan'], pricedata[i]['amount'], pricedata[i]['time_unit'], pricedata[i]['type'],pricedata['days_flag'],
-         pricedata[i]['additional_days'],pricedata[i]['status'],pricedata[i]['validity'],pricedata[i]['startdate'],pricedata[i]['enddate'],pricedata[i]['tax_type']));
+        this.priceDetails.push(this.createMaterial(pricedata[i]['srp_id'], pricedata[i]['sub_plan'], pricedata[i]['amount'], pricedata[i]['time_unit'], pricedata[i]['type'], pricedata['days_flag'],
+          pricedata[i]['additional_days'], pricedata[i]['status'], pricedata[i]['validity'], pricedata[i]['startdate'], pricedata[i]['enddate'], pricedata[i]['tax_type']));
       }
     }
   }
@@ -277,44 +277,44 @@ export class EditServiceComponent implements OnInit {
   deletepriceField(index: number) {
     this.priceDetails.removeAt(index);
   }
-  createMaterial(subid='',plan = '', serprice = '', timeunit = '', timetype = '', days='' ,addays = '',substatus='',
-  sub_validity='',st_date='',end_date='',tax_type=''): FormGroup {
+  createMaterial(subid = '', plan = '', serprice = '', timeunit = '', timetype = '', days = '', addays = '', substatus = '',
+    sub_validity = '', st_date = '', end_date = '', tax_type = ''): FormGroup {
     return this._fb.group({
-      srp_id:[subid],
+      srp_id: [subid],
       sub_plan: [plan],
       ser_price: [serprice],
       time_unit: [timeunit],
       timeunit_type: [timetype],
-      dayflag:[days],
+      dayflag: [days],
       add_days: [addays],
-      subplan_status:[substatus],
-      subplan_validity:[sub_validity],
-      subst_date : [st_date],
-      subend_date:[end_date],
-      sertax_cal:[tax_type]
+      subplan_status: [substatus],
+      subplan_validity: [sub_validity],
+      subst_date: [st_date],
+      subend_date: [end_date],
+      sertax_cal: [tax_type]
     });
   }
 
   createForm() {
     this.EditServiceForm = new FormGroup({
       // serassign_type: new FormControl(this.editdatas ? this.editdatas : ''),
-      bus_id: new FormControl(this.editdatas ? this.editdatas['isp_id'] : '',Validators.required),
+      bus_id: new FormControl(this.editdatas ? this.editdatas['isp_id'] : '', Validators.required),
       groupid: new FormControl(this.editdatas ? this.editdatas['group_id'] : ''),
-      Name: new FormControl(this.editdatas ? this.editdatas['srvname'] : '',Validators.required),
-      Type: new FormControl(this.editdatas ? this.editdatas['srvmode'] : '',Validators.required),
+      Name: new FormControl(this.editdatas ? this.editdatas['srvname'] : '', Validators.required),
+      Type: new FormControl(this.editdatas ? this.editdatas['srvmode'] : '', Validators.required),
       ciscopolicy: new FormControl(this.editdatas ? this.editdatas['policy'] : ''),
       cisco_dl: new FormControl(this.editdatas ? this.editdatas['policymapdl'] : ''),
       cisco_ul: new FormControl(this.editdatas ? this.editdatas['policymapul'] : ''),
       datadl_rate: new FormControl(this.editdatas ? this.editdatas['downrate'] : ''),
       dataul_rate: new FormControl(this.editdatas ? this.editdatas['uprate'] : ''),
-      Service: new FormControl(this.editdatas ? (this.editdatas['srvtype']) : '',Validators.required),
-      Expiry: new FormControl(this.editdatas ? this.editdatas['limitexpiration'] : '',Validators.required),
+      Service: new FormControl(this.editdatas ? (this.editdatas['srvtype']) : '', Validators.required),
+      Expiry: new FormControl(this.editdatas ? this.editdatas['limitexpiration'] : '', Validators.required),
       ser_validity: new FormControl(this.editdatas ? this.editdatas['svalidity'] : ''),
       st_date: new FormControl(''),
       end_date: new FormControl(''),
       data_split: new FormControl(this.editdatas ? this.editdatas['datasplit'] : ''),
       serstatus: new FormControl(this.editdatas ? this.editdatas['enableservice'] : ''),
-      Data: new FormControl(this.editdatas ? this.editdatas['srvdatatype'] : '',Validators.required),
+      Data: new FormControl(this.editdatas ? this.editdatas['srvdatatype'] : '', Validators.required),
       Total: new FormControl(this.editdatas ? (this.editdatas['limitcomb'] == 0 ? this.editdatas['limitcomb'] = false : this.editdatas['limitcomb'] = true) : ''),
       tTraffic: new FormControl(this.editdatas ? this.editdatas['trafficunitcomb'] : ''),
       tottraf_initial: new FormControl(this.editdatas ? this.editdatas['inittotal'] : ''),
@@ -366,6 +366,7 @@ export class EditServiceComponent implements OnInit {
       ser_valid: new FormControl(''),
       stprice_date: new FormControl(''),
       endprice_date: new FormControl(''),
+      renewalmode: new FormControl(this.editdatas ? this.editdatas['renewalmode'] : ''),
       priceDetails: new FormArray([
         // this.createMaterial()
       ]),

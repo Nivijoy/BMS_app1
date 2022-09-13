@@ -33,5 +33,8 @@ export class ReportService {
    async resellerRevenueShare(params){
       return await this.http.post("/api/reports/resellerRevenueShare",params).toPromise();
    }
+   async topupReport(params){
+      return await this.http.post("/api/reports/topupReport",params).toPromise();
+   }
    
 }

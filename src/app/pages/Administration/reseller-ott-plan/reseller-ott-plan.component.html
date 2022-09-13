@@ -100,7 +100,10 @@
         <td><i class="fas fa-rupee-sign">&nbsp;{{item.ottamt}}</i></td>
         <td style="font-size: medium;font-weight: 900;cursor: pointer;"><a
             (click)="ottcount(item.ottplanid)">{{item.tot}}</a></td>
-        <td>{{item.omstatus==1 ? 'Enable':'Disable'}}</td>
+        <!-- <td>{{item.omstatus==1 ? 'Enable':'Disable'}}</td> -->
+        <td style="text-align: center;"> <a [ngStyle]="{'color' :item.omstatus==1 ? 'green' : 'red' }"
+          [ngClass]="{'ion-close-round':item.omstatus!=1? true:false,'ion-checkmark-round': item.omstatus==1 ? true:false  }">
+        </a> </td>
       </tr>
       <tr>
         <td colspan="4" *ngIf="pagedItems==''">NO DATA FOUND</td>

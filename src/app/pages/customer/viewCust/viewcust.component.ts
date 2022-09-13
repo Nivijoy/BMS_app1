@@ -11,7 +11,7 @@ import { RenewCustComponent } from '../RenewCustomer/renewCust.component';
 import { ShowAuthpassComponent } from '../showauthpassword/showauthpass.component';
 import {
   AccountService, CustService, RoleService, PagerService,
-  ComplaintService, S_Service, OperationService, AdminuserService
+  ComplaintService, S_Service, OperationService, AdminuserService,ReportService
 } from '../../_service/indexService';
 import { ViewInvoiceComponent } from '../../Accounts/viewinvoice/viewinvoice.component';
 import { ViewReceiptComponent } from '../../Accounts/viewreceipt/viewreceipt.component';
@@ -47,6 +47,7 @@ import { OttcountComponent } from '../../Administration/ottcount/ottcount.compon
 import { ITreeOptions } from 'angular-tree-component';
 import { toJS } from "mobx";
 import { AddSuccessComponent } from '../success/add-success.component';
+import { TopuprenewalComponent } from '../topuprenewal/topuprenewal.component';
 
 @Component({
   selector: 'viewCust',
@@ -63,9 +64,10 @@ export class ViewCustComponent implements OnInit {
   verify: boolean = false; notverify: boolean = false; verifyid: boolean = false; notverifyid: boolean = false;
   verifyaddr: boolean = false; notverifyaddr: boolean = false; verifypic: boolean = false; notverifypic: boolean = false;
   cafverify: boolean = false; cafnotverify: boolean = false; renew_history; oldnew = 1; radact_tname; table_data; ottInvoiceData;
- 
+  topup_data;
+
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; srvidData: any[] = [];
-  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname; selectdata;
+   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname; selectdata;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
@@ -87,6 +89,7 @@ export class ViewCustComponent implements OnInit {
     private confirmservice: ConfirmationDialogService,
     private datePipe: DatePipe,
     private adminser: AdminuserService,
+    private reportser:ReportService
   ) {
     this.id = JSON.parse(localStorage.getItem('details'));
     this.schlist_flag = JSON.parse(localStorage.getItem('schedflag'))
@@ -483,17 +486,16 @@ export class ViewCustComponent implements OnInit {
 
   async invoicelist() {
     this.loading = true
-    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1 })  // Non-GST Invoice
+    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1,index:0,limit:10 })  // Non-GST Invoice
     this.loading = false;
-    this.invoicedata = res[0]; 
-  }
-  async downloadInvoice()
-  {
+    this.invoicedata = res[0];
+   }
+  async downloadInvoice() {
     this.loading = true
     let res = await this.accser.listInvoice({ uid: this.id, invtype: 1 })  // Non-GST Invoice
     this.loading = false;
-    this.invoicedata = res[0]; 
-     if (res) {
+    this.invoicedata = res[0];
+    if (res) {
       let tempdata = [], temp: any = res[0];
       for (var i = 0; i < temp.length; i++) {
         let param = {};
@@ -505,16 +507,16 @@ export class ViewCustComponent implements OnInit {
         param['TAX AMOUNT'] = temp[i]['tax_amount'];
         param['BILL NO'] = temp[i]['rollid'];
         param['GST NUMBER'] = temp[i]['supplier_gst_number'];
-        param['IGST'] =Number(temp[i]['igst']).toFixed(2) + " " + '%';
-        param['CGST'] =Number(temp[i]['cgst']).toFixed(2) + " " + '%';
-        param['SGST'] =Number(temp[i]['sgst']).toFixed(2) + " " + '%';
-        param['INVOICE TYPE'] = temp[i]['inv_type']==1? 'Invoice':'GST Invoice';
-        param['INVOICE STATUS'] = temp[i]['inv_status']==1?'Active':temp[i]['inv_status']==2?'Proforma Invoice': 'Cancelled';
+        param['IGST'] = Number(temp[i]['igst']).toFixed(2) + " " + '%';
+        param['CGST'] = Number(temp[i]['cgst']).toFixed(2) + " " + '%';
+        param['SGST'] = Number(temp[i]['sgst']).toFixed(2) + " " + '%';
+        param['INVOICE TYPE'] = temp[i]['inv_type'] == 1 ? 'Invoice' : 'GST Invoice';
+        param['INVOICE STATUS'] = temp[i]['inv_status'] == 1 ? 'Active' : temp[i]['inv_status'] == 2 ? 'Proforma Invoice' : 'Cancelled';
         param['RENEWAL DATE	'] = this.datePipe.transform(temp[i]['inv_date'], 'd MMM y hh:mm:ss a');
         param['EXPIRE DATE'] = this.datePipe.transform(temp[i]['expiry_date'], 'd MMM y hh:mm:ss a');
-        param['PAY STATUS'] = temp[i]['pay_status']==2? 'Paid': 'Unpaid';
-        temp[i]['pay_status']=temp[i]['pay_status']==2?this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a'):'--';
-        param['PAY DATE'] =temp[i]['pay_status']
+        param['PAY STATUS'] = temp[i]['pay_status'] == 2 ? 'Paid' : 'Unpaid';
+        temp[i]['pay_status'] = temp[i]['pay_status'] == 2 ? this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a') : '--';
+        param['PAY DATE'] = temp[i]['pay_status']
         tempdata[i] = param
       }
       const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);
@@ -526,7 +528,7 @@ export class ViewCustComponent implements OnInit {
 
   async gstInvoice() {
     this.loading = true;
-    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2 })  // GST Invoice
+    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2,index:0,limit:10 })  // GST Invoice
     this.loading = false;
     this.gstinvoice = resp[0];
     // console.log(res);
@@ -534,7 +536,7 @@ export class ViewCustComponent implements OnInit {
 
   async ottInvoice() {
     this.loading = true
-    let res = await this.accser.ottInvoice({ uid: this.id })  // Non-GST Invoice
+    let res = await this.accser.ottInvoice({ uid: this.id,index:0,limit:10 })  // Non-GST Invoice
     this.loading = false;
     this.ottInvoiceData = res[0];
   }
@@ -542,7 +544,7 @@ export class ViewCustComponent implements OnInit {
 
   async renewal_history() {
     this.loading = true;
-    let resp = await this.accser.renewalHistory({ uid: this.id });
+    let resp = await this.accser.renewalHistory({ uid: this.id,index:0,limit:10 });
     // console.log('Renewal History Result', resp);
     this.loading = false;
     this.renew_history = resp[0];
@@ -555,6 +557,12 @@ export class ViewCustComponent implements OnInit {
 
   }
 
+  async topupReport(){
+    this.loading = true;
+    const resp = await this.reportser.topupReport({uid:this.id,index:0,limit:10});
+    this.loading = false;
+    this.topup_data = resp[0];
+  }
   async listcomplaint() {
     let result = await this.compser.listComplaint({ uid: this.id });
     this.complist = result[0]
@@ -719,8 +727,9 @@ export class ViewCustComponent implements OnInit {
 
   setPage() {
     // console.log(this.data);
-    this.pager = this.pageservice.getPager(this.trafcount, this.page, this.limit);
-    this.pagedItems = this.trafficdata;
+       this.pager = this.pageservice.getPager(this.trafcount, this.page, this.limit);
+      this.pagedItems = this.trafficdata;
+    
     // console.log('asdfg',this.pagedItems)
   }
 
@@ -741,25 +750,25 @@ export class ViewCustComponent implements OnInit {
     this.router.navigate(['/pages/cust/add-custpic']);
   }
 
-  addpic(uid,item, picflag) {
+  addpic(uid, item, picflag) {
     localStorage.setItem('array', JSON.stringify(item));
     localStorage.setItem('flag', JSON.stringify(picflag));
-    localStorage.setItem('subid',JSON.stringify(uid));
+    localStorage.setItem('subid', JSON.stringify(uid));
     this.router.navigate(['/pages/cust/add-custpic']);
   }
 
-  snapaddrproof(uid,item, picflag) {
+  snapaddrproof(uid, item, picflag) {
     localStorage.setItem('array', JSON.stringify(item));
     localStorage.setItem('flag', JSON.stringify(picflag));
-    localStorage.setItem('subid',JSON.stringify(uid));
+    localStorage.setItem('subid', JSON.stringify(uid));
 
     this.router.navigate(['/pages/cust/add-custpic']);
   }
 
-  snapidproof(uid,item, picflag) {
+  snapidproof(uid, item, picflag) {
     localStorage.setItem('array', JSON.stringify(item));
     localStorage.setItem('flag', JSON.stringify(picflag));
-    localStorage.setItem('subid',JSON.stringify(uid));
+    localStorage.setItem('subid', JSON.stringify(uid));
 
     this.router.navigate(['/pages/cust/add-custpic']);
   }
@@ -782,6 +791,15 @@ export class ViewCustComponent implements OnInit {
     const activeModal = this.nasmodel.open(RenewCustComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Renew Customer';
     activeModal.componentInstance.item = { cust_id: cust_id, role: role, cdate: cdate, edate: edate }
+    activeModal.result.then((data) => {
+      this.view();
+    })
+  }
+
+  topup(cust_id, resel_id) {
+    const activeModal = this.nasmodel.open(TopuprenewalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'TopUp';
+    activeModal.componentInstance.item = { cust_id: cust_id, resel_id: resel_id }
     activeModal.result.then((data) => {
       this.view();
     })
@@ -860,37 +878,37 @@ export class ViewCustComponent implements OnInit {
     })
   }
 
-  cafuploadproof(uid,proid, cafaddr) {
+  cafuploadproof(uid, proid, cafaddr) {
     const activeModal = this.nasmodel.open(DocpopComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'CAF Upload';
-    activeModal.componentInstance.item = {uid:uid, proid: proid, cafaddr: cafaddr };
+    activeModal.componentInstance.item = { uid: uid, proid: proid, cafaddr: cafaddr };
     activeModal.result.then((data) => {
       this.view();
     })
   }
 
-  addrsproof(uid,proid, addr) {
+  addrsproof(uid, proid, addr) {
     const activeModal = this.nasmodel.open(DocpopComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Address Proof';
-    activeModal.componentInstance.item = {uid:uid, proid: proid, addr: addr };
+    activeModal.componentInstance.item = { uid: uid, proid: proid, addr: addr };
     activeModal.result.then((data) => {
       this.view();
     })
   }
 
-  idproof(uid,proid, idproof) {
+  idproof(uid, proid, idproof) {
     const activeModal = this.nasmodel.open(DocpopComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Identity Proof';
-    activeModal.componentInstance.item = {uid:uid, proid: proid, idproof: idproof };
+    activeModal.componentInstance.item = { uid: uid, proid: proid, idproof: idproof };
     activeModal.result.then((data) => {
       this.view();
     })
   }
 
-  custpicupload(uid,proid, subpicflag) {
+  custpicupload(uid, proid, subpicflag) {
     const activeModal = this.nasmodel.open(DocpopComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Subscriber Picture';
-    activeModal.componentInstance.item = {uid:uid,proid: proid, subpicflag: subpicflag };
+    activeModal.componentInstance.item = { uid: uid, proid: proid, subpicflag: subpicflag };
     activeModal.result.then((data) => {
       this.view();
     })
@@ -996,6 +1014,7 @@ export class ViewCustComponent implements OnInit {
     localStorage.setItem('isp_id', JSON.stringify(this.data['isp_id']))
     const activeModal = this.nasmodel.open(CafFormComponent, { size: 'lg', container: 'nb-layout', windowClass: 'custom-class', backdrop: 'static' });
     activeModal.componentInstance.modalHeader = 'View CAF Form';
+    activeModal.componentInstance.status = this.data.caf_photo_status
     activeModal.result.then((data) => {
 
     })
@@ -1104,7 +1123,6 @@ export class ViewCustComponent implements OnInit {
   selectednodes() {
     const selectedNodes = [];
     Object.entries(toJS(this.tree.treeModel.selectedLeafNodeIds)).forEach(([key, value]) => {
-      // console.log(key, value);
       if (value === true) {
         selectedNodes.push(parseInt(key));
       }
@@ -1120,9 +1138,7 @@ export class ViewCustComponent implements OnInit {
     }
     let nodedata = this.tree.treeModel.nodes;
     for (var i = 0; i < item.length; ++i) {
-      // console.log("checkdatas", item[i]);
       let leaf = this.tree.treeModel.getNodeById(JSON.parse(item[i]))
-      // console.log(leaf)
       if (leaf)
         leaf.setIsSelected(true);
     }
@@ -1131,18 +1147,13 @@ export class ViewCustComponent implements OnInit {
   getParentNodeId(item) {
     let parentNodeid = []
     for (let val of this.nodes) {
-      // console.log('Val', val);
       for (let ids of item) {
         let pids = val['subplan'].filter(x => x.id == ids);
-        // console.log('Pids', pids, 'val', val.id);
         if (pids.length) {
           parentNodeid.push(val.id);
         }
-
       }
     }
-
-    // console.log('Srvid', parentNodeid);
     // To remove Duplicates in Array
     parentNodeid = parentNodeid.filter((v, i, x) =>
       x.indexOf(v) == i);
@@ -1151,20 +1162,14 @@ export class ViewCustComponent implements OnInit {
 
   async planMapping() {
     let planid = this.selectednodes();
-    // console.log('Result', planid);
     this.srvidData = this.getParentNodeId(planid)
-    // console.log('Unique parentId', this.srvidData);
-    // console.log('Result', planid,'uid',this.data['uid']);
     let result = await this.packser.subscriberPlanMap({
       isp_id: this.data['isp_id'], reseller: this.data['reseller_id'], uid: this.data['uid'], service_id: this.srvidData, plan_id: planid
     });
-    // console.log('plan  Map result', result);
     if (result) {
       this.result_pop(result);
     }
-
   }
-
 
   result_pop(item) {
     const activemodal = this.nasmodel.open(AddSuccessComponent, { size: 'lg', container: 'nb-layout' });

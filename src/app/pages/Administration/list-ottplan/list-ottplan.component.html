@@ -11,14 +11,15 @@
   <nb-card-body>
     <toaster-container [toasterconfig]="config"></toaster-container>
     <button *ngIf="role.getroleid()>=775" class="btn btn-sm btn-success"
-     [routerLink]="['/pages/administration/ott-plan']" >Add</button>
+      [routerLink]="['/pages/administration/ott-plan']">Add</button>
     <hr style="border: 0px;">
     <div class="modal-body" autocomplete="off" [hidden]='!search'>
       <div class="form-group row">
         <div class="col-sm-3" *ngIf="role.getroleid()>777">
           <label>Business Name</label>
           <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
-            (changed)="showGroupName();showOTTPlanCode();showOTTPlanName();" (keyUp)="showBusName($event)" placeholder='Select Business' id="bus_name" [item]="bus">
+            (changed)="showGroupName();showOTTPlanCode();showOTTPlanName();" (keyUp)="showBusName($event)"
+            placeholder='Select Business' id="bus_name" [item]="bus">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
@@ -38,6 +39,24 @@
           <auto-completen [(ngModel)]="ottplan_code" addclass="form-control" optValues="ottplancode"
             placeholder='Select OTTPlanCode' (keyUp)="showOTTPlanCode($event)" optId="ottplanid" [item]="ottplandata">
           </auto-completen>
+        </div>
+      </div>
+      <div class="formm-group row">
+        <div class="col-sm-3">
+          <label>Status</label>
+          <select [(ngModel)]="status" class="form-control">
+            <option value="" selected>Select status</option>
+            <option value="1">Enable</option>
+            <option value="0">Disable</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Days</label>
+          <select [(ngModel)]="days" class="form-control">
+            <option value="" selected>Select Days</option>
+            <option value="30">30 Days</option>
+            <option value="365">365 Days</option>
+          </select>
         </div>
       </div>
       <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
@@ -70,7 +89,7 @@
         <th>GLTV Code</th>
         <th>Tax Type</th>
         <th>Time Unit</th>
-         <th>Amount</th>
+        <th>Amount</th>
         <th>OTTPlatform</th>
         <th>Status</th>
       </tr>
@@ -78,9 +97,9 @@
         <!-- <td *ngIf="!role.getmenurole(1030)"> <a [routerLink]="['/pages/administration/ott-auth']"
             [queryParams]='{id: item.ottid}' style="cursor: pointer;color: black;"><i class="nb-edit"></i> Edit</a>
         </td> -->
-        <td> <a [routerLink]="['/pages/administration/ott-plan']"
-          [queryParams]='{id: item.ottplanid}' style="cursor: pointer;color: black;"><i class="nb-edit"></i> Edit</a>
-      </td>
+        <td> <a [routerLink]="['/pages/administration/ott-plan']" [queryParams]='{id: item.ottplanid}'
+            style="cursor: pointer;color: black;"><i class="nb-edit"></i> Edit</a>
+        </td>
         <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
         <td>{{item.ottplan_name}}</td>
         <td>{{item.ottplancode}}</td>
@@ -88,8 +107,12 @@
         <td>{{item.otttaxtype == 0? 'Inclusive':'Exclusive'}}</td>
         <td>{{item.dayormonth == 1 ? item.days +" "+ "Days": item.days +" "+ "Months"}}</td>
         <td><i class="fas fa-rupee-sign">&nbsp;{{item.ottamount}}</i></td>
-        <td style="font-size: medium;font-weight: 900;cursor: pointer;"><a (click)="ottcount(item.ottplanid)">{{item.tot}}</a></td>
-        <td>{{item.status==1 ? 'Enable':'Disable'}}</td>
+        <td style="font-size: medium;font-weight: 900;cursor: pointer;"><a
+            (click)="ottcount(item.ottplanid)">{{item.tot}}</a></td>
+        <!-- <td>{{item.status==1 ? 'Enable':'Disable'}}</td> -->
+        <td style="text-align: center;"> <a [ngStyle]="{'color' :item.status==1 ? 'green' : 'red' }"
+            [ngClass]="{'ion-close-round':item.status!=1? true:false,'ion-checkmark-round': item.status==1 ? true:false  }">
+          </a> </td>
       </tr>
       <tr>
         <td colspan="4" *ngIf="pagedItems==''">NO DATA FOUND</td>

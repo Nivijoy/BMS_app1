@@ -25,3 +25,4 @@ export * from './reportservice';
 export * from './payservice';
 export * from './toolservice';
 export * from './userValidator';
+export * from './validatorservice';

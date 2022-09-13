@@ -163,9 +163,19 @@ export class SubsRenewalComponent implements OnInit {
       this.packcal()
     }
   }
+  ottValidation() {
+    let [mode] = this.pack.filter(x => x.srvid == this.SubsRenewForm.value['srvid']).map(x => x.renewalmode)
+    if (mode == 1) {
+      this.SubsRenewForm.controls['ottplanid'].setValidators([Validators.required])
+    } else {
+      this.SubsRenewForm.controls['ottplanid'].clearValidators();
+      this.SubsRenewForm.controls['ottplanid'].updateValueAndValidity();
+    }
+
+  }
 
   async Renewsubs() {
-    console.log(this.SubsRenewForm.value)
+    // console.log(this.SubsRenewForm.value)
     if (this.SubsRenewForm.invalid || this.SubsRenewForm.value['srvid'] == null || this.SubsRenewForm.value['sub_plan_id'] == null) {
       window.alert('Please fill mandatory fields')
       this.submit = true;

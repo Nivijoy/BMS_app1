@@ -28,7 +28,7 @@ export class CollectionReportComponent implements OnInit {
   submit: boolean = false; addNas; data; search; bus_name = ''; bus; group1; sername = ''; sub_plan = '';
   profile; resel_type = ''; res1; res_name = ''; invoice_num = ''; paymentForm; tot; Download; inv_type = ''; pack; count; cust_name = '';
   group_name = ''; subplandata; custname; dtype = ''; inv_status = ''; from_date = ''; to_date = ''; from_edate = ''; to_edate = '';
-  pay_status = ''; start_date = ''; end_date = ''; invnum;
+  pay_status = ''; start_date = ''; end_date = ''; invnum; pay_start_date = ''; pay_end_date = '';
   invamnt; totinvamnt; invpaid; invunpaid; taxamount;
   intispshare; Vispshare; Oispshare; AONispshare; totispshare;
   subispshare; Osubispshare; Vsubispshare; AONsubispshare; totsubispshare;
@@ -129,30 +129,30 @@ export class CollectionReportComponent implements OnInit {
   changeclear(item) {
     if (item == 1) {
       this.group_name = ''; this.resel_type = ''; this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 2) {
       this.resel_type = ''; this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 3) {
       this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 4) {
       this.invoice_num = ''; this.sername = ''; this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 5) {
       this.sername = ''; this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 6) {
       this.sub_plan = ''; this.cust_name = '';
-      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
     if (item == 7) {
-      this.cust_name = ''; this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
+      this.cust_name = ''; this.inv_type = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.pay_start_date = ''; this.pay_end_date = '';
     }
   }
 
@@ -161,6 +161,7 @@ export class CollectionReportComponent implements OnInit {
     this.bus_name = ''; this.group_name = ''; this.resel_type = ''; this.res_name = ''; this.cust_name = ''; this.sername = ''; this.invoice_num = '';
     this.sub_plan = ''; this.inv_type = ''; this.inv_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
     this.group1 = ''; this.profile = ''; this.res1 = ''; this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';
+    this.pay_start_date = ''; this.pay_end_date = '';
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();
@@ -187,7 +188,9 @@ export class CollectionReportComponent implements OnInit {
         start_date: this.start_date,
         end_date: this.end_date,
         srv_type: this.serv_type,
-        role : this.resel_type
+        role: this.resel_type,
+        pay_start_date: this.pay_start_date,
+        pay_end_date: this.pay_end_date,
         // res_id:this.reseller_under,
       })
     this.data = result[0];
@@ -265,7 +268,9 @@ export class CollectionReportComponent implements OnInit {
       start_date: this.start_date,
       end_date: this.end_date,
       srv_type: this.serv_type,
-      role : this.resel_type
+      role: this.resel_type,
+      pay_start_date: this.pay_start_date,
+      pay_end_date: this.pay_end_date,
     })
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -274,9 +279,9 @@ export class CollectionReportComponent implements OnInit {
         if (this.role.getroleid() > 777) {
           param['ISP Name'] = temp[i]['busname'];
         }
-        if(this.role.getroleid() >= 775) param['INVOICE ID'] = temp[i]['invid'];
-        if (this.role.getroleid() >= 775 || this.role.getroleid() >444) {
-           param['RESELLER TYPE'] = temp[i]['role'] == 444 ? 'Bulk Reseller' : temp[i]['role'] == 333 ? 'Deposit Reseller' : temp[i]['role'] == 666 ? 'Sub ISP Bulk' :
+        if (this.role.getroleid() >= 775) param['INVOICE ID'] = temp[i]['invid'];
+        if (this.role.getroleid() >= 775 || this.role.getroleid() > 444) {
+          param['RESELLER TYPE'] = temp[i]['role'] == 444 ? 'Bulk Reseller' : temp[i]['role'] == 333 ? 'Deposit Reseller' : temp[i]['role'] == 666 ? 'Sub ISP Bulk' :
             temp[i]['role'] == 555 ? 'Sub ISP Deposit' : temp[i]['role'] == 551 ? 'Sub Distributor Deposit' : temp[i]['role'] == 661 ? 'Sun Distributor Bulk' : 'Hotel';
           param['RESELLER NAME'] = temp[i]['company'];
         }
@@ -328,7 +333,7 @@ export class CollectionReportComponent implements OnInit {
         param['INVOICE STATUS'] = temp[i]['inv_status'] == 1 ? 'Active' : temp[i]['inv_status'] == 2 ? 'Proforma Invoice' : 'Cancelled';
         temp[i]['inv_date'] = this.datePipe.transform(temp[i]['inv_date'], 'd MMM y hh:mm:ss a')
         param['INVOICE DATE'] = temp[i]['inv_date'];
-        
+
         param['INTERNET ISP %'] = Number(temp[i]['isp_per']).toFixed(2) + " " + '%';
         param['INTERNET SUBISP %'] = Number(temp[i]['sub_isp_per']).toFixed(2) + " " + '%';
         param['INTERNET SUBDIST %'] = Number(temp[i]['sub_dist_per']).toFixed(2) + " " + '%';

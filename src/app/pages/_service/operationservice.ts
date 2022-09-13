@@ -23,15 +23,21 @@ export class OperationService {
     return await this.http.post("/api/operations/subscriber_renewal", params).toPromise();
   }
   async cancel_renewal(params) {
-    return await this.http.post("/api/operations/cancel_renewal",params).toPromise();
+    return await this.http.post("/api/operations/cancel_renewal", params).toPromise();
   }
   async invoiceBalanceReceipt(params) {
-    return await this.http.post("/api/operations/invoiceBalanceReceipt",params).toPromise();
+    return await this.http.post("/api/operations/invoiceBalanceReceipt", params).toPromise();
   }
   async cancel_schedule(params) {
-    return await this.http.post("/api/operations/cancel_schedule",params).toPromise();
+    return await this.http.post("/api/operations/cancel_schedule", params).toPromise();
   }
   async cancelReceipt(params) {
-    return await this.http.post("/api/operations/cancelReceipt",params).toPromise();
+    return await this.http.post("/api/operations/cancelReceipt", params).toPromise();
   }
+  topup(params) {
+    return this.http.post("/api/operations/subscriber_data_topup", params);
+  }
+
+
+
 }

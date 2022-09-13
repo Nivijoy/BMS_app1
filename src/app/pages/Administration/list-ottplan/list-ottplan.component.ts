@@ -19,6 +19,7 @@ import { OttcountComponent } from '../ottcount/ottcount.component'
 export class ListOTTPlanComponent implements OnInit {
   submit: boolean = false; ottdata; total; bus; bus_name; config; search; group1; group_name;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; ottplan_code; ottplandata; ottplan_name; ottplanname;
+  status='';days='';
   constructor(
     private route: Router,
     private ser: BusinessService,
@@ -63,6 +64,8 @@ export class ListOTTPlanComponent implements OnInit {
     this.group_name = '';
     this.ottplan_code = '';
     this.ottplan_name = '';
+    this.status='';
+    this.days='';
     await this.initiallist();
   }
 
@@ -73,7 +76,9 @@ export class ListOTTPlanComponent implements OnInit {
         limit: this.limit,
         bus_id: this.bus_name,
         ottplan_code: this.ottplan_code,
-        ottplan_name: this.ottplan_name
+        ottplan_name: this.ottplan_name,
+        status:this.status,
+        days:this.days
       })
     // console.log("result")
     if (result) {
@@ -127,7 +132,9 @@ export class ListOTTPlanComponent implements OnInit {
     let res = await this.adminser.listOTTPlan({
       bus_id: this.bus_name,
       ottplan_code: this.ottplan_code,
-      ottplan_name: this.ottplan_name
+      ottplan_name: this.ottplan_name,
+      status:this.status,
+      days:this.days
     })
     if (res) {
       let tempdata = [], temp: any = res[0];

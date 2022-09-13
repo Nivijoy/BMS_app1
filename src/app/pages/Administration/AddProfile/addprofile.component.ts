@@ -247,6 +247,7 @@ export class AddprofileComponent implements OnInit {
         { id: 1053, name: 'Bulk Limit Update' },
         { id: 1054, name: 'Show Services For Subscriber' },
         { id: 1055, name: 'Bulk Update' },
+        { id: 1065, name: 'Topup Renewal' },
 
         {
           name: 'CAF Book',
@@ -350,7 +351,7 @@ export class AddprofileComponent implements OnInit {
         { id: 1003, name: 'Bandwidth Log' },
         { id: 1004, name: 'Editprofile Log' },
         { id: 1005, name: 'Resellershare Log' },
-        { id: 1064, name: 'UserMail Log'},
+        { id: 1064, name: 'UserMail Log' },
       ]
     },
     {
@@ -373,7 +374,8 @@ export class AddprofileComponent implements OnInit {
         { id: 1012, name: 'Reseller Nas' },
         { id: 1013, name: 'Nas Status' },
         { id: 1041, name: 'Subscriber Traffic' },
-        { id: 1061, name: 'Reseller Revenue Sharing' }
+        { id: 1061, name: 'Reseller Revenue Sharing' },
+        { id: 1066, name: 'Topup Report' }
       ]
     },
     {

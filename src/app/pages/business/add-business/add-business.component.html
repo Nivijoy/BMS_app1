@@ -115,6 +115,57 @@
                 </div>
               </nb-card-body>
             </nb-card>
+            <nb-card>
+              <nb-card-header style="background-color :  #01a7ee">TOPUP SHARE</nb-card-header>
+              <nb-card-body>
+                <div class="form-group row">
+                  <div class="col-sm-4">
+                    <label>ISP SHARE % <span style="color:red;">*</span></label>
+                    <input type="text" placeholder="Isp Share" formControlName="tisp_share"
+                      [ngClass]="{'form-control':true,'form-control-danger':AddBusForm.controls.tisp_share.invalid&&submit}">
+                      <small *ngIf="AddBusForm.hasError('required','tisp_share')&&submit" class="form-text error">ISP
+                        SHARE % is
+                        required! </small>
+                      <small *ngIf="AddBusForm.hasError('limitNotMatch','tisp_share')&&submit" class="form-text error">Total
+                        share not equal to 100! </small>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>SUBISP SHARE % <span style="color:red;">*</span></label>
+                    <input type="text" placeholder="SubIsp Share" formControlName="tsub_isp_share"
+                      [ngClass]="{'form-control':true,'form-control-danger':AddBusForm.controls.tsub_isp_share.invalid&&submit}">
+                      <small *ngIf="AddBusForm.hasError('required','tsub_isp_share')&&submit" class="form-text error">SUB ISP
+                        SHARE % is
+                        required! </small>
+                      <small *ngIf="AddBusForm.hasError('limitNotMatch','tsub_isp_share')&&submit" class="form-text error">Total
+                        share not equal to 100! </small>
+                  </div>
+                   
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4">
+                    <label>SUBDIST SHARE % <span style="color:red;">*</span></label>
+                    <input type="text" placeholder="SubSistributor Share" formControlName="tsub_dist_share"
+                      [ngClass]="{'form-control':true,'form-control-danger':AddBusForm.controls.tsub_dist_share.invalid&&submit}">
+                      <small *ngIf="AddBusForm.hasError('required','tsub_dist_share')&&submit" class="form-text error">SUB Distributor
+                        SHARE % is
+                        required! </small>
+                      <small *ngIf="AddBusForm.hasError('limitNotMatch','tsub_dist_share')&&submit" class="form-text error">Total
+                        share not equal to 100! </small>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>RESELLER SHARE % <span style="color:red;">*</span></label>
+                    <input type="text" placeholder="Reseller Share" formControlName="tresel_share"
+                      [ngClass]="{'form-control':true,'form-control-danger':AddBusForm.controls.tresel_share.invalid&&submit}">
+                      <small *ngIf="AddBusForm.hasError('required','tresel_share')&&submit" class="form-text error">RESELLER
+                        SHARE % is
+                        required! </small>
+                      <small *ngIf="AddBusForm.hasError('limitNotMatch','tresel_share')&&submit" class="form-text error">Total
+                        share not equal to 100! </small>
+                      </div>
+                   
+                </div>
+              </nb-card-body>
+            </nb-card>
           </div>
           <div class="col-md-6">
             <nb-card>
@@ -586,7 +637,7 @@
                     <input type="number" formControlName="exp_alert" placeholder="Alert Days"
                       [ngClass]="{'form-control':true,'form-control-danger':AddBusForm.controls.exp_alert.invalid&&submit}">
                     <!-- <small style="color: red;text-align: right;float: right; ">Day(S)
-                      !</small> -->
+                      </small> -->
                   </div>
                 </div>
                 <div class="form-group row">

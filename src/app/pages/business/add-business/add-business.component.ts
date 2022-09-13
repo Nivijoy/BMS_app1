@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import * as JSXLSX from 'xlsx';
@@ -10,7 +10,7 @@ const EXCEL_EXTENSION = '.xlsx';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddSuccessComponent } from './../success/add-success.component';
 import { Md5 } from 'ts-md5/dist/md5';
-import { RoleService, BusinessService, SelectService, AdminuserService } from '../../_service/indexService';
+import { RoleService, BusinessService, SelectService, AdminuserService, sumValidator } from '../../_service/indexService';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -20,9 +20,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class AddBusinessComponent implements OnInit {
-  submit: boolean = false; AddBusForm; id; groups; datas; loc;ottdata;
+  submit: boolean = false; AddBusForm; id; groups; datas; loc; ottdata;
   bulk = []; failure: any[]; arrayBuffer: any; file: any[]; s = 0; f = 0;
-  dist; states; sumit; config; servtype;ott_name=[];
+  dist; states; sumit; config; servtype; ott_name = [];
   selectedfile: File = null; fileupload; imageURL: any; files;
   constructor(
     private router: Router,
@@ -32,7 +32,8 @@ export class AddBusinessComponent implements OnInit {
     public role: RoleService,
     public activeModal: NgbModal,
     private sanitizer: DomSanitizer,
-    private adminser : AdminuserService,
+    private adminser: AdminuserService,
+    private fb: FormBuilder
 
   ) { }
 
@@ -84,9 +85,9 @@ export class AddBusinessComponent implements OnInit {
     // console.log("servtype",this.servtype);
   }
 
-  async ottplatform($event=''){
-    if(this.AddBusForm.value['serv_type']==3||this.AddBusForm.value['serv_type']==5||this.AddBusForm.value['serv_type']==7||this.AddBusForm.value['serv_type']==8){
-      this.ottdata = await this.adminser.showOTTPlatforms({ like:$event });
+  async ottplatform($event = '') {
+    if (this.AddBusForm.value['serv_type'] == 3 || this.AddBusForm.value['serv_type'] == 5 || this.AddBusForm.value['serv_type'] == 7 || this.AddBusForm.value['serv_type'] == 8) {
+      this.ottdata = await this.adminser.showOTTPlatforms({ like: $event });
     }
   }
 
@@ -103,103 +104,103 @@ export class AddBusinessComponent implements OnInit {
     }
   }
 
-  ottvalid(){
-   if(this.AddBusForm.value['disney_flag']==true){
-     this.AddBusForm.get('disney_igst').setValidators([Validators.required]);
-     this.AddBusForm.get('disney_cgst').setValidators([Validators.required]);
-     this.AddBusForm.get('disney_sgst').setValidators([Validators.required]);
-   }else{
-     this.AddBusForm.get('disney_igst').clearValidators();
-     this.AddBusForm.get('disney_igst').updateValueAndValidity();
-     this.AddBusForm.get('disney_cgst').clearValidators();
-     this.AddBusForm.get('disney_cgst').updateValueAndValidity();
-     this.AddBusForm.get('disney_sgst').clearValidators();
-     this.AddBusForm.get('disney_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.vlaue['amazon_flag']==true){
-    this.AddBusForm.get('amazon_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('amazon_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('amazon_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('amazon_igst').clearValidators();
-    this.AddBusForm.get('amazon_igst').updateValueAndValidity();
-    this.AddBusForm.get('amazon_cgst').clearValidators();
-    this.AddBusForm.get('amazon_cgst').updateValueAndValidity();
-    this.AddBusForm.get('amazon_sgst').clearValidators();
-    this.AddBusForm.get('amazon_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['netflix_flag']==true){
-    this.AddBusForm.get('netflix_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('netflix_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('netflix_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('netflix_igst').clearValidators();
-    this.AddBusForm.get('netflix_igst').updateValueAndValidity();
-    this.AddBusForm.get('netflix_cgst').clearValidators();
-    this.AddBusForm.get('netflix_cgst').updateValueAndValidity();
-    this.AddBusForm.get('netflix_sgst').clearValidators();
-    this.AddBusForm.get('netflix_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['sun_flag']== true){
-    this.AddBusForm.get('sun_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('sun_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('sun_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('sun_igst').clearValidators();
-    this.AddBusForm.get('sun_igst').updateValueAndValidity();
-    this.AddBusForm.get('sun_cgst').clearValidators();
-    this.AddBusForm.get('sun_cgst').updateValueAndValidity();
-    this.AddBusForm.get('sun_sgst').clearValidators();
-    this.AddBusForm.get('sun_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['zee_flag'] == true){
-    this.AddBusForm.get('zee_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('zee_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('zee_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('zee_igst').clearValidators();
-    this.AddBusForm.get('zee_igst').updateValueAndValidity();
-    this.AddBusForm.get('zee_cgst').clearValidators();
-    this.AddBusForm.get('zee_cgst').updateValueAndValidity();
-    this.AddBusForm.get('zee_sgst').clearValidators();
-    this.AddBusForm.get('zee_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['raj_flag'] == true){
-    this.AddBusForm.get('raj_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('raj_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('raj_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('raj_igst').clearValidators();
-    this.AddBusForm.get('raj_igst').updateValueAndValidity();
-    this.AddBusForm.get('raj_cgst').clearValidators();
-    this.AddBusForm.get('raj_cgst').updateValueAndValidity();
-    this.AddBusForm.get('raj_sgst').clearValidators();
-    this.AddBusForm.get('raj_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['sony_flag']==true){
-    this.AddBusForm.get('sony_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('sony_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('sony_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('sony_igst').clearValidators();
-    this.AddBusForm.get('sony_igst').updateValueAndValidity();
-    this.AddBusForm.get('sony_cgst').clearValidators();
-    this.AddBusForm.get('sony_cgst').updateValueAndValidity();
-    this.AddBusForm.get('sony_sgst').clearValidators();
-    this.AddBusForm.get('sony_sgst').updateValueAndValidity();
-   }
-   if(this.AddBusForm.value['hunga_flag'] == true){
-    this.AddBusForm.get('hunga_igst').setValidators([Validators.required]);
-    this.AddBusForm.get('hunga_cgst').setValidators([Validators.required]);
-    this.AddBusForm.get('hunga_sgst').setValidators([Validators.required]);
-   }else{
-    this.AddBusForm.get('hunga_igst').clearValidators();
-    this.AddBusForm.get('hunga_igst').updateValueAndValidity();
-    this.AddBusForm.get('hunga_cgst').clearValidators();
-    this.AddBusForm.get('hunga_cgst').updateValueAndValidity();
-    this.AddBusForm.get('hunga_sgst').clearValidators();
-    this.AddBusForm.get('hunga_sgst').updateValueAndValidity();
-   }
+  ottvalid() {
+    if (this.AddBusForm.value['disney_flag'] == true) {
+      this.AddBusForm.get('disney_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('disney_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('disney_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('disney_igst').clearValidators();
+      this.AddBusForm.get('disney_igst').updateValueAndValidity();
+      this.AddBusForm.get('disney_cgst').clearValidators();
+      this.AddBusForm.get('disney_cgst').updateValueAndValidity();
+      this.AddBusForm.get('disney_sgst').clearValidators();
+      this.AddBusForm.get('disney_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.vlaue['amazon_flag'] == true) {
+      this.AddBusForm.get('amazon_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('amazon_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('amazon_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('amazon_igst').clearValidators();
+      this.AddBusForm.get('amazon_igst').updateValueAndValidity();
+      this.AddBusForm.get('amazon_cgst').clearValidators();
+      this.AddBusForm.get('amazon_cgst').updateValueAndValidity();
+      this.AddBusForm.get('amazon_sgst').clearValidators();
+      this.AddBusForm.get('amazon_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['netflix_flag'] == true) {
+      this.AddBusForm.get('netflix_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('netflix_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('netflix_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('netflix_igst').clearValidators();
+      this.AddBusForm.get('netflix_igst').updateValueAndValidity();
+      this.AddBusForm.get('netflix_cgst').clearValidators();
+      this.AddBusForm.get('netflix_cgst').updateValueAndValidity();
+      this.AddBusForm.get('netflix_sgst').clearValidators();
+      this.AddBusForm.get('netflix_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['sun_flag'] == true) {
+      this.AddBusForm.get('sun_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('sun_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('sun_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('sun_igst').clearValidators();
+      this.AddBusForm.get('sun_igst').updateValueAndValidity();
+      this.AddBusForm.get('sun_cgst').clearValidators();
+      this.AddBusForm.get('sun_cgst').updateValueAndValidity();
+      this.AddBusForm.get('sun_sgst').clearValidators();
+      this.AddBusForm.get('sun_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['zee_flag'] == true) {
+      this.AddBusForm.get('zee_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('zee_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('zee_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('zee_igst').clearValidators();
+      this.AddBusForm.get('zee_igst').updateValueAndValidity();
+      this.AddBusForm.get('zee_cgst').clearValidators();
+      this.AddBusForm.get('zee_cgst').updateValueAndValidity();
+      this.AddBusForm.get('zee_sgst').clearValidators();
+      this.AddBusForm.get('zee_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['raj_flag'] == true) {
+      this.AddBusForm.get('raj_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('raj_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('raj_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('raj_igst').clearValidators();
+      this.AddBusForm.get('raj_igst').updateValueAndValidity();
+      this.AddBusForm.get('raj_cgst').clearValidators();
+      this.AddBusForm.get('raj_cgst').updateValueAndValidity();
+      this.AddBusForm.get('raj_sgst').clearValidators();
+      this.AddBusForm.get('raj_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['sony_flag'] == true) {
+      this.AddBusForm.get('sony_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('sony_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('sony_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('sony_igst').clearValidators();
+      this.AddBusForm.get('sony_igst').updateValueAndValidity();
+      this.AddBusForm.get('sony_cgst').clearValidators();
+      this.AddBusForm.get('sony_cgst').updateValueAndValidity();
+      this.AddBusForm.get('sony_sgst').clearValidators();
+      this.AddBusForm.get('sony_sgst').updateValueAndValidity();
+    }
+    if (this.AddBusForm.value['hunga_flag'] == true) {
+      this.AddBusForm.get('hunga_igst').setValidators([Validators.required]);
+      this.AddBusForm.get('hunga_cgst').setValidators([Validators.required]);
+      this.AddBusForm.get('hunga_sgst').setValidators([Validators.required]);
+    } else {
+      this.AddBusForm.get('hunga_igst').clearValidators();
+      this.AddBusForm.get('hunga_igst').updateValueAndValidity();
+      this.AddBusForm.get('hunga_cgst').clearValidators();
+      this.AddBusForm.get('hunga_cgst').updateValueAndValidity();
+      this.AddBusForm.get('hunga_sgst').clearValidators();
+      this.AddBusForm.get('hunga_sgst').updateValueAndValidity();
+    }
 
   }
 
@@ -262,11 +263,11 @@ export class AddBusinessComponent implements OnInit {
     this.createForm();
     await this.stateshow();
     await this.servicetype();
-    
+
   }
 
   createForm() {
-    this.AddBusForm = new FormGroup({
+    this.AddBusForm = this.fb.group({
       bus_id: new FormControl('', Validators.required),
       user_name: new FormControl('', [Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")]),//[Validators.required,Validators.pattern('^[0-9 A-Z a-z]')]
       gender: new FormControl('', Validators.required),
@@ -300,9 +301,14 @@ export class AddBusinessComponent implements OnInit {
       add_igst: new FormControl(''),
       add_cgst: new FormControl(''),
       add_sgst: new FormControl(''),
-      gst_id: new FormControl('',[Validators.required, Validators.pattern('^[A-Z a-z]{6}$')]),
+      gst_id: new FormControl('', [Validators.required, Validators.pattern('^[A-Z a-z]{6}$')]),
+
+      tisp_share: new FormControl(''),
+      tresel_share: new FormControl(''),
+      tsub_isp_share: new FormControl(''),
+      tsub_dist_share: new FormControl(''),
       //disney
-      disney_flag : new FormControl(''),
+      disney_flag: new FormControl(''),
       disney_igst: new FormControl(''),
       disney_cgst: new FormControl(''),
       disney_sgst: new FormControl(''),
@@ -312,32 +318,32 @@ export class AddBusinessComponent implements OnInit {
       amazon_cgst: new FormControl(''),
       amazon_sgst: new FormControl(''),
       //netflix
-      netflix_flag : new FormControl(''),
+      netflix_flag: new FormControl(''),
       netflix_igst: new FormControl(''),
       netflix_cgst: new FormControl(''),
       netflix_sgst: new FormControl(''),
-       //sun
-       sun_flag : new FormControl(''),
-       sun_igst: new FormControl(''),
-       sun_cgst: new FormControl(''),
-       sun_sgst: new FormControl(''),
+      //sun
+      sun_flag: new FormControl(''),
+      sun_igst: new FormControl(''),
+      sun_cgst: new FormControl(''),
+      sun_sgst: new FormControl(''),
       //zee
-      zee_flag : new FormControl(''),
+      zee_flag: new FormControl(''),
       zee_igst: new FormControl(''),
       zee_cgst: new FormControl(''),
       zee_sgst: new FormControl(''),
       //raj
-      raj_flag : new FormControl(''),
+      raj_flag: new FormControl(''),
       raj_igst: new FormControl(''),
       raj_cgst: new FormControl(''),
       raj_sgst: new FormControl(''),
       //sony
-      sony_flag : new FormControl(''),
+      sony_flag: new FormControl(''),
       sony_igst: new FormControl(''),
       sony_cgst: new FormControl(''),
       sony_sgst: new FormControl(''),
       //hunga
-      hunga_flag : new FormControl(''),
+      hunga_flag: new FormControl(''),
       hunga_igst: new FormControl(''),
       hunga_cgst: new FormControl(''),
       hunga_sgst: new FormControl(''),
@@ -351,6 +357,9 @@ export class AddBusinessComponent implements OnInit {
       ul_alert: new FormControl(''),
       tot_alert: new FormControl(''),
       ontime_alert: new FormControl(''),
+    }, {
+      validator: sumValidator(100, 'tisp_share', 'tresel_share', 'tsub_isp_share', 'tsub_dist_share')
+
     });
   }
 }

@@ -13,8 +13,8 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class ListPriceComponent implements OnInit {
   datas; count; search; reseler; branch; bus; bus_id; group1; groupid; nas1; nas_name;
-  nam1; name; rescount; res_name; nascount; subcount; res1; group_name=''; bus_name=''; subname;
-  subpaln = '';pro;
+  nam1; name; rescount; res_name; nascount; subcount; res1; group_name = ''; bus_name = ''; subname;
+  subpaln = ''; pro;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -47,18 +47,18 @@ export class ListPriceComponent implements OnInit {
   }
 
   async showService($event = '') {
-    if( this. role.getroleid()>=775){
+    if (this.role.getroleid() >= 775) {
       this.nam1 = await this.ser.showService({ resel_id: this.res_name, res_flag: 1, bus_id: this.bus_name, groupid: this.group_name, like: $event });
       // console.log("service",result)
-    }else{
+    } else {
       this.nam1 = await this.ser.showService({ res_flag: 1, bus_id: this.bus_name, groupid: this.group_name, like: $event });
       // console.log("service",result)
     }
-   
+
   }
 
   async showsubplan($event = '') {
-    this.subname = await this.ser.showSubPlan({ srvid: this.name,resel_id:this.res_name, like: $event });
+    this.subname = await this.ser.showSubPlan({ srvid: this.name, resel_id: this.res_name, like: $event });
     // console.log("subplan",res)
   }
 
@@ -79,35 +79,35 @@ export class ListPriceComponent implements OnInit {
     }
   }
 
-  changeclear(item){
-    if(item == 1){
-      this.group_name='';
-      this.res_name='';
-      this.name='';
-      this.subpaln='';
+  changeclear(item) {
+    if (item == 1) {
+      this.group_name = '';
+      this.res_name = '';
+      this.name = '';
+      this.subpaln = '';
     }
-    if(item == 2){
-      this.res_name='';
-      this.name='';
-      this.subpaln='';
+    if (item == 2) {
+      this.res_name = '';
+      this.name = '';
+      this.subpaln = '';
     }
-    if(item == 3){
-      this.name='';
-      this.subpaln='';
+    if (item == 3) {
+      this.name = '';
+      this.subpaln = '';
     }
   }
 
-  async refresh(){
-    this.bus_name='';
-    this.group_name='';
-    this.res_name='';
-    this.name='';
-    this.subpaln='';
-    this.subname='';
-    this.res1='';
-    this.nam1='';
-    this.group1='';
-    if(this.role.getroleid()<=777){
+  async refresh() {
+    this.bus_name = '';
+    this.group_name = '';
+    this.res_name = '';
+    this.name = '';
+    this.subpaln = '';
+    this.subname = '';
+    this.res1 = '';
+    this.nam1 = '';
+    this.group1 = '';
+    if (this.role.getroleid() <= 777) {
       await this.showGroupName();
       await this.showResellerName();
       await this.showService();
@@ -136,6 +136,7 @@ export class ListPriceComponent implements OnInit {
   }
 
   async download() {
+    this.loading = true;
     let res = await this.ser.listprice({
       bus_id: this.bus_name,
       groupid: this.group_name,
@@ -144,6 +145,7 @@ export class ListPriceComponent implements OnInit {
       sub_plan: this.subpaln
     })
     if (res) {
+      this.loading = false;
       let tempdata = [], temp: any = res[0];
       for (var i = 0; i < temp.length; i++) {
         let param = {};
@@ -168,6 +170,43 @@ export class ListPriceComponent implements OnInit {
       const wb: JSXLSX.WorkBook = JSXLSX.utils.book_new();
       JSXLSX.utils.book_append_sheet(wb, worksheet, 'Sheet1');
       JSXLSX.writeFile(wb, 'Service Price List' + EXCEL_EXTENSION);
+    }
+  }
+
+  async updateShare() {
+    this.loading = true;
+    let res = await this.ser.listprice({
+      bus_id: this.bus_name,
+      groupid: this.group_name,
+      resel_id: this.res_name,
+      srvid: this.name,
+      sub_plan: this.subpaln
+    });
+    if (res) {
+      this.loading = false;
+      let tempdata = [], temp: any = res[0];
+      for (var i = 0; i < temp.length; i++) {
+        let param = {};
+        if (this.role.getroleid() > 777) {
+          param['ISP NAME'] = temp[i]['busname'];
+        }
+        if (this.role.getroleid() >= 775 || this.role.getroleid() > 444) {
+          param['RESELLER NAME'] = temp[i]['managername'];
+        }
+        param['SERVICE NAME'] = temp[i]['srvname'];
+        param['SERVICE TYPE'] = temp[i]['service_name'];
+        param['SUB PLAN NAME'] = temp[i]['sub_plan'];
+        param['ISP SHARE'] = temp[i]['isp_share'];
+        param['SUBISP SHARE'] = temp[i]['sub_isp_share'];
+        param['SUBDIST SHARE'] = temp[i]['sub_dist_share'];
+        param['RESELLER SHARE'] = temp[i]['reseller_share'];
+        param['STATUS'] = temp[i]['status'] == 1 ? 'Active' : 'Inactive';
+        tempdata[i] = param
+      }
+      const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);
+      const wb: JSXLSX.WorkBook = JSXLSX.utils.book_new();
+      JSXLSX.utils.book_append_sheet(wb, worksheet, 'Sheet1');
+      JSXLSX.writeFile(wb, 'Update PlanShare' + EXCEL_EXTENSION);
     }
   }
 

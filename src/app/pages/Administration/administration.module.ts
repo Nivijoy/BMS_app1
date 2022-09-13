@@ -22,8 +22,7 @@ import { SmstemplateIspComponent } from './smstemplate-isp/smstemplate-isp.compo
 import { EmailtemplateIspComponent } from './emailtemplate-isp/emailtemplate-isp.component';
 import { AddOTTComponent } from './add-ott/add-ott.component';
 import { NgxLoadingModule } from 'ngx-loading';
-// import { OttcountComponent } from './ottcount/ottcount.component';
-import { ShareModule } from '../sharemodule/share.module';
+ import { ShareModule } from '../sharemodule/share.module';
 import { filterModule } from './../filter/filter-module';
 import { RevenueShareReportsComponent } from './revenue-share-reports/revenue-share-reports.component';
 import { SmscreditsComponent } from './smscredits/smscredits.component';
@@ -40,6 +39,7 @@ import { ResellerOttPlanComponent } from './reseller-ott-plan/reseller-ott-plan.
 import { InvoiceMailLogComponent } from './invoice-mail-log/invoice-mail-log.component';
 import { GstinvoiceMailLogComponent } from './gstinvoice-mail-log/gstinvoice-mail-log.component';
 import { MailLogComponent } from './mail-log/mail-log.component';
+import { UpdateShareComponent } from './update-share/update-share.component';
 
 
 
@@ -81,17 +81,14 @@ import { MailLogComponent } from './mail-log/mail-log.component';
     InvoiceMailLogComponent,
     GstinvoiceMailLogComponent,
     MailLogComponent,
-    // OttcountComponent,
-    //  ReadonlyDirective,
-
+    UpdateShareComponent,
   ],
   entryComponents: [
     ChangepasswordComponent,
     AddStaticIPComponent,
     AddOTTComponent,
     AddsmscreditsComponent,
-    // OttcountComponent
-  ],
+   ],
   providers: [CompanyService, GroupService, AdminuserService, NasService, S_Service,
     RoleService, BusinessService, ResellerService, UserLogService, ReportService, NgbActiveModal],
 })

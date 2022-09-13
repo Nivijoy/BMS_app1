@@ -134,7 +134,7 @@ export class UpdateottmapComponent implements OnInit {
           omstatus: {
             title: 'Status',
             valuePrepareFunction: (omstatus: any) => {
-              return (omstatus == 2 ? 'Disable' : 'Enable');
+              return (omstatus == 0 ? 'Disable' : 'Enable');
             },
             editor: {
               type: 'list',
@@ -186,6 +186,9 @@ export class UpdateottmapComponent implements OnInit {
   }
 
   async showOttPlan() {
+    if (this.role.getroleid() <= 777) {
+      this.UpdateOttMapForm.get('isp_id').setValue(this.role.getispid())
+      }
     this.ottplans = await this.admin.showOttMap({ bus_id: this.UpdateOttMapForm.value['isp_id'], resel_id: this.UpdateOttMapForm.value['manid'] });
     console.log('OttPlans-----', this.ottplans);
     this.source.load(this.ottplans)
@@ -194,7 +197,17 @@ export class UpdateottmapComponent implements OnInit {
   async updateottmap() {
     this.submit = true;
     console.log('Selected Value ----', this.selectedRows)
+    const invalid = [];
+    const controls = this.UpdateOttMapForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name)
+      }
+    };
+    console.log('value',this.UpdateOttMapForm.value)
     if (this.UpdateOttMapForm.invalid || !this.selectedRows) {
+      console.log('Invalid',invalid)
+
       window.alert('Please fill the fields or Select Plan');
       return
     }

@@ -1,9 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 
 const httpOptions = {
@@ -48,19 +44,19 @@ export class DashboardService {
   async payment(params) {
     return await this.http.post("/api/dashboard/payment", params).toPromise();
   }
-  async getCAFPending(params){
-    return await this.http.post("/api/dashboard/getCAFPending",params).toPromise();
+  async getCAFPending(params) {
+    return await this.http.post("/api/dashboard/getCAFPending", params).toPromise();
   }
-  async getDeposit(params){
-    return await this.http.post("/api/dashboard/getDeposit",params).toPromise();
+  async getDeposit(params) {
+    return await this.http.post("/api/dashboard/getDeposit", params).toPromise();
   }
-  async getLMD(params){
-    return await this.http.post("/api/dashboard/getLMD",params).toPromise();
+  async getLMD(params) {
+    return await this.http.post("/api/dashboard/getLMD", params).toPromise();
   }
-  async getLMO(params){
-    return await this.http.post("/api/dashboard/getLMO",params).toPromise();
+  async getLMO(params) {
+    return await this.http.post("/api/dashboard/getLMO", params).toPromise();
   }
-  async getNasStatus(params){
-    return await this.http.post("/api/dashboard/getNasStatus",params).toPromise();
+  async getNasStatus(params) {
+    return await this.http.post("/api/dashboard/getNasStatus", params).toPromise();
   }
 }

@@ -13,6 +13,6 @@
 export const environment = {
    production: false,
   // baseUrl: 'http://103.231.217.170:9091'
-  baseUrl:'http://192.168.4.252:9092'
-  // baseUrl: URL.url
-};
+  baseUrl:'http://192.168.4.104:9092'
+  // baseUrl: URL.url};
+}

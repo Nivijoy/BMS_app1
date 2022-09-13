@@ -1,7 +1,7 @@
 <nb-card>
   <ngx-loading [show]="loading"
-  [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
-</ngx-loading>
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
   <nb-card-header>
     Revenue Share Details
   </nb-card-header>
@@ -13,8 +13,8 @@
         <div class="col-sm-3" *ngIf="role.getroleid()>777">
           <label>Business Name</label>
           <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
-            placeholder='Select Business' (keyUp)="showBusiness($event)" (changed)="showResellerName();changebusiness();" id="id"
-            [item]="bus">
+            placeholder='Select Business' (keyUp)="showBusiness($event)"
+            (changed)="showResellerName();changebusiness();" id="id" [item]="bus">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
@@ -43,10 +43,10 @@
         <tr style="background-color :  #01a7ee;color:white;font-size: medium;">
           <th>Service Name</th>
           <th>Plan Price</th>
-          <th>Isp Share</th>
-          <th>Subisp Share</th>
-          <th>Subdist Share</th>
-          <th>Reseller Share</th>
+          <th *ngIf="share_type == 1">Isp Share</th>
+          <th *ngIf="share_type == 1">Subisp Share</th>
+          <th *ngIf="share_type == 1">Subdist Share</th>
+          <th *ngIf="share_type == 1">Reseller Share</th>
 
         </tr>
         <tr *ngFor="let item of srv_details">
@@ -69,17 +69,24 @@
                 <td><i class="fas fa-rupee-sign">&nbsp;{{plan.amount}}</i></td>
                 <td>{{plan.tax_type == 0 ? 'Exclusive': 'Inclusive'}}</td>
                 <td>{{plan.status == 1 ? 'Active': 'Inactive'}}</td>
-                <td  style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.isp_share}}&nbsp;<b>%</b></td>
-                <td  style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.sub_isp_share}}&nbsp;<b>%</b></td>
-                <td style="font-weight:bold;color:#181818"  *ngIf="share_type == 2">{{plan.sub_dist_share}}&nbsp;<b>%</b></td>
-                <td  style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.reseller_share}}&nbsp;<b>%</b></td>
+                <td style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.isp_share}}&nbsp;<b>%</b></td>
+                <td style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.sub_isp_share}}&nbsp;<b>%</b>
+                </td>
+                <td style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.sub_dist_share}}&nbsp;<b>%</b>
+                </td>
+                <td style="font-weight:bold;color:#181818" *ngIf="share_type == 2">{{plan.reseller_share}}&nbsp;<b>%</b>
+                </td>
               </tr>
             </table>
           </td>
-          <td  style="font-weight:bold;color:#181818">{{ share_type == 1 ? item.mispshare : 0}}&nbsp;<b>%</b></td>
-          <td  style="font-weight:bold;color:#181818">{{ share_type == 1 ? item.msubispshare : 0}}&nbsp;<b>%</b></td>
-          <td  style="font-weight:bold;color:#181818">{{ share_type == 1 ? item.msubdistshare : 0}}&nbsp;<b>%</b></td>
-          <td  style="font-weight:bold;color:#181818">{{ share_type == 1 ? item.mreselshare: 0}}&nbsp;<b>%</b></td>
+          <td style="font-weight:bold;color:#181818" *ngIf="share_type == 1">{{ item.mispshare || 0 }}&nbsp;<b>%</b>
+          </td>
+          <td style="font-weight:bold;color:#181818" *ngIf="share_type == 1">{{ item.msubispshare || 0 }}&nbsp;<b>%</b>
+          </td>
+          <td style="font-weight:bold;color:#181818" *ngIf="share_type == 1">{{ item.msubdistshare || 0 }}&nbsp;<b>%</b>
+          </td>
+          <td style="font-weight:bold;color:#181818" *ngIf="share_type == 1">{{ item.mreselshare || 0}}&nbsp;<b>%</b>
+          </td>
 
         </tr>
       </table>

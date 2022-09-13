@@ -17,13 +17,13 @@
         <div class="col-sm-3" *ngIf="role.getroleid()>777">
           <label>Business Name</label>
           <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
-            (changed)="showGroupName();" placeholder='Select Business' id="bus_name" [item]="bus">
+          placeholder='Select Business' id="bus_name" [item]="bus">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
           <label>Circle</label>
           <auto-completen [(ngModel)]="group_name" addclass="form-control" optValues="groupname"
-            placeholder='Select Circle' (keyUp)="showGroupName($event)" optId="groupid" [item]="group1">
+            placeholder='Select Circle'  optId="groupid" [item]="group1">
           </auto-completen>
         </div>
       </div>

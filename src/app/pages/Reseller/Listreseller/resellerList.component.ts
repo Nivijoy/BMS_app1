@@ -273,7 +273,8 @@ export class ResellerListComponent implements OnInit {
         param['RESELLER BUSINESS NAME'] = temp[i]['company'];
         param['PRIMARY NAS'] = temp[i]['nasip'];
         param['SERVICE TYPE'] = temp[i]['service_name'];
-        param['MOBILE NO'] = temp[i]['mobile'];
+        param['MOBILE'] = temp[i]['mobile'];
+        param['EMAIL'] = temp[i]['email'];
         param['BALANCE'] = temp[i]['balance_amt'];
         param['GST No'] = temp[i]['gst_no'];
         param['SUBSCRIBER LIMIT'] = temp[i]['sub_limit'] == 0 ? 'Unlimited' : temp[i]['sub_limit'];
@@ -283,6 +284,12 @@ export class ResellerListComponent implements OnInit {
         param['REGISTERED DATE'] = temp[i]['c_date'];
         param['STATE'] = temp[i]['stname'];
         param['CITY'] = temp[i]['diname'];
+        param['SHARING TYPE'] = temp[i]['sharing_type'] == 1 ? 'Common Sharing' : 'Package Wise Sharing';
+        param['ISP SHARE'] = temp[i]['isp_share'] + "%" || 0 
+        param['SUB ISP SHARE'] = temp[i]['sub_isp_share'] + "%" || 0 
+        param['SUB DIST SHARE'] = temp[i]['sub_dist_share'] + "%" || 0 
+        param['RESELLER SHARE'] = temp[i]['reseller_share'] + "%" || 0 
+
         tempdata[i] = param
       }
       const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);
@@ -331,7 +338,7 @@ export class ResellerListComponent implements OnInit {
   password(item) {
     const activeModal = this.nasmodel.open(PasswordComponent, { size: 'sm', container: 'nb-layout' });
     activeModal.componentInstance.item = { id: item },
-    activeModal.componentInstance.modalHeader = 'Change Password';
+      activeModal.componentInstance.modalHeader = 'Change Password';
   }
 
   nasedit(resid, busid, grupid, nasid) {

@@ -1,11 +1,8 @@
 import 'style-loader!angular2-toaster/toaster.css';
-import { Component, OnInit } from '@angular/core';
-import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdminuserService, DashboardService } from '../../../pages/_service/indexService';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DashboardService } from '../../../pages/_service/indexService';
 import { Router } from '@angular/router';
-import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'ngx-searchbar',
@@ -18,12 +15,10 @@ export class searchbarcomponent implements OnInit {
   search = ''; limit: number = 10;
 
   constructor(
-
     public activeModal: NgbActiveModal,
-    private alert: ToasterService,
-    private ser: AdminuserService,
     private router: Router,
-    private dash: DashboardService
+    private dash: DashboardService,
+    private cdr: ChangeDetectorRef
   ) { this.id = JSON.parse(localStorage.getItem('details')); }
 
   closeModal() {
@@ -34,12 +29,10 @@ export class searchbarcomponent implements OnInit {
     await this.searchresult('');
   }
 
-  async searchresult($event='') {
-    // console.log(this.sflag)
-    // console.log($event)
+  async searchresult($event = '') {
+    this.cdr.detectChanges();
     let result = await this.dash.search({ sflag: this.sflag, like: $event })
     this.datas = result;
-    // console.log(result)
   }
 
   searchclick() {

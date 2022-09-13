@@ -22,17 +22,47 @@
 //   }
 
 
-.text_size{
-    font-size: 10px;padding: 6px;
+.text_size {
+    font-size: 10px;
+    padding: 6px;
     white-space: normal;
-    text-align:justify;
+    text-align: justify;
 }
- 
-.text_sizes{
-    font-size: 10px;padding: 6px;
+
+.text_sizes {
+    font-size: 10px;
+    padding: 6px;
     white-space: normal;
-    text-align:justify;
+    text-align: justify;
 }
- .splitterm{
-     font-size: 8px;
- }
+
+.splitterm {
+    font-size: 8px;
+}
+
+//  <style type="text/css">
+//     table { page-break-inside:auto }
+//     tr    { page-break-inside:avoid; page-break-after:auto }
+//     thead { display:table-header-group }
+//     tfoot { display:table-footer-group }
+// </style>
+
+.page-break {
+    break-after: page;
+}
+
+.front {
+    height: 100%;
+    display: block;
+    text-align: -webkit-center;
+
+    overflow: hidden;
+}
+
+.back {
+    height: 100%;
+    display: block;
+    text-align: -webkit-center;
+
+    overflow: hidden;
+}

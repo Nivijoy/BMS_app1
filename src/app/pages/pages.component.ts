@@ -175,40 +175,7 @@ export class PagesComponent {
             },
           ],
         },
-        // {
-        //   title: 'OTT',
-        //   hidden: !(this.role.find(x => x == 1028) || this.role.find(x => x == 1028)),
-        //   children: [
-        //     {
-        //       title: 'List',
-        //       link: '/pages/administration/list-ottauth',
-        //       hidden: !this.role.find(x => x == 1028),
-        //     },
-        //     {
-        //       title: 'Add',
-        //       link: '/pages/administration/ott-auth',
-        //       hidden: !this.role.find(x => x == 1029),
-        //     },
-        //     {
-        //       title: 'OTT Plan',
-        //       hidden: this.roleid < 775,
-        //       children: [
-        //         {
-        //           title: 'List',
-        //           link: '/pages/administration/list-ottplan',
-        //           hidden: this.roleid < 775
-        //         },
-        //         {
-        //           title: 'Add',
-        //           link: '/pages/administration/ott-plan',
-        //           hidden: this.roleid < 775
-        //         },
 
-        //       ],
-        //     },
-
-        //   ]
-        // },
         {
           title: 'Templates',
           hidden: (this.roleid < 775 || !(this.role.find(x => x == 41) || this.role.find(x => x == 45) || this.role.find(x => x == 46))),
@@ -241,6 +208,11 @@ export class PagesComponent {
               link: '/pages/administration/list-sms-credit',
             },
           ],
+        },
+        {
+          title: 'Reseller-Share-Update',
+          link: '/pages/administration/update-share',
+          hidden: this.roleid < 775
         },
       ],
     },
@@ -696,6 +668,12 @@ export class PagesComponent {
 
         },
         {
+          title: 'Topup',
+          link: '/pages/reports/topupreport',
+          hidden: (!this.role.find(x => x == 1066))
+
+        },
+        {
           title: 'Cancel Invoice',
           link: '/pages/Accounts/cancelinvreport',
           hidden: (!this.role.find(x => x == 1008))
@@ -877,7 +855,7 @@ export class PagesComponent {
           hidden: !this.role.find(x => x == 1004)
         },
         {
-          title: 'ResellerSahrelog',
+          title: 'ResellerSharelog',
           link: '/pages/administration/listresellersharelog',
           hidden: !this.role.find(x => x == 1005)
         },
@@ -898,6 +876,11 @@ export class PagesComponent {
           title: 'UserMailLog',
           link: '/pages/administration/user-mail-log',
           hidden: !this.role.find(x => x == 1064),
+        },
+        {
+          title:'UpdateShareLog',
+          link:'/pages/administration/share-log',
+          hidden: this.roleid < 775
         }
 
       ],

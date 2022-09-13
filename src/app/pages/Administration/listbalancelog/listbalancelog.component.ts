@@ -41,7 +41,7 @@ export class ListBalanceLogComponent implements OnInit {
   }
 
   async profile($event = '') {
-    this.pro = await this.resser.showProfileReseller({ rec_role: 1, bus_id: this.bus_name, like: $event })
+    this.pro = await this.resser.showProfileReseller({ dep_role: 1,dep:1, bus_id: this.bus_name, like: $event })
     // console.log(res)
   }
 
