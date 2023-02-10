@@ -10,7 +10,8 @@
               <label>ISP Name <span style="color:red;">*</span></label>
               <select formControlName="bus_id"
                 [ngClass]="{'form-control':true,'form-control-danger':AddComplaintForm.controls.bus_id.invalid&&submit}"
-                (change)="profile()">
+                (change)="profile();ctrl['Role'].setValue('');ctrl['reseller'].setValue('');ctrl['sflag'].setValue('');
+                ctrl['cust_id'].setValue('');ctrl['Assign'].setValue('');">
                 <option value="" selected>Select ISP</option>
                 <option *ngFor="let item of busname" [ngValue]="item.id">{{item.busname}}</option>
               </select>
@@ -32,7 +33,8 @@
               <label>Reseller Type<span style="color:red;">*</span></label>
               <select name="Role" formControlName="Role"
                 [ngClass]="{'form-control' : true,'form-control-danger':AddComplaintForm.controls.Role.invalid&&submit}"
-                (change)="showResellerName()">
+                (change)="showResellerName();ctrl['reseller'].setValue('');ctrl['sflag'].setValue('');
+                ctrl['cust_id'].setValue('');ctrl['Assign'].setValue('');">
                 <option value="" selected>Select Reseller Type</option>
                 <option *ngFor="let item of pro" [ngValue]="item.role">{{item.menu_name}}</option>
               </select>
@@ -43,7 +45,8 @@
               <label>Reseller Name </label>
               <auto-completen formControlName="reseller"
                 [addclass]="{'form-control':true,'form-control-danger':AddComplaintForm.controls.reseller.invalid&&submit}"
-                optValues="resellername" placeholder='Select Reseller' (changed)="employe();comptype()"
+                optValues="resellername" placeholder='Select Reseller' (changed)="ctrl['sflag'].setValue('');
+                ctrl['cust_id'].setValue('');ctrl['Assign'].setValue('');employe();comptype()"
                 (keyUp)="showResellerName($event)" id="id" [item]="resell">
               </auto-completen>
               <small *ngIf="AddComplaintForm.controls.reseller.invalid&&submit" class="form-text error">Reseller name is
@@ -53,7 +56,8 @@
           <div class="form-group row">
             <div class="col-sm-4" >
               <label>Search Type</label>
-              <select formControlName="sflag" (change)="searchresult();sflagchange();"
+              <select formControlName="sflag" (change)="
+              ctrl['cust_id'].setValue('');ctrl['Assign'].setValue('');searchresult();sflagchange();"
                 [ngClass]="{'form-control':true,'form-control-danger':AddComplaintForm.controls.sflag.invalid&&submit}">
                 <option value="" selected>Select Search Type</option>
                 <option value="1" selected>Subscriber ID</option>

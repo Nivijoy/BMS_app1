@@ -12,13 +12,13 @@
                <tbody>
                   <div style="font-weight: 700;text-align: center;">RECEIPT</div>
                   <p style="color: darkblue; margin-bottom: 2px;font-weight: 400;">
-                     <img style="width:180px" src="/assets/images/eronet_logo.png">
+                     <img style="width:180px" src="/assets/images/Bluelotus_logo_bold4.png">
                      <img *ngIf="receiptdata ? receiptdata.rstatus==2:''"
                         style="width:100px;float:right;transform: rotate(29deg);" src="/assets/images/c1.png"><br>
                      <span
                         style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{receiptdata?receiptdata.busname:'--'}}</span><br>
                      <span
-                        style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{receiptdata?receiptdata.bus_address:'--'}}<br>
+                        style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{bus_address?bus_address:'--'}}<br>
                      </span>
                   </p>
                </tbody>
@@ -64,13 +64,13 @@
             <table style="border-bottom: 1px solid black;width:100%;">
                <tbody>
                   <p style="color: darkblue;margin-bottom: 2px;font-weight: 400;">
-                     <img style="width:180px" src="/assets/images/eronet_logo.png">
+                     <img style="width:180px" src="/assets/images/Bluelotus_logo_bold4.png.png">
                      <img *ngIf="receiptdata ? receiptdata.rstatus==2:''"
                         style="width:100px;float:right;transform: rotate(29deg);" src="/assets/images/c1.png"><br>
                      <span
                         style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{receiptdata?receiptdata.busname:'--'}}</span><br>
                      <span
-                        style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{receiptdata?receiptdata.bus_address:'--'}}<br>
+                        style="white-space: break-spaces;font-weight: bolder;">&nbsp;{{receiptdata?r:'--'}}<br>
                      </span>
                   </p>
                </tbody>

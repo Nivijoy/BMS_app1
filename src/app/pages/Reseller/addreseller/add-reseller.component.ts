@@ -14,7 +14,7 @@ import { ThemeModule } from '../../../@theme/theme.module';
 import { stat } from 'fs';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
-import { BusinessService, GroupService, NasService, IppoolService, ResellerService, SelectService, RoleService, AdminuserService } from '../../_service/indexService';
+import { BusinessService, GroupService, NasService, IppoolService, ResellerService, SelectService, RoleService, AdminuserService, S_Service } from '../../_service/indexService';
 import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 
 
@@ -33,12 +33,13 @@ export class AddResellerComponent implements OnInit {
   grup; reseldata = []; resellist: any;
   change: boolean;
   ispsharedefault = false; isReadonly = false;
+  assign_service;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
-  public isOpening = false; 
+  public isOpening = false;
 
   constructor(
     private alert: ToasterService,
@@ -54,54 +55,47 @@ export class AddResellerComponent implements OnInit {
     private nasser: NasService,
     private poolser: IppoolService,
     private adminser: AdminuserService,
-
+    private service: S_Service
   ) { }
 
   async business() {
     this.busname = await this.busser.showBusName({});
-    // console.log(this.busname)
   }
 
   async profile() {
     if (this.role.getroleid() > 777) {
       this.pro = await this.resell.showProfileReseller({ bus_id: this.value.bus_id });
-      // console.log(res)
     }
     if (this.role.getroleid() <= 777) {
       this.pro = await this.resell.showProfileReseller({});
-      // console.log(result)
     }
   }
 
   async Nas($event = '') {
     this.anas = await this.nasser.showGroupNas({ like: $event, bus_id: this.value.bus_id, groupid: this.value.groupid });
-    // console.log(res)
   }
 
   async PoolName($event = '') {
     this.ip = await this.poolser.showPoolName({ like: $event, bus_id: this.value.bus_id, ipflag: 1, nas_id: this.value.ass_nas, groupid: this.value.groupid });
-    // console.log(result)
   }
 
   async GroupName() {
     this.grup = await this.groupser.showGroupName({ bus_id: this.value.bus_id });
-    // console.log(res)
   }
 
   async cityshow($event = '') {
     this.dist = await this.select.showDistrict({ state_id: this.value.State, like: $event, index: 0, limit: 15 });
-    // console.log(result)
   }
 
   async stateshow($event = '') {
     this.states = await this.select.showState({ like: $event });
-    // console.log(result)
   }
 
   async showResellerUnder($event = '') {
-    this.resellist = await this.resell.showResellerUnder({ like: $event, reseller_under: this.value.reseller_under, Role: this.value.Role,
-      bus_id:this.value.bus_id,groupid:this.value.groupid });
-    // console.log("auto", result)
+    this.resellist = await this.resell.showResellerUnder({
+      like: $event, reseller_under: this.value.reseller_under, Role: this.value.Role,
+      bus_id: this.value.bus_id, groupid: this.value.groupid
+    });
   }
 
   async servicetype() {
@@ -110,7 +104,6 @@ export class AddResellerComponent implements OnInit {
 
   async SMSgateway($event = '') {
     this.smsgateway = await this.adminser.getSMSGateway({ bus_id: this.value.bus_id, like: $event });
-    // console.log("smsgateway",this.smsgateway);
   }
 
   async ottplatform($event = '') {
@@ -121,8 +114,6 @@ export class AddResellerComponent implements OnInit {
 
   async payGateway() {
     this.paymentgateway = await this.resell.getPayGateway({ bus_id: this.value.bus_id });
-    // console.log(this.paymentgateway);
-
   }
 
   async ngOnInit() {
@@ -195,23 +186,23 @@ export class AddResellerComponent implements OnInit {
     }
   }
 
-  ottchange(){
-    if(this.value.disney_flag == false){
+  ottchange() {
+    if (this.value.disney_flag == false) {
       this.ctrl.disneyshare_type.setValue('');
     }
-    if(this.value.amazon_flag == false){
+    if (this.value.amazon_flag == false) {
       this.ctrl.amazonshare_type.setValue('');
-    }if(this.value.netflix_flag == false){
+    } if (this.value.netflix_flag == false) {
       this.ctrl.netflixshare_type.setValue('');
-    }if(this.value.sun_flag == false){
+    } if (this.value.sun_flag == false) {
       this.ctrl.sunshare_type.setValue('');
-    }if(this.value.zee_flag == false){
+    } if (this.value.zee_flag == false) {
       this.ctrl.zeeshare_type.setValue('');
-    }if(this.value.raj_flag == false){
+    } if (this.value.raj_flag == false) {
       this.ctrl.rajshare_type.setValue('');
-    }if(this.value.sony_flag == false){
+    } if (this.value.sony_flag == false) {
       this.ctrl.sonyshare_type.setValue('');
-    }if(this.value.hunga_flag == false){
+    } if (this.value.hunga_flag == false) {
       this.ctrl.hungashare_type.setValue('');
     }
   }
@@ -242,11 +233,9 @@ export class AddResellerComponent implements OnInit {
   }
 
   async sharedefault() {
-    // console.log(this.value.reseller_under);
     await this.shareempty();
     //SUB DISTRIBUTOR BULK UNDER SUB ISP BULK
     if (this.value.Role == 661) {
-      // console.log("661 under sub isp bulk");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
       this.shareval = result[0];
       if (this.value.serv_type == 2) {
@@ -290,10 +279,8 @@ export class AddResellerComponent implements OnInit {
     }
     // UNDER SUB ISP BULK
     if (this.value.reseller_under == 1) {
-      // console.log("under sub isp bulk");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
       this.shareval = result[0];
-      //  console.log("sharevalue",this.shareval);
 
       //BULK RESELLER UNDER SUB ISP BULK
       if (this.value.serv_type == 2 && this.value.Role == 444) {
@@ -453,7 +440,6 @@ export class AddResellerComponent implements OnInit {
     }
     //UNDER SUB ISP DEPOSIT
     if (this.value.reseller_under == 2) {
-      // console.log("under sub isp deposit");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subdep_name });
       this.shareval = result[0]
 
@@ -521,12 +507,10 @@ export class AddResellerComponent implements OnInit {
     //UNDER SUB DIST BULK AND SUB DIST DEPOSIT
     if (this.value.reseller_under == 3 || this.value.reseller_under == 4) {
       if (this.value.subdist_bulk != '') {
-        // console.log("under sub dist bulk");
         let result = await this.resell.showResellerUnder({ resel_id: this.value.subdist_bulk });
         this.shareval = result[0];
       }
       if (this.value.subdis_name != '') {
-        // console.log("under sub dist deposit");
         let result = await this.resell.showResellerUnder({ resel_id: this.value.subdis_name });
         this.shareval = result[0];
       }
@@ -789,7 +773,6 @@ export class AddResellerComponent implements OnInit {
   async provalid() {
     await this.validclear();
     const pro = this.value.Role
-    // console.log(pro);
     switch (pro) {
       case 555:
         //Sub ISP Deposit
@@ -2257,9 +2240,9 @@ export class AddResellerComponent implements OnInit {
   }
 
   pingchange() {
-		this.value.ping_status == 1 ? this.ctrl.port.setValidators(Validators.required) : this.ctrl.port.clearValidators();
-		this.ctrl.port.updateValueAndValidity();
-	}
+    this.value.ping_status == 1 ? this.ctrl.port.setValidators(Validators.required) : this.ctrl.port.clearValidators();
+    this.ctrl.port.updateValueAndValidity();
+  }
 
   agreementvalid() {
     this.value.agrmnt_status == '2' ? this.ctrl.drop_date.setValidators([Validators.required]) : this.ctrl.drop_date.clearValidators()
@@ -2275,10 +2258,10 @@ export class AddResellerComponent implements OnInit {
   }
 
   exptimesetting() {
-    if(this.value.exp_mode == 2){
+    if (this.value.exp_mode == 2) {
       this.ctrl.exp_time.setValidators(Validators.required);
       this.ctrl.exp_time.updateValueAndValidity();
-    }else{
+    } else {
       this.ctrl.exp_time.clearValidators();
       this.ctrl.exp_time.updateValueAndValidity();
     }
@@ -2302,8 +2285,7 @@ export class AddResellerComponent implements OnInit {
     const range = new Netmask(ip)
     this.AddReselForm.controls['FirstIp'].setValue(range.first)
     this.AddReselForm.controls['LastIp'].setValue(range.last)
-    // console.log(range)
-  }
+   }
 
 
   async addReseller() {
@@ -2311,10 +2293,8 @@ export class AddResellerComponent implements OnInit {
     // let val = this.AddReselForm.value;
     // this.filereader(this.file, async res => {
     // this.bulk = res;
-    // console.log(res)
-    // let total = this.mats.length,
-    // console.log("bulk",this.bulk);
-
+     // let total = this.mats.length,
+ 
     let bulkvald: boolean = false;
     for (var i = 0; i < this.bulk.length; i++) {
       if (!this.bulk[i].hasOwnProperty('Reseller Profile*')) {
@@ -2776,8 +2756,6 @@ export class AddResellerComponent implements OnInit {
       this.bulk[i].Logo = this.AddReselForm.value['Logo'];
       this.bulk[i].ereceipt = this.AddReselForm.value['ereceipt'];
       this.bulk[i].ecaf = this.AddReselForm.value['ecaf']
-      // console.log(this.bulk[i].bus_id);
-
     }
 
 
@@ -2787,8 +2765,7 @@ export class AddResellerComponent implements OnInit {
     this.s = 0; this.f = 0;
     let s = 0;
     this.failure = [];
-    console.log("outside",this.AddReselForm.value)
-    const invalid = [];
+     const invalid = [];
     const controls = this.AddReselForm.controls;
     for (const name in controls) {
       if (controls[name].invalid) {
@@ -2796,16 +2773,14 @@ export class AddResellerComponent implements OnInit {
       }
     };
     if (this.AddReselForm.invalid || this.value.Password != this.value.CPassword) {
-      console.log('Invalid',invalid)
-      window.alert('Please fill all mandatory fields')
+       window.alert('Please fill all mandatory fields')
       this.submit = true;
       return;
     }
     if (this.value.reselcreate_type == '0') {
       const md5 = new Md5;
       this.value.password_en = md5.appendStr(this.value.Password).end();
-      //  console.log("inside",this.AddReselForm.value)
-      this.value.disney_flag == true ? this.ott_name.push(1) : '';
+       this.value.disney_flag == true ? this.ott_name.push(1) : '';
       this.value.amazon_flag == true ? this.ott_name.push(2) : '';
       this.value.netflix_flag == true ? this.ott_name.push(3) : '';
       this.value.sun_flag == true ? this.ott_name.push(4) : '';
@@ -2818,8 +2793,7 @@ export class AddResellerComponent implements OnInit {
       let method = 'addReseller';
       this.loading = true;
       let result = await this.resell[method]({ bulkReseller: reselldata });
-      console.log(result)
-       if(result[0]['error_msg']!=0){
+       if (result[0]['error_msg'] != 0) {
         this.ott_name = [];
       }
       if (result) {
@@ -2848,11 +2822,8 @@ export class AddResellerComponent implements OnInit {
     }
     if (this.value.reselcreate_type == '1') {
       this.loading = true;
-      // console.log(this.AddReselForm.value)
-      // console.log("in",this.bulk)
       let method = 'addReseller';
       let result = await this.resell[method]({ bulkReseller: this.bulk });
-      // console.log(result)
       if (result) {
         this.loading = false;
         this.result_pop(result);
@@ -2863,16 +2834,11 @@ export class AddResellerComponent implements OnInit {
   }
 
   changeListener(file) {
-    console.log('Opening',this.isOpening)
     this.isOpening = true;
-console.log('Opening',this.isOpening)
-    console.log('file in')
     this.file = file;
     this.filereader(this.file, result => {
       this.isOpening = false;
-         this.bulk = result;
-        console.log('file out')
-       
+      this.bulk = result;
     });
   }
 
@@ -2889,7 +2855,7 @@ console.log('Opening',this.isOpening)
         var workbook = JSXLSX.read(bstr, { type: "binary" });
         var first_sheet_name = workbook.SheetNames[0];
         var worksheet = workbook.Sheets[first_sheet_name];
-         callback(JSXLSX.utils.sheet_to_json(worksheet, { raw: true }))
+        callback(JSXLSX.utils.sheet_to_json(worksheet, { raw: true }))
       }
       fileReader.readAsArrayBuffer(file);
     } else {
@@ -2934,6 +2900,13 @@ console.log('Opening',this.isOpening)
   cancel() {
     this.router.navigate(['/pages/reseller/resellerList']);
 
+  }
+
+  async getService($event = '') {
+    if (this.value.Role == 331) {
+      const result = await this.service.showServiceName({ bus_id: this.value.bus_id, show_service: 1, like: $event });
+      this.assign_service = result;
+    }
   }
 
   createForm() {
@@ -3080,7 +3053,7 @@ console.log('Opening',this.isOpening)
       credit_limit: new FormControl(''),
       due_invoice: new FormControl(''),
       exp_mode: new FormControl('0'),
-      exp_time:new FormControl(''),
+      exp_time: new FormControl(''),
       ereceipt: new FormControl(''),
       ecaf: new FormControl(''),
       unique_no: new FormControl(''),
@@ -3134,7 +3107,7 @@ console.log('Opening',this.isOpening)
       NextPool: new FormControl(''),
       Description: new FormControl(''),
       ping_status: new FormControl(0),
-      port:new FormControl(''),
+      port: new FormControl(''),
       nas_type: new FormControl('', Validators.required),
       nasname: new FormControl(''),
       ip: new FormControl(''),
@@ -3147,6 +3120,9 @@ console.log('Opening',this.isOpening)
       ciscobwmode: new FormControl('0'),
       api_ver: new FormControl('0'),
       descr: new FormControl(''),
+
+      srsrvid: new FormControl(''),
+      srtime: new FormControl('')
     });
   }
 }

@@ -39,10 +39,7 @@ export class RenewCustComponent implements OnInit {
   ) { }
 
   closeModal() {
-    // console.log(this.item)
     this.activeModal.close(true);
-    // this.router.navigate(['/pages/cust/viewcust']);
-
   }
 
   async ngOnInit() {
@@ -157,9 +154,21 @@ export class RenewCustComponent implements OnInit {
       }
 
     }
+  }
 
-
-
+  payValidation(){
+    if(this.RenewSubsForm.value['pay_status'] == 2) {
+      this.RenewSubsForm.controls['paytype'].setValidators([Validators.required])
+      this.RenewSubsForm.controls['pay_date'].setValidators([Validators.required])
+      this.RenewSubsForm.controls['pay_amt'].setValidators([Validators.required])
+    }else{
+      this.RenewSubsForm.controls['paytype'].clearValidators();
+      this.RenewSubsForm.controls['paytype'].updateValueAndValidity(); 
+      this.RenewSubsForm.controls['pay_date'].clearValidators();
+      this.RenewSubsForm.controls['pay_date'].updateValueAndValidity();
+      this.RenewSubsForm.controls['pay_amt'].clearValidators();
+      this.RenewSubsForm.controls['pay_amt'].updateValueAndValidity();
+    }
   }
 
   async packrenewal() {
@@ -287,6 +296,7 @@ export class RenewCustComponent implements OnInit {
       schedule_date: new FormControl(''),
       comment: new FormControl(''),
       pay_amt: new FormControl(''),
+      paytype:new FormControl(''),
       ottplanid: new FormControl(''),
 
     });

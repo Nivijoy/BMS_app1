@@ -20,7 +20,7 @@ export class ListInvoiceAckComponent implements OnInit {
   data; totalpage = 10; pages = [1, 2, 3, 4, 5]; count; bus; bus_name; group1;
   group_name; nas1; nas_name; search;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25;
-  cust_name; subs_gst; custname; gst; invnum; invoice_num; start_date; end_date;ackStatus;
+  cust_name; subs_gst; custname; gst; invnum; invoice_num; start_date; end_date; ackStatus;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -68,7 +68,7 @@ export class ListInvoiceAckComponent implements OnInit {
   }
 
   async refresh() {
-    this.bus_name = ''; this.cust_name = ''; this.subs_gst = ''; this.invoice_num = ''; this.start_date = ''; this.end_date = '';this.ackStatus='';
+    this.bus_name = ''; this.cust_name = ''; this.subs_gst = ''; this.invoice_num = ''; this.start_date = ''; this.end_date = ''; this.ackStatus = '';
     await this.initiallist()
   }
 
@@ -82,7 +82,7 @@ export class ListInvoiceAckComponent implements OnInit {
       gst: this.subs_gst,
       inv_no: this.invoice_num,
       start_date: this.start_date, end_date: this.end_date,
-      ackStatus:this.ackStatus
+      ackStatus: this.ackStatus
     })
     this.data = result[0];
     this.count = result[1]['count'];
@@ -91,8 +91,6 @@ export class ListInvoiceAckComponent implements OnInit {
     }
     this.loading = false;
     this.setPage();
-    // console.log(result);
-
   }
 
   getlist(page) {
@@ -105,10 +103,8 @@ export class ListInvoiceAckComponent implements OnInit {
   }
 
   setPage() {
-    // console.log(this.data);
     this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
-    // console.log('asdfg',this.pagedItems)
   }
 
   async download() {
@@ -119,7 +115,7 @@ export class ListInvoiceAckComponent implements OnInit {
       gst: this.subs_gst,
       inv_no: this.invoice_num,
       start_date: this.start_date, end_date: this.end_date,
-      ackStatus:this.ackStatus
+      ackStatus: this.ackStatus
     });
     this.loading = false;
     if (res) {
@@ -185,7 +181,7 @@ export class ListInvoiceAckComponent implements OnInit {
     });
   }
 
-  
+
   changeclear(item) {
     if (item == 1) {
       this.cust_name = ''; this.subs_gst = ''; this.invoice_num = '';

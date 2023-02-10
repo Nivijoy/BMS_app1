@@ -51,17 +51,14 @@ export class ServicemapComponent implements OnInit {
 
   async GroupName() {
     this.grup = await this.grupser.showGroupName({ bus_id: this.AddServiceMapForm.value['bus_id'] });
-    // console.log(res)
   }
 
   async service($event = '') {
     if (this.role.getroleid() >= 775) {
       this.pack = await this.ser.showService({ bus_id: this.AddServiceMapForm.value['bus_id'], groupid: this.AddServiceMapForm.value['groupid'], like: $event });
-      // console.log('pack', res)
     }
     if (this.role.getroleid() < 775) {
       this.pack = await this.ser.showService({ res_flag: 1, like: $event });
-      // console.log(this.pack)
     }
   }
 
@@ -78,11 +75,8 @@ export class ServicemapComponent implements OnInit {
   async showServiceNas() {           // Nas Wise
     if (this.AddServiceMapForm.value['package'] != null && this.AddServiceMapForm.value['package'] != '' && this.AddServiceMapForm.value['serassign_type'] == '1') {
       let result = await this.ser.showAssignNas({ srvid: this.AddServiceMapForm.value['package'], groupid: this.AddServiceMapForm.value['groupid'], bus_id: this.AddServiceMapForm.value['bus_id'] });
-      // console.log('nasresult', result)
       this.srvnas = result;
-      // console.log('nasresult', this.srvnas)
       this.nasid = this.srvnas.filter(item => item.astatus == 1).map(item => item.id)
-      // console.log('Nas Assigned service', this.nasid)
       await this.reselmap();
     }
 
@@ -93,7 +87,6 @@ export class ServicemapComponent implements OnInit {
       let result = await this.ser.showAssignService({ srvid: this.AddServiceMapForm.value['package'], groupid: this.AddServiceMapForm.value['groupid'], bus_id: this.AddServiceMapForm.value['bus_id'] });
       this.srvmanitems = result;
       this.resid = this.srvmanitems.filter(item => item.astatus == 1).map(item => item.manid)
-      // console.log('managers assigned service', this.resid)
       await this.reselmap();
     }
 
@@ -113,13 +106,11 @@ export class ServicemapComponent implements OnInit {
     if (this.AddServiceMapForm.value['serassign_type'] == '1') {   // Nas Wise
       let checkedresell = await this.srvnas.filter(item => item.data).map(item => item.id)
       this.reseldata = checkedresell;
-      // console.log(this.reseldata)
       // await this.fallbackser();
     }
     if (this.AddServiceMapForm.value['serassign_type'] == '2') {    // Reseller Wise
       let checkedresell = await this.srvmanitems.filter(item => item.data).map(item => item.manid)
       this.reseldata = checkedresell;
-      // console.log(this.reseldata);
       // await this.fallbackser();
     }
   }
@@ -130,7 +121,6 @@ export class ServicemapComponent implements OnInit {
       return;
     }
     this.AddServiceMapForm.value['resid'] = this.reseldata;
-    // console.log('Submit Value', this.AddServiceMapForm.value)
     let sermapdata = [this.AddServiceMapForm.value]
     let result = await this.ser.serviceMapping({ mapService: sermapdata }
     );
@@ -168,18 +158,16 @@ export class ServicemapComponent implements OnInit {
     activeModal.componentInstance.item = item;
     activeModal.componentInstance.servicemap = servicemap;
     activeModal.result.then((data) => {
-     });
+    });
   }
 
 
   // async fallbackser() {
   //   if (this.AddServiceMapForm.value['serassign_type'] == '1') {
   //     this.falback = await this.ser.showFallback({ nas_id: this.nas, resel_id: this.reseldata, serassign_type: this.AddServiceMapForm.value['serassign_type'] });
-  //     // console.log(res)
   //   }
   //   if (this.AddServiceMapForm.value['serassign_type'] == '2') {
   //     this.falback = await this.ser.showFallback({ resel_id: this.reseldata, serassign_type: this.AddServiceMapForm.value['serassign_type'] });
-  //     // console.log(res)
   //   }
   // }
 

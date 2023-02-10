@@ -10,7 +10,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ResellerRevenueShareComponent } from './reseller-revenue-share/reseller-revenue-share.component';
 import { RenewalReportComponent } from './renewal-report/renewal-report.component';
 import { TopupreportComponent } from './topupreport/topupreport.component';
-   
+    
 @NgModule({
   imports: [
     ShareModule,
@@ -26,7 +26,7 @@ import { TopupreportComponent } from './topupreport/topupreport.component';
    ResellerRevenueShareComponent,
    RenewalReportComponent,
    TopupreportComponent,
-     
+      
   ],
    entryComponents : [
    

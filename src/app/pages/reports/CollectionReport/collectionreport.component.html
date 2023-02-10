@@ -65,7 +65,7 @@
         <div class="col-sm-2">
           <label>Subscriber ProfileID</label>
           <auto-completen [(ngModel)]="cust_name" (keyUp)="showUser($event)" addclass="form-control"
-            optValues="username" placeholder='Select ProfileID' optId="uid" [item]="custname">
+            optValues="profileid" placeholder='Select ProfileID' optId="uid" [item]="custname">
           </auto-completen>
         </div>
         <div class="col-sm-2">
@@ -99,6 +99,15 @@
         <div class="col-sm-2">
           <label>Collected End Date</label>
           <input type="date" placeholder="End Date" [(ngModel)]="pay_end_date" class="form-control">
+        </div>
+        <div class="col-sm-2">
+          <label>Payment Type</label>
+          <select name="pay_type" [(ngModel)]="pay_type" class="form-control">
+            <option value="" selected>Select Type</option>
+            <option value="1">Cash</option>
+            <option value="2">Online</option>
+            <option value="3">Cheque</option>
+          </select>
         </div>
       </div>
       <button type="button" class="btn btn-md btn-success middle" (click)='initiallist();page=1;'
@@ -284,7 +293,7 @@
             Details
           </th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Service Expiry</th>
-          <th style="border: 3px solid #aeb8b9;color: white;" colspan="3">Payment</th>
+          <th style="border: 3px solid #aeb8b9;color: white;" colspan="4">Payment</th>
           <!-- <th>Pay Status</th>
           <th>Collected</th>
           <th>Pay Date</th> -->
@@ -351,6 +360,7 @@
           <th style="border: 3px solid #aeb8b9;" *ngIf="role.getroleid()>111">Reseller</th>
 
           <th style="border: 3px solid #aeb8b9;">Status</th>
+          <th style="border: 3px solid #aeb8b9;">Type</th>
           <th style="border: 3px solid #aeb8b9;">Collected</th>
           <th style="border: 3px solid #aeb8b9;">Date</th>
         </tr>
@@ -487,6 +497,7 @@
 
           <td>{{item.expiry_date | date: 'd MMM y h:mm:ss a'}}}</td>
           <td>{{item.pay_status==2 ? 'Paid': 'Unpaid'}}</td>
+          <td>{{item.paytype == 1 ? 'Cash': item.paytype == 2 ? 'Online Payment': item.paytype == 3? 'Cheque': ''}}</td>
           <td><i class="fas fa-rupee-sign">&nbsp;{{item.sub_payed_amt}}</i></td>
           <td>{{item.pay_status==2 ? (item.paydate | date:'d MMM y h:mm:ss a'):'--'}}</td>
         </tr>

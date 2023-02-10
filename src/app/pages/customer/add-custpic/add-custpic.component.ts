@@ -228,7 +228,7 @@ export class SubscriberPicComponent implements OnInit, OnDestroy {
 
       let filename = this.AddPicForm.value['addr_proof'] == 1 ? 'Aadhaar' : this.AddPicForm.value['addr_proof'] == 2 ? 'Ration' :
         this.AddPicForm.value['addr_proof'] == 3 ? 'Voter ID' : this.AddPicForm.value['addr_proof'] == 4 ? 'Passport' : this.AddPicForm.value['addr_proof'] == 5 ? 'Gas Bill' :
-          this.AddPicForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddPicForm.value['addr_proof'] == 7 ? 'Water Bill' : '--'
+          this.AddPicForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddPicForm.value['addr_proof'] == 7 ? 'Water Bill' : this.AddPicForm.value['addr_proof'] == 8 ? 'Home tax' : '--'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
 
       file.append('file', frontimageblob, first)

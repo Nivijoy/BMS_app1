@@ -32,7 +32,6 @@ export class ChangepasswordComponent implements OnInit {
   ) { this.id = JSON.parse(localStorage.getItem('details')); }
 
   closeModal() {
-    // console.log("close")
     this.activeModal.close();
   }
 
@@ -46,15 +45,12 @@ export class ChangepasswordComponent implements OnInit {
       return;
     }
 
-    // this.AddNasForm.value['id'] = this.id;
     const md5 = new Md5;
     this.AddNasForm.value['password_en'] = md5.appendStr(this.AddNasForm.value['Password']).end();
-    // console.log("Adnas",this.AddNasForm.value)
 
     if (this.role.getroleid() != 111) {
       let result = await this.ser.changeadminpwd(this.AddNasForm.value)
       this.datas = result;
-      // console.log(result);
       const toast: Toast = {
         type: result['status'] == 1 ? 'success' : 'warning',
         title: result['status'] == 1 ? 'Success' : 'Failure',
@@ -72,7 +68,6 @@ export class ChangepasswordComponent implements OnInit {
     if (this.role.getroleid() == 111) {
       let result = await this.custser.changeprofilepwd(this.AddNasForm.value)
       this.datas = result;
-      // console.log(result);
       const toast: Toast = {
         type: result['status'] == 1 ? 'success' : 'warning',
         title: result['status'] == 1 ? 'Success' : 'Failure',

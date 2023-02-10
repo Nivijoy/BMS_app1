@@ -32,8 +32,10 @@
                <option value="5" *ngIf="AddDocForm.value['same_proof'] == false">Gas Bill </option>
                <option value="6" *ngIf="AddDocForm.value['same_proof'] == false">EB Bill </option>
                <option value="7" *ngIf="AddDocForm.value['same_proof'] == false">Water Bill </option>
+               <option value="8" *ngIf="AddDocForm.value['same_proof'] == false">Home Tax Bill </option>
+
             </select>
-            <small  style="color: blueviolet;"><b>(Water Bill ,EB bill & Gas Bill shouldn't be older than 3 Months)</b></small>
+            <small  style="color: blueviolet;"><b>(Water Bill ,EB bill,Gas Bill & Home Tax shouldn't be older than 3 Months)</b></small>
             <small *ngIf="AddDocForm.controls.addr_proof.invalid&&submit" class="form-text error">Address Proof is
                Required!</small>
          </div>

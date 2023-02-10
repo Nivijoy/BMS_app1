@@ -33,7 +33,7 @@
         <div class="col-sm-2">
           <label>Subscriber ID</label>
           <auto-completen [(ngModel)]="cust_name" (keyUp)="showUser($event)" addclass="form-control"
-            optValues="username" placeholder='Select Subs AccountID' optId="uid" [item]="custname">
+            optValues="profileid" placeholder='Select Subs AccountID' optId="uid" [item]="custname">
           </auto-completen>
         </div>
         <div class="col-sm-2">
@@ -105,6 +105,7 @@
           <th>Service Type</th>
           <th>Scheduled By</th>
           <th>Scheduled Date</th>
+          <th>Schedule Completed</th>
           <th>Status</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
@@ -115,8 +116,8 @@
                 ngbDropdownToggle>Action&nbsp;
               </button>
               <ul style="width: 75;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
-                <li *ngIf="!role.getmenurole(712)" class="dropdown-item" title="Cancel" (click)="cancel(item.rsid)"><i
-                    style="color: red;" class="ion-close-round"></i>&nbsp;Cancel</li>
+                <li *ngIf="!role.getmenurole(712) && item.c_role != 111" class="dropdown-item" title="Cancel"
+                  (click)="cancel(item.rsid)"><i style="color: red;" class="ion-close-round"></i>&nbsp;Cancel</li>
                 <li *ngIf="!role.getmenurole(714) && (item.schedule_status == 1)" class="dropdown-item"
                   title="Change Schedule" (click)="change_sched(item.rsid)"><i
                     class="fa fa-exchange-alt"></i>&nbsp;ChangeTime</li>
@@ -141,7 +142,8 @@
           <td style="font-weight:900">{{item.inv_amt | currency:'INR':'symbol'}}</td>
           <td style="font-weight:900">{{item.inv_tax | currency:'INR':'symbol' }}</td>
           <td>{{item.service_type ==1 ? 'Internet': item.service_type ==2 ? 'Internet & Voice': item.service_type ==3 ?
-            'Internet & OTT': item.service_type ==4? 'Internet & AddOn': item.service_type ==5? 'Internet & voice & OTT':
+            'Internet & OTT': item.service_type ==4? 'Internet & AddOn': item.service_type ==5? 'Internet & voice &
+            OTT':
             item.service_type ==6 ? 'Internet & Voice & Addon':
             item.service_type==7? 'Internet & Ott & Addon': item.service_type ==8? 'All services': ''}}
           </td>
@@ -152,6 +154,7 @@
           <td *ngIf="item.schedule_status==3">{{item.modified}}</td>
           <td *ngIf="item.schedule_status!=3">{{item.schedule_date | date:'d MMM y h:mm:ss a'}}</td>
           <td *ngIf="item.schedule_status==3">{{item.lm_date | date:'d MMM y h:mm:ss a'}}</td>
+          <td>{{item.schedule_completed_on ? (item.schedule_completed_on | date:'d MMM y h:mm:ss a') : '--'}}</td>
           <td>{{item.schedule_status==1 ? 'On Process':item.schedule_status==2 ? 'Schedule Completed':item.schedule_status==3 ? 'Cancel'
             :item.schedule_status ==4 ? 'Already Done': item.schedule_status ==5? 'Initialized' : '--'}}</td>
         </tr>

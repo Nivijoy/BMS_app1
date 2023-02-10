@@ -91,7 +91,8 @@ export class OnlinePaylistComponent implements OnInit {
 
   async showResellerName($event = '') {
     // console.log('inside', this.resel_type)
-    this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, role: this.resel_type, like: $event });
+    if (this.resel_type)
+      this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, role: this.resel_type, like: $event });
 
     // console.log("resellername",result)
   }
@@ -250,8 +251,8 @@ export class OnlinePaylistComponent implements OnInit {
     if (gwid == 1) result = await this.payser.paystatus({ opid: item })   // Federal
     else if (gwid == 2) {
       result = await this.payser.pumstatus({ opid: item })  // payUMoney
-    }else{
-      result = await this.payser.paytmStatus({ opid: item})
+    } else {
+      result = await this.payser.paytmStatus({ opid: item })
     }
     if (result) {
       console.log('Result', result)

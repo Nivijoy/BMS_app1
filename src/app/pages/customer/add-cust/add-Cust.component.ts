@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewChecked,ChangeDetectorRef, ViewRef } from '@angular/core';
 import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder, } from '@angular/forms';
@@ -28,7 +28,7 @@ import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
   styleUrls: ['./custstyle.scss'],
 })
 
-export class AddCustComponent implements OnInit {
+export class AddCustComponent implements OnInit,AfterViewChecked {
   submit: boolean = false; AddSubsForm; resell; datas; pack; cusprefix; branches;
   ip; busname; grup; mod; id_proof_file: any; selectfile: File = null; imageURL: any = []; typeid; imageurl: any = [];
   subsid = false; bulk = []; arrayBuffer: any; failure: any[]; s = 0; f = 0; file: any[]; dist; states; config; servtype;
@@ -87,9 +87,18 @@ export class AddCustComponent implements OnInit {
     public role: RoleService,
     private ipser: IppoolService,
     private imageCompress: NgxImageCompressService,
-
+    private readonly changeDetectorRef: ChangeDetectorRef
 
   ) { }
+
+  ngAfterViewChecked(): void {
+    // this.changeDetectorRef.detectChanges();
+    if ( this.changeDetectorRef !== null &&
+      this.changeDetectorRef !== undefined &&
+      ! (this.changeDetectorRef as ViewRef).destroyed ) {
+          this.changeDetectorRef.detectChanges();
+  }
+  }
 
   public camera(): void {
     WebcamUtil.getAvailableVideoInputs()
@@ -672,6 +681,8 @@ export class AddCustComponent implements OnInit {
 
 
   mac() {
+    console.log('mac address',this.AddSubsForm.value['mac_addr']);
+    
     if (this.AddSubsForm.value['mac_addr'] == true) {
       this.AddSubsForm.get('amac').setValidators([Validators.required]);
     }
@@ -1255,7 +1266,7 @@ export class AddCustComponent implements OnInit {
       acctype: new FormControl('', Validators.required),
       pan_no: new FormControl(''),
       mac_id: new FormControl(''),
-      mac_addr: new FormControl(''),
+      mac_addr: new FormControl(false),
       mat_from: new FormControl(''),
       type_name: new FormControl(''),
       dllimit: new FormControl('0', [Validators.pattern('^[0-9]*$')]),

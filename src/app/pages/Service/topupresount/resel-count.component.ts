@@ -11,7 +11,7 @@ import { S_Service } from '../../_service/indexService';
 })
 
 export class TopupReselcountComponent implements OnInit {
-	submit: boolean = false; item;modalHeader;
+	submit: boolean = false; item; modalHeader;
 	constructor(
 		private alert: ToasterService,
 		private ser: S_Service,
@@ -21,13 +21,10 @@ export class TopupReselcountComponent implements OnInit {
 	) { }
 
 	closeModal() {
-		// console.log(this.addprice)
 		this.activeModal.close(true);
-		
 	}
 
 	ngOnInit() {
-		// console.log(this.item)
 	}
 }
 

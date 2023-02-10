@@ -117,5 +117,8 @@ export class AccountService {
   async walletSharing(params){
     return await this.http.post("/api/account/walletSharing",params).toPromise();
   }
+  async listOnlinePaymentReport(params) {
+    return await this.http.post("/api/account/listOnlinePaymentReport", params).toPromise();
+  }
 
 }

@@ -54,8 +54,8 @@
                                     <td>
                                        {{data.role==666 ? 'Sub ISP Bulk':data.role==555 ? 'Sub ISP
                                        Deposit':data.role==444 ? 'Bulk Reseller':data.role==333 ? 'Deposit
-                                       Reseller':data.role==222 ? 'Hotel':data.role==661 ? 'Sub Distributor Bulk':'Sub
-                                       Distributor Deposit'}}
+                                       Reseller':data.role==222 ? 'Hotel':data.role==661 ? 'Sub Distributor Bulk':
+                                       data.role == 331 ? 'Card Reseller' :'Sub Distributor Deposit'}}
                                     </td>
                                  </tr>
                                  <tr *ngIf="data.role=='333'||data.role=='444'||data.role=='551'">

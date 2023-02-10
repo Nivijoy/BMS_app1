@@ -75,7 +75,7 @@ export class ShareLogComponent implements OnInit {
   }
 
   getlist(page) {
-    var total = Math.ceil(this.total / this.limit);
+    var total = Math.ceil(this.count / this.limit);
     let result = this.pageservice.pageValidator(this.page, page, total);
     this.page = result['value'];
     if (result['result']) {
@@ -102,7 +102,7 @@ export class ShareLogComponent implements OnInit {
 
   setPage() {
     // console.log(this.data);
-    this.pager = this.pageservice.getPager(this.total, this.page, this.limit);
+    this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
   }
 

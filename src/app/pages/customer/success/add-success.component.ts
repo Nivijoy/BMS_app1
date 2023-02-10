@@ -13,7 +13,8 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 
 export class AddSuccessComponent implements OnInit {
-	submit: boolean = false; item; modalHeader; add_res; edit_res; voice_res; limit_flag
+	submit: boolean = false; item; modalHeader; add_res; edit_res; voice_res; limit_flag;
+	add_card_res;
 	constructor(
 		private alert: ToasterService,
 		private ser: CustService,
@@ -33,6 +34,9 @@ export class AddSuccessComponent implements OnInit {
 			}
 			if (this.edit_res == false) {
 				this.router.navigate(['/pages/cust/viewcust']);
+			}
+			if (this.add_card_res == true) {
+				this.router.navigate(['/pages/cust/list-card-user']);
 			}
 		}
 	}

@@ -6,6 +6,9 @@
 </div>
 <form [formGroup]="AddNasForm" *ngIf="AddNasForm" (ngSubmit)="addNas();">
 	<div class="modal-body">
+		<ngx-loading [show]="loading"
+		[config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+	 </ngx-loading>
 		<div class="form-group row">
 			<div class="col-sm-4" *ngIf="role.getroleid()>777"><br>
 				<label>ISP Name <span style="color:red;">*</span></label>

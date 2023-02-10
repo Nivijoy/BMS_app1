@@ -19,11 +19,9 @@ export class AuthGuard implements CanActivate {
     }
     canActivate() {
         setTimeout(() => {
-            // console.log("userinfo1", this.cuser)
             this.cuser = JSON.parse(localStorage.getItem('userinfo'));
             this.menu_access = this.cuser ? JSON.parse(this.cuser['menu_role']) : [];
             var menu = (this.router.url).split('/');
-            // console.log("URL", menu)
             if (!this.cuser) {
                 // not logged in so redirect to login page with the return url
                 this.router.navigate(['/auth/logout']);

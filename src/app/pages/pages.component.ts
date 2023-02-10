@@ -446,7 +446,7 @@ export class PagesComponent {
       title: 'Reseller',
       icon: 'fa fa-user-secret',
       hidden: !(this.role.find(x => x == 401) || this.role.find(x => x == 402) ||
-        this.role.find(x => x == 501) || this.role.find(x => x == 502)),
+        this.role.find(x => x == 501) || this.role.find(x => x == 502) || this.role.find(x => x == 404)),
       children: [
         {
           title: ' List',
@@ -539,6 +539,23 @@ export class PagesComponent {
           hidden: this.roleid < 775
         }
       ],
+    },
+    {
+      title: 'Card users',
+      icon: 'fa fa-id-card',
+      hidden: !(this.role.find(x => x == 1067) || (this.role.find(x => x == 1068))),
+      children: [
+        {
+          title: 'Registered Card user',
+          link: '/pages/cust/register-card-user',
+          hidden: !this.role.find(x => x == 1067)
+        },
+        {
+          title: 'List Card User',
+          link: '/pages/cust/list-card-user',
+          hidden: !this.role.find(x => x == 1068)
+        }
+      ]
     },
     {
       title: 'Renewal',
@@ -723,6 +740,11 @@ export class PagesComponent {
           link: '/pages/reports/subscriberReport',
           hidden: !this.role.find(x => x == 1041)
         },
+        {
+          title: 'Online Payment Report',
+          link: '/pages/Accounts/list-online-report',
+          hidden: this.roleid < 775
+        },
       ],
     },
     {
@@ -878,8 +900,8 @@ export class PagesComponent {
           hidden: !this.role.find(x => x == 1064),
         },
         {
-          title:'UpdateShareLog',
-          link:'/pages/administration/share-log',
+          title: 'UpdateShareLog',
+          link: '/pages/administration/share-log',
           hidden: this.roleid < 775
         }
 

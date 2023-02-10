@@ -12,7 +12,7 @@ import { S_Service, BusinessService, GroupService, RoleService, NasService, Rese
 
 export class EditTopupComponent implements OnInit {
   submit: boolean = false; EditTopupForm; id; editdatas; resell; busname; grup; pack; alnas: any = []; nasresel: any = []; buresellitems;
-  nas; searchresell = ''; reseldata; resid; state = ''; data = ''; checkids;
+  nas; searchresell = ''; reseldata=[]; resid; state = ''; data = ''; checkids;
   resdata;
   config;
   constructor(
@@ -54,14 +54,8 @@ export class EditTopupComponent implements OnInit {
   }
 
   async reseller($event = '') {
-    if (this.role.getroleid() >= 777) {
-      this.resdata = await this.resser.showResellerName({ edit_flag: 1, except: 1, bus_id: this.EditTopupForm.value['bus_id'], groupid: this.EditTopupForm.value['groupid'], like: $event });
-      // console.log('pack', res)
-    }
-    if (this.role.getroleid() <= 775) {
-      this.resdata = await this.resser.showResellerName({ edit_flag: 1, except: 1, like: $event });
-      // console.log(this.pack)
-    }
+    this.resdata = await this.resser.showResellerName({ edit_flag: 1, except: 1, bus_id: this.EditTopupForm.value['bus_id'], groupid: this.EditTopupForm.value['groupid'], like: $event });
+
     if (this.resdata) {
       await this.editcheck();
     }
@@ -77,8 +71,9 @@ export class EditTopupComponent implements OnInit {
   }
 
   async edittopup() {
-    if (this.EditTopupForm.invalid) {
+    if (this.EditTopupForm.invalid || !this.reseldata.length) {
       this.submit = true;
+      window.alert('Please Fill all mandatory fields or Select any one Reseller')
       return;
     }
     this.EditTopupForm.value['id'] = this.id;
@@ -120,7 +115,7 @@ export class EditTopupComponent implements OnInit {
   createForm() {
     this.EditTopupForm = new FormGroup({
       bus_id: new FormControl(this.editdatas ? this.editdatas['isp_id'] : '', Validators.required),
-      groupid: new FormControl(this.editdatas ? this.editdatas['group_id'] : '', Validators.required),
+      groupid: new FormControl(this.editdatas ? this.editdatas['group_id'] : ''),
       topup_name: new FormControl(this.editdatas ? this.editdatas['top_name'] : '', Validators.required),
       limit_size: new FormControl(this.editdatas ? this.editdatas['limit_size'] : '', Validators.required),
       limit: new FormControl(this.editdatas ? this.editdatas['limit'] : '', Validators.required),

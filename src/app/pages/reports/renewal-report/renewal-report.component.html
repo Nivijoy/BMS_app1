@@ -188,6 +188,8 @@
               <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Service Expiry</th>
                <th style="border: 3px solid #aeb8b9;color: white;" colspan="3">Payment</th>
               <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Renewal BY</th>
+              <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Renewal Note</th>
+
            </tr>
            <tr style="background-color :  #01a7ee;color:white;position: sticky;top: 38px;">
               <th style="border: 3px solid #aeb8b9;" *ngIf="role.getroleid()>444">Type</th>
@@ -266,6 +268,7 @@
              
               <td *ngIf="item.c_role != 111">{{item.renewalby_name}}</td>
               <td *ngIf="item.c_role == 111">{{item.userid}}</td>
+              <td>{{item.comment1? item.comment1 : '--'}}</td>
            </tr>
            <tr>
               <td colspan="28" *ngIf="pagedItems==''">NO DATA FOUND</td>

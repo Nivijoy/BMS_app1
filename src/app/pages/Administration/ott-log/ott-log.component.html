@@ -17,21 +17,21 @@
         <div class="col-sm-3" *ngIf="role.getroleid()>777">
           <label>ISP Name</label>
           <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
-            (changed)="showGroupName();showResellerName();showUser();showinvoicenum();changeclear(1);"
+            (changed)="showGroupName();showResellerName();showUser();showinvoicenum();"
             (keyUp)="showBusName($event)" placeholder='Select Business' id="bus_name" [item]="bus">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
           <label>Circle</label>
           <auto-completen [(ngModel)]="group_name"
-            (changed)="showResellerName();showUser();showinvoicenum();changeclear(2);" (keyUp)="showGroupName($event)"
+            (changed)="showResellerName();showUser();showinvoicenum();" (keyUp)="showGroupName($event)"
             addclass="form-control" optValues="groupname" placeholder='Select Circle' optId="groupid" [item]="group1">
           </auto-completen>
         </div>
         <div class="col-sm-3">
           <label>Reseller Name</label>
           <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
-            (keyUp)="showResellerName($event)" (changed)="showUser();showinvoicenum();changeclear(4);"
+            (keyUp)="showResellerName($event)" (changed)="showUser();showinvoicenum();"
             placeholder='Select Reseller' id="mid" [item]="res1">
           </auto-completen>
         </div>
@@ -46,7 +46,7 @@
         <div class="col-sm-3">
           <label>Invoice NO</label>
           <auto-completen [(ngModel)]="invoice_num" addclass="form-control" optValues="rollid"
-            placeholder='Select Invoice-NO' (keyUp)="showinvoicenum($event)" (changed)="changeclear(5);" optId="invid"
+            placeholder='Select Invoice-NO' (keyUp)="showinvoicenum($event)"   optId="invid"
             [item]="invnum">
           </auto-completen>
         </div>
@@ -63,7 +63,26 @@
             placeholder='Select OTTPlanCode' (keyUp)="showOTTPlanCode($event)" optId="ottplanid" [item]="ottplandata">
           </auto-completen>
         </div>
+        <div class="col-sm-3">
+          <label>OTT Status</label>
+          <select name="ottstatus" [(ngModel)]="ottstatus" class="form-control">
+            <option value="" selected>Select OTT Status</option>
+            <option value="1">Initialized</option>
+            <option value="2">Activated</option>
+            <option value="3">Canelled</option>
+          </select>
+        </div>
 
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>Start Date</label>
+          <input type="date" pattern="Start Date" [(ngModel)]="start_date" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label>End Date</label>
+          <input type="date" pattern="End Date" [(ngModel)]="end_date" class="form-control">
+        </div>
       </div>
 
       <button type="button" class="btn btn-md btn-success middle" (click)='initiallist();page=1;'
@@ -106,6 +125,8 @@
           <th style="border: 3px solid #aeb8b9;color: white;" colspan="2">Subscriber</th>
           <th style="border: 3px solid #aeb8b9;color: white;" colspan="5">OTT</th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2"><br>Status</th>
+          <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2"><br>Generated Date</th>
+
         </tr>
         <tr style="background-color :  #01a7ee;color:white;position: sticky;top: 38px;">
           <th style="border: 3px solid #aeb8b9;" *ngIf="role.getroleid()>=775">Invoice </th>
@@ -136,6 +157,7 @@
           </td>
           <td>{{item.ottstatus == 1 ? 'Processing': item.ottstatus == 2 ? 'Activated': item.ottstatus == 3 ? 'Cancelled'
             : 'Need to check' }}</td>
+          <td>{{(item.cdate | date:'d MMM y h:mm:ss a')}}</td>
           <!-- <td style="text-align: center;"><a [ngStyle]="{'color' :item.status==1 ? 'green' : 'red' }"
               [ngClass]="{'ion-close-round':item.status!=1? true:false,'ion-checkmark-round': item.status==1 ? true:false  }">
             </a></td> -->

@@ -3,7 +3,7 @@ import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectService,S_Service,NasService } from '../../_service/indexService';
+import { SelectService, S_Service, NasService } from '../../_service/indexService';
 
 @Component({
   selector: 'specialAdd',
@@ -13,7 +13,7 @@ import { SelectService,S_Service,NasService } from '../../_service/indexService'
 
 export class SpecialAddComponent implements OnInit {
   submit: boolean = false; SpecialForm; data; pack;
-  ratio = []; item; grup; busname;modalHeader;
+  ratio = []; item; grup; busname; modalHeader;
 
   constructor(
     private ser: S_Service,
@@ -23,29 +23,29 @@ export class SpecialAddComponent implements OnInit {
     private select: SelectService
 
   ) {
-  this.ratio = [
-    { value: 0.0, percentage: '0' },
-    { value: 0.05, percentage: '5' },
-    { value: 0.10, percentage: '10' },
-    { value: 0.15, percentage: '15' },
-    { value: 0.20, percentage: '20' },
-    { value: 0.25, percentage: '25' },
-    { value: 0.30, percentage: '30' },
-    { value: 0.35, percentage: '35' },
-    { value: 0.40, percentage: '40' },
-    { value: 0.45, percentage: '45' },
-    { value: 0.50, percentage: '50' },
-    { value: 0.55, percentage: '55' },
-    { value: 0.60, percentage: '60' },
-    { value: 0.65, percentage: '65' },
-    { value: 0.70, percentage: '70' },
-    { value: 0.75, percentage: '75' },
-    { value: 0.80, percentage: '80' },
-    { value: 0.85, percentage: '85' },
-    { value: 0.90, percentage: '90' },
-    { value: 0.95, percentage: '95' },
-    { value: 1.0, percentage: '100' }
-  ];
+    this.ratio = [
+      { value: 0.0, percentage: '0' },
+      { value: 0.05, percentage: '5' },
+      { value: 0.10, percentage: '10' },
+      { value: 0.15, percentage: '15' },
+      { value: 0.20, percentage: '20' },
+      { value: 0.25, percentage: '25' },
+      { value: 0.30, percentage: '30' },
+      { value: 0.35, percentage: '35' },
+      { value: 0.40, percentage: '40' },
+      { value: 0.45, percentage: '45' },
+      { value: 0.50, percentage: '50' },
+      { value: 0.55, percentage: '55' },
+      { value: 0.60, percentage: '60' },
+      { value: 0.65, percentage: '65' },
+      { value: 0.70, percentage: '70' },
+      { value: 0.75, percentage: '75' },
+      { value: 0.80, percentage: '80' },
+      { value: 0.85, percentage: '85' },
+      { value: 0.90, percentage: '90' },
+      { value: 0.95, percentage: '95' },
+      { value: 1.0, percentage: '100' }
+    ];
   }
   closeModal() {
     this.activeModal.close();
@@ -53,21 +53,18 @@ export class SpecialAddComponent implements OnInit {
   group() {
     // this.select.showBusGroup({ business_id: this.SpecialForm.value['bus_name'] }).subscribe(res => {
     //   this.grup = res;
-    //   console.log(res)
     // })
   }
 
   business() {
     // this.select.showBusName({}).subscribe(result => {
     //   this.busname = result;
-    //   console.log(result)
     // })
   }
 
   busservice() {
     // this.select.showBusSer({ isp_id: this.SpecialForm.value['bus_name'] }).subscribe(res => {
     //   this.pack = res;
-    //   console.log(res)
     // });
   }
 
@@ -75,14 +72,12 @@ export class SpecialAddComponent implements OnInit {
     // if (this.SpecialForm.value['group_name'] != '') {
     //   this.select.showBusGrpSer({ isp_id: this.SpecialForm.value['bus_name'], group_id: this.SpecialForm.value['group_name'] }).subscribe(result => {
     //     this.pack = result;
-    //     console.log(result)
     //   })
     // }
 
   }
 
   AddSpecialAervice() {
-    // console.log(this.item)
     // this.submit = true
     // if (this.SpecialForm.invalid) {
     //   return;
@@ -91,11 +86,9 @@ export class SpecialAddComponent implements OnInit {
     // if (this.item) {
     //   method = 'updateAddSer';
     //   this.SpecialForm.value['id'] = this.item['id'];
-    //   console.log(this.SpecialForm.value['id'])
     // }
     // this.ser[method](this.SpecialForm.value).subscribe(result => {
     //   this.data = result;
-    //   console.log(result.msg.msg)
     //   const toast: Toast = {
     //     type: result.msg.status == 1 ? 'success' : 'warning',
     //     title: result.msg.status == 1 ? 'Success' : 'Failure',
@@ -121,8 +114,8 @@ export class SpecialAddComponent implements OnInit {
 
   createForm() {
     this.SpecialForm = new FormGroup({
-      bus_name: new FormControl(this.item? this.item['isp_id']:''),
-      group_name: new FormControl(this.item ? this.item['group_id']:''),
+      bus_name: new FormControl(this.item ? this.item['isp_id'] : ''),
+      group_name: new FormControl(this.item ? this.item['group_id'] : ''),
       pack: new FormControl(this.item ? this.item['srvid'] : '', Validators.required),
       tratio: new FormControl(this.item ? this.item['timeratio'] : '', Validators.required),
       dlratio: new FormControl(this.item ? this.item['dlratio'] : '', Validators.required),

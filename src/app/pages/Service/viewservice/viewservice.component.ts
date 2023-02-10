@@ -34,7 +34,6 @@ export class ViewServiceComponent implements OnInit {
 
   async serivceshow() {
     this.pack = await this.ser.viewSerResel({ srvid: this.datas });
-    // console.log(res);
   }
 
   async packprice(index) {
@@ -44,7 +43,6 @@ export class ViewServiceComponent implements OnInit {
     let serid = this.pack[index].srvid;
     let resid = this.pack[index].reseller_id;
     let result = await this.ser.viewPrice({ reseller: resid, srvid: serid });
-    // console.log(result)
     if (result) {
       this.priceshow = result;
       this.length1 = this.priceshow.length ? this.priceshow.length : 0
@@ -55,7 +53,6 @@ export class ViewServiceComponent implements OnInit {
     let result = await this.ser.getService({ srvid: this.datas });
     this.data = result[0][0] || [];
     this.item = result[1];
-    console.log('Get service',result)
   }
 
 }

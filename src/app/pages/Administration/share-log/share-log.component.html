@@ -80,7 +80,7 @@
         <tr *ngFor="let item of pagedItems">
 
           <td>{{item.id}}</td>
-          <td>{{item.busname}}</td>
+          <td   *ngIf="role.getroleid() > 777">{{item.busname}}</td>
           <td>{{item.company}}</td>
           <td>{{item['share']['oldshare_type'] == 1 ? 'COMMON':'PACKAGE WISE'}}</td>
           <td><b>{{item['share']['oldisp_share'] + "%" || '--'}}</b></td>

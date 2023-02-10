@@ -3,6 +3,9 @@
     <nb-card-header>Edit Reseller</nb-card-header>
     <nb-card-body>
       <toaster-container [toasterconfig]="config"> </toaster-container>
+      <ngx-loading [show]="loading"
+      [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+    </ngx-loading>
       <form [formGroup]="EditReselForm" class="form-horizontal" (ngSubmit)="editReseller();">
         <div class="modal-body">
           <div class="form-group row">
@@ -53,7 +56,7 @@
               <label>Reseller Type<span style="color:red;">*</span></label>
               <select name="Role" formControlName="Role"
                 [ngClass]="{'form-control' : true,'form-control-danger':EditReselForm.controls.Role.invalid&&submit}"
-                (change)="provalid();showResellerUnder();sharedefault();EditReselForm.controls.reseller_under.setValue('')">
+                (change)="provalid();showResellerUnder();sharedefault();EditReselForm.controls.reseller_under.setValue('');getService()">
                 <option value="" selected>Select Reseller Type</option>
                 <option *ngFor="let item of pro" [ngValue]="item.role">{{item.menu_name}}</option>
               </select>
@@ -350,11 +353,11 @@
                 <div class="form-group row">
                   <div class="col-sm-4">
                     <label>Sharing Type</label>
-                    <select formControlName="share_type"
+                    <select   formControlName="share_type"
                       [ngClass]="{'form-control':true,'form-control-danger':EditReselForm.controls.share_type.invalid&&submit}">
-                      <option value="" selected>Select Sharing Type</option>
-                      <option value="1">Common Sharing</option>
-                      <option value="2">Package wise Sharing</option>
+                      <option disabled value="" selected>Select Sharing Type</option>
+                      <option disabled value="1">Common Sharing</option>
+                      <option disabled value="2">Package wise Sharing</option>
                     </select>
                   </div>
                   <div class="col-sm-4">
@@ -1371,6 +1374,21 @@
                   <div class="col-sm-4" *ngIf="imageURL">
                     <label>Logo Preview</label>
                     <img [src]="imageURL" style="width: 100%;height: 150px">
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="value.Role ==331">
+                  <div class="col-sm-4">
+                    <label>Assign Service For Self Registration</label>
+                    <auto-completen
+                    [addclass]="{'form-control' : true,'form-control-danger':ctrl.srsrvid.invalid&&submit}"
+                     optValues="srvname" (keyUp)="getService($event)" placeholder='Select Service Name'
+                      formControlName="srsrvid" optId="srvid" [item]="assign_service">
+                    </auto-completen>
+                  </div>
+                  <div class="col-sm-4">
+                    <label>Time (in minutes)</label>
+                    <input type="number" formControlName="srtime" placeholder="Time (in minutes)"
+                    [ngClass]="{'form-control':true,'form-control-danger':ctrl.srtime.invalid&&submit}"/>
                   </div>
                 </div>
               </ng-template>

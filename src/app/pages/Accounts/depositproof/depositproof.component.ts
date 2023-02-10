@@ -40,9 +40,8 @@ export class DepositProofComponent implements OnInit {
     await this.getproof()
   }
   async getproof() {
-    // console.log(subsusername)
     this.loading = true;
-    let result = await this.acntser.getPaymentProof({ id:this.item['depid'] })
+    let result = await this.acntser.getPaymentProof({ id: this.item['depid'] })
     this.img_result = result;
     if (this.img_result) {
       this.loading = false;
@@ -50,7 +49,6 @@ export class DepositProofComponent implements OnInit {
         if (Object.prototype.hasOwnProperty.call(result, key)) {
           const element = result[key];
           this.img_result[key] = 'data:image/png;base64,' + element
-          // console.log("image", this.img_result)
         }
       }
     }

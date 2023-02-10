@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
         this.LoginForm.value['userAgent'] = this.deviceInfo.userAgent;
         this.LoginForm.value['devicetype'] = this.mobile == true ? 'mobile' : this.tablet == true ? 'tablet' : this.desktop == true ? 'desktop' : 'N/A';
         this.service.login(this.LoginForm.value).subscribe(result => {
-            // console.log(result)
             const toast: Toast = {
                 type: result[0][0]['status'] == 1 ? 'success' : 'warning',
                 title: result[0][0]['status'] == 1 ? 'Success' : 'Failure',
@@ -76,7 +75,6 @@ export class LoginComponent implements OnInit {
         // menu.addEventListener("contextmenu", function (e) {
         //     e.preventDefault();
         // }, false);
-        // console.log(this.desktop)
     }
 
     showPwd() {

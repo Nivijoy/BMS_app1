@@ -17,7 +17,8 @@
             (changed)="showResellerName();changebusiness();" id="id" [item]="bus">
           </auto-completen>
         </div>
-        <div class="col-sm-3" *ngIf="role.getroleid()>=775">
+        <div class="col-sm-3">
+          <!-- *ngIf="role.getroleid()>=775" -->
           <label>Reseller</label>
           <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
             (changed)="showRevenueShare();showShareType();" (keyUp)="showResellerName($event)"

@@ -4,8 +4,8 @@
     <toaster-container></toaster-container>
     <nb-card-header>Update Reseller Share</nb-card-header>
     <nb-card-body>
-       <ngx-loading [show]="loading"
-         [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+      <ngx-loading [show]="loading"
+        [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
       </ngx-loading>
       <form [formGroup]="shareForm" class="form-horizontal" (ngSubmit)="updateShare()">
         <div class="modal-body">
@@ -24,8 +24,8 @@
               <label>Circle</label>
               <auto-completen
                 [addclass]="{'form-control' : true,'form-control-danger':shareForm.controls.groupid.invalid&&submit}"
-                optValues="groupname" formControlName="groupid" (changed)="resellername();"
-                placeholder='Select Circle' optId="groupid" [item]="groupdata">
+                optValues="groupname" formControlName="groupid" (changed)="resellername();" placeholder='Select Circle'
+                optId="groupid" [item]="groupdata">
               </auto-completen>
             </div>
 
@@ -58,7 +58,7 @@
                 <div class="col-sm-3">
                   <label>Reseller Under<span style="color:red;">*</span></label>
                   <select formControlName="resel_under" (change)="sharevalidation();"
-                  [ngClass]="{'form-control':true,'form-control-danger':shareForm.controls.resel_under.invalid&&submit}">
+                    [ngClass]="{'form-control':true,'form-control-danger':shareForm.controls.resel_under.invalid&&submit}">
                     <option value="" selected>Select Reseller Under</option>
                     <option value="0">None</option>
                     <option value="1">SubIsp bulk</option>
@@ -77,7 +77,7 @@
                     Share is
                     Required!</small>
                 </div>
-                 <div class="col-sm-3" *ngIf="val['resel_under']!=0">
+                <div class="col-sm-3" *ngIf="val['resel_under']!=0">
                   <label style="white-space: nowrap;">Sub ISP Share <span style="color:red;">*</span></label>
                   <input type="number" formControlName="sisp_share" placeholder="SUBISP Share"
                     [ngClass]="{'form-control':true,'form-control-danger':shareForm.controls.sisp_share.invalid&&submit}">
@@ -109,7 +109,19 @@
               </div>
               <div class="form-group row" *ngIf="val['share_type']==2">
                 <div class="col-sm-3">
-                  <b style="color:darkblue">Upload Subplan share Details </b>
+                  <label>Share Mode<span style="color:red;">*</span></label>
+                  <select formControlName="share_mode"
+                    [ngClass]="{'form-control':true,'form-control-danger':shareForm.controls.share_mode.invalid&&submit}">
+                    <option value="" selected>Select Reseller Under</option>
+                    <option value="0">All Plan</option>
+                    <option  *ngIf="rdata['sharing_type']==2" value="1">Selected Plan</option>
+
+                  </select>
+                  <small *ngIf="shareForm.controls.share_mode.invalid&&submit" class="form-text error">Sharing Mode is
+                    Required!</small>
+                </div>
+                <div class="col-sm-3" *ngIf="rdata['sharing_type']==2 && this.val['share_mode']==1">
+                  <label><b style="color:darkblue">Upload Subplan share Details </b></label>
                   <input #myFile type="file" (change)="changeListener($event.target.files[0])" class="form-control"
                     accept=".xlsx" />
                 </div>

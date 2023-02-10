@@ -25,7 +25,7 @@ export class DepositpaylistComponent implements OnInit {
   submit: boolean = false; addNas; data; search; bus_name; bus; group1; group_name; profile; resel_type;
   res1; res_name; count; dep_by; depositer; dep_amt; totalDepositAmount;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; start_date: any; end_date: any;
-  depReason = 0; reasondata; dd: any; mm: any;showtype=0
+  depReason = 0; reasondata; dd: any; mm: any; showtype = 0
 
 
   constructor(
@@ -70,24 +70,19 @@ export class DepositpaylistComponent implements OnInit {
 
   async showBusName($event = '') {
     this.bus = await this.busser.showBusName({ like: $event });
-
-    // console.log(result)
   }
 
   async showGroupName($event = '') {
     this.group1 = await this.groupser.showGroupName({ bus_id: this.bus_name, like: $event });
-    // console.log("group:", result)
   }
 
   async showProfileReseller($event = '') {
     this.profile = await this.reselser.showProfileReseller({ dep_role: 1, bus_id: this.bus_name, like: $event });
-    // console.log("prof:", result)
   }
 
   async showResellerName($event = '') {
-    // console.log('inside', this.resel_type)
-    this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, groupid: this.group_name, role: this.resel_type, like: $event });
-    // console.log("resellername",result)
+    if (this.resel_type)
+      this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, groupid: this.group_name, role: this.resel_type, like: $event });
   }
 
   async deposited($event = '') {
@@ -144,6 +139,7 @@ export class DepositpaylistComponent implements OnInit {
 
     await this.initiallist();
     await this.showBusName();
+    await this.showGroupName();
     await this.showProfileReseller();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();
@@ -171,7 +167,6 @@ export class DepositpaylistComponent implements OnInit {
     this.data = result[0];
     this.count = result[1]['tot'];
     this.totalDepositAmount = result[1]['deposit'];
-    // console.log(result)
     this.setPage();
   }
 
@@ -184,7 +179,6 @@ export class DepositpaylistComponent implements OnInit {
     }
   }
   setPage() {
-    // console.log(this.data);
     this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
   }
@@ -216,9 +210,9 @@ export class DepositpaylistComponent implements OnInit {
           param['RESELLER BUSINESS NAME'] = temp[i]['company']
         }
         param['DEPOSIT MODE'] = temp[i]['dflag'] == 1 ? 'Depost' : temp[i]['dflag'] == 2 ? 'Received' : temp[i]['dflag'] == 3 ?
-          'Deposit Against Payment' : temp[i]['dflag'] == 4 ? 'Commission' : temp[i]['dflag']==5?'Debit':temp[i]['dflag']==6?'Credit':'--';
+          'Deposit Against Payment' : temp[i]['dflag'] == 4 ? 'Commission' : temp[i]['dflag'] == 5 ? 'Debit' : temp[i]['dflag'] == 6 ? 'Credit' : '--';
         param['DEPOSIT TYPE'] = temp[i]['deposit_type'] == 1 ? 'Cash' : temp[i]['deposit_type'] == 2 ? 'Bank Payment' :
-          temp[i]['deposit_type'] == 3 ? 'Net Banking' : temp[i]['deposit_type'] == 4 ? 'UPI' :temp[i]['deposit_type']==6?'Wallet': 'Deposit';
+          temp[i]['deposit_type'] == 3 ? 'Net Banking' : temp[i]['deposit_type'] == 4 ? 'UPI' : temp[i]['deposit_type'] == 6 ? 'Wallet' : 'Deposit';
         param['ORDER ID'] = temp[i]['txnid'];
         param['UTR'] = temp[i]['utr'] == null ? '--' : temp[i]['utr'];
         param['DEPOSIT AMOUNT'] = temp[i]['deposit_amount'];

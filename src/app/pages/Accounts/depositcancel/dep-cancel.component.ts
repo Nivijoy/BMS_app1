@@ -22,15 +22,12 @@ export class DepositCancelComponent implements OnInit {
 	) { }
 
 	closeModal() {
-		// console.log(this.item)
 		this.activeModal.close(true);
 		this.router.navigate(['/pages/Accounts/depositlist']);
 	}
 
 	async ngOnInit() {
 		this.createForm();
-		console.log((this.item));
-
 	}
 
 	async updatedep_cancel() {
@@ -38,7 +35,6 @@ export class DepositCancelComponent implements OnInit {
 		this.DepositCancelForm.value['status'] = 1;
 
 		let result = await this.ser.cancelDeposit(this.DepositCancelForm.value);
-		console.log(result);
 		const toast: Toast = {
 			type: result[0]['error_msg'] == 0 ? 'success' : 'warning',
 			title: result[0]['error_msg'] == 0 ? 'Success' : 'Failure',

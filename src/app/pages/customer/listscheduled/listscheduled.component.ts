@@ -161,6 +161,7 @@ export class ListScheduledCustComponent implements OnInit {
           temp[i]['schedul_date'] = this.datePipe.transform(temp[i]['lm_date'], 'd MMM y h:mm:ss a');
           param['SCHEDULED DATE'] = temp[i]['schedul_date'];
         }
+        param['SCHEDULE COMPLETED'] = this.datePipe.transform(temp[i]['schedule_completed_on'], 'd MMM y h:mm:ss a');
         param['STATUS'] = temp[i]['schedule_status'] == 1 ? 'On Process' : temp[i]['schedule_status'] == 2 ? 'Completed'
           : temp[i]['schedule_status'] == 3 ? 'Canceled' : temp[i]['schedule_status'] == 4 ? 'Already Done' : temp[i]['schedule_status'] == 5 ? 'Initialized' : '--';
         tempdata[i] = param

@@ -36,7 +36,6 @@ export class ChangedateComponent implements OnInit {
     }
     this.ChangeDateForm.value['invid'] = this.item['invid'];
     let result = await this.account.updateEinvoice(this.ChangeDateForm.value)
-    console.log(result)
     const toast: Toast = {
       type: result['error_msg'] == 0 ? 'success' : 'warning',
       title: result['error_msg'] == 0 ? 'Success' : 'Failure',

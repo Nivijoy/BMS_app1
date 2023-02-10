@@ -14,7 +14,7 @@ import { NgbModal,NgbModule} from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class InvoiceReceiptComponent implements OnInit {
-	submit: boolean = false; item; modalHeader; data; receiptdata; receiptlist;
+	submit: boolean = false; item; modalHeader; data; receiptdata; receiptlist;bus_address;
 	constructor(
 		private alert: ToasterService,
 		private ser: S_Service,
@@ -50,6 +50,7 @@ export class InvoiceReceiptComponent implements OnInit {
 		let result = await this.acntser.listInvReceipt({ invrecid: invrecid })
 		if (result) {
 			this.receiptdata = result[0][0];
+			this.bus_address = this.receiptdata['bus_address'].replace(/<br>/g, '');
 			// this.rcptvalue = this.receiptdata ? result[1][0]['receipt_num'] : '';
 			// console.log("res", result)
 			// console.log('pay', this.data['pay_status'])

@@ -878,6 +878,10 @@
                                           <label for="amac">Mac Address</label>
                                           <input class="form-control" name="amac" id="amac" formControlName="amac"
                                              type="text" placeholder="MAC Format: XX:XX:XX:XX:XX:XX" maxlength="60">
+                                             <small *ngIf="AddSubsForm.hasError('required','amac')&&submit"
+                                             class="form-text error">
+                                            Allow MAC is
+                                             required! </small>
                                        </div>
                                     </div>
                                     <div class="form-group row">

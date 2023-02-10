@@ -18,6 +18,10 @@ import { ListVoiceNumComponent } from './list-voicenum/list-voicenum.component';
 import { BulkUpdateLimitComponent } from './bulk-updatelimit/bulk-updatelimit.component';
 import { BulkupdateComponent } from './bulkupdate/bulkupdate.component';
 import { DataUsageComponent } from './data-usage/data-usage.component';
+import { RegisterCardUserComponent } from './register-card-user/register-card-user.component';
+import { ListCardUserComponent } from './list-card-user/list-card-user.component';
+import { AddCardUserComponent } from './add-card-user/add-card-user.component';
+
 
 const routes: Routes = [{
   path: '',
@@ -39,6 +43,11 @@ const routes: Routes = [{
     { path: 'bulk-updatelimit', component: BulkUpdateLimitComponent },
     { path: 'bulkupdate', component: BulkupdateComponent },
     { path: 'data-usage', component: DataUsageComponent },
+    { path: 'register-card-user', component: RegisterCardUserComponent },
+    { path: 'list-card-user', component: ListCardUserComponent },
+    { path: 'add-card-user', component: AddCardUserComponent },
+    { path: 'update-card-user', component: AddCardUserComponent }
+
   ],
 }];
 
@@ -67,4 +76,7 @@ export const routedComponents = [
   BulkUpdateLimitComponent,
   BulkupdateComponent,
   DataUsageComponent,
+  RegisterCardUserComponent,
+  ListCardUserComponent,
+  AddCardUserComponent
 ];

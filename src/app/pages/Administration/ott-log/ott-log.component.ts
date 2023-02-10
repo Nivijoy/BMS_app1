@@ -8,6 +8,7 @@ const EXCEL_EXTENSION = '.xlsx';
 import { OTTPlanComponent } from '../ott-plan/ott-plan.component';
 import { OttcountComponent } from '../ottcount/ottcount.component';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class OttLogComponent implements OnInit {
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
+  ottstatus='';start_date='';end_date='';
 
 
   constructor(
@@ -37,6 +39,7 @@ export class OttLogComponent implements OnInit {
     private account: AccountService,
     private reselser: ResellerService,
     private custser: CustService,
+    private datePipe: DatePipe
 
   ) { }
 
@@ -91,7 +94,10 @@ export class OttLogComponent implements OnInit {
         uid: this.cust_name,
         invid: this.invoice_num,
         ottplan_code: this.ottplan_code,
-        ottplan_name: this.ottplan_name
+        ottplan_name: this.ottplan_name,
+        ottstatus:this.ottstatus,
+        start_date:this.start_date,
+        end_date: this.end_date
       })
     // console.log("result")
     this.loading = false;
@@ -104,7 +110,7 @@ export class OttLogComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.group_name = ''; this.res_name = ''; this.invoice_num = ''; this.cust_name = '';
-    this.ottplan_code = ''; this.ottplan_name = '';
+    this.ottplan_code = ''; this.ottplan_name = '';this.ottstatus = '';this.start_date='';this.end_date='';
     await this.initiallist();
   }
 
@@ -116,7 +122,10 @@ export class OttLogComponent implements OnInit {
         uid: this.cust_name,
         invid: this.invoice_num,
         ottplan_code: this.ottplan_code,
-        ottplan_name: this.ottplan_name
+        ottplan_name: this.ottplan_name,
+        ottstatus:this.ottstatus,
+        start_date:this.start_date,
+        end_date: this.end_date
       })
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -132,6 +141,9 @@ export class OttLogComponent implements OnInit {
         param['TIMEUNIT'] = temp[i]['dayormonth'] == 1 ? temp[i]['ottdays'] + "Days" : temp[i]['days'] + "Months";
         param['AMOUNT'] = temp[i]['ottamount'];
         param['STATUS'] = temp[i]['ottstatus'] == 1 ? 'Processing' : temp[i]['ottstatus'] == 2? 'Activated': temp[i]['ottstatus'] == 3? 'Cancelled' : 'Need To check';
+        temp[i]['cdate'] = this.datePipe.transform(temp[i]['cdate'], 'd MMM y hh:mm:ss a')
+        param['GENERATED DATE'] = temp[i]['cdate'];
+
 
         tempdata[i] = param
       }

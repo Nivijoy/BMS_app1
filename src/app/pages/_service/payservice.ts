@@ -35,5 +35,9 @@ export class PaymentService {
   async paytmStatus(params){
     return await this.http.post("/api/pay/paytmtranstatus",params).toPromise();
   }
+
+  async checkAggregatorStatus(params){
+    return await this.http.post("/api/pay/checkAggregatorStatus",params).toPromise();
+  }
   
 }

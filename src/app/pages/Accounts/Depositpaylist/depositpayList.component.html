@@ -43,14 +43,14 @@
         </div>
         <div class="col-sm-2" *ngIf="(role.getroleid()>=775 || role.getroleid() > 444)" [hidden]="showtype==1">
           <label>Reseller Name</label>
-          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
+          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company" (keyUp)="showResellerName($event)"
             placeholder='Select Reseller' id="res_name" [item]="res1">
           </auto-completen>
         </div>
         <div class="col-sm-2" *ngIf="role.getroleid()>=775">
           <label>Deposited By</label>
           <auto-completen [(ngModel)]="dep_by" addclass="form-control" optValues="res_name"
-            placeholder='Select Depositers' (kryUp)="deposited($event)" id="dep_by" [item]="depositer">
+            placeholder='Select Depositers' (keyUp)="deposited($event)" id="dep_by" [item]="depositer">
           </auto-completen>
         </div>
         <div class="col-sm-2">

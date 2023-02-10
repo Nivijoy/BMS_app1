@@ -14,7 +14,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 })
 
 export class AuthpassComponent implements OnInit {
-  submit: boolean = false; changeauthPassForm; datas; id; modalHeader; config;
+  submit: boolean = false; changeauthPassForm; datas; id; modalHeader; config;item;
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -25,7 +25,11 @@ export class AuthpassComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close();
+    if(this.item.card_flag){
+      this.router.navigate(['/pages/cust/list-card-user'])
+    }else{
     this.router.navigate(['/pages/cust/viewcust'])
+    }
   }
   ngOnInit() {
     this.createForm();
@@ -38,7 +42,12 @@ export class AuthpassComponent implements OnInit {
       return;
     }
     // console.log('qqqq')
-    this.changeauthPassForm.value['id'] = this.id;
+    // this.changeauthPassForm.value['id'] = this.id;
+    if(this.id){
+      this.changeauthPassForm.value['id'] = this.id;
+    }else{
+      this.changeauthPassForm.value['id'] = this.item['id'];
+    }
     const md5 = new Md5;
     this.changeauthPassForm.value['password_en'] = md5.appendStr(this.changeauthPassForm.value['password']).end();
     // this.changeauthPassForm.value['password_en']= this.changeauthPassForm.value['password'] ;

@@ -295,6 +295,10 @@ export class EditServiceComponent implements OnInit {
     });
   }
 
+  assignCardService() {
+    if (this.EditServiceForm.value.srv_type == 1) this.EditServiceForm.get('Service').setValue('0');
+  }
+
   createForm() {
     this.EditServiceForm = new FormGroup({
       // serassign_type: new FormControl(this.editdatas ? this.editdatas : ''),
@@ -308,6 +312,7 @@ export class EditServiceComponent implements OnInit {
       datadl_rate: new FormControl(this.editdatas ? this.editdatas['downrate'] : ''),
       dataul_rate: new FormControl(this.editdatas ? this.editdatas['uprate'] : ''),
       Service: new FormControl(this.editdatas ? (this.editdatas['srvtype']) : '', Validators.required),
+      srv_type: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['srv_type']): '0', Validators.required),
       Expiry: new FormControl(this.editdatas ? this.editdatas['limitexpiration'] : '', Validators.required),
       ser_validity: new FormControl(this.editdatas ? this.editdatas['svalidity'] : ''),
       st_date: new FormControl(''),

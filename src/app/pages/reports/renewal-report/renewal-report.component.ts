@@ -26,7 +26,7 @@ export class RenewalReportComponent implements OnInit {
   profile; resel_type = ''; res1; res_name = ''; invoice_num = ''; paymentForm; tot; Download; inv_type = 1; pack; count; cust_name = '';
   group_name = ''; subplandata; custname; dtype = ''; inv_status = ''; from_date = ''; to_date = ''; from_edate = ''; to_edate = '';
   pay_status = ''; start_date = ''; end_date = ''; invnum;
-  invamnt; totinvamnt; taxamount;sbranch; s_branch;
+  invamnt; totinvamnt; taxamount; sbranch; s_branch;
   index = -1; invdetails; share; servtype; serv_type;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -61,7 +61,7 @@ export class RenewalReportComponent implements OnInit {
       await this.showUser();
       await this.showService();
       await this.showUser();
-      await this.showResellerBranch();  
+      await this.showResellerBranch();
     }
     if (this.role.getroleid() < 775) {
       await this.initiallist();
@@ -127,30 +127,30 @@ export class RenewalReportComponent implements OnInit {
   changeclear(item) {
     if (item == 1) {
       this.group_name = ''; this.resel_type = ''; this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 2) {
       this.resel_type = ''; this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 3) {
       this.res_name = ''; this.invoice_num = ''; this.sername = ''; this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 4) {
       this.invoice_num = ''; this.sername = ''; this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 5) {
       this.sername = ''; this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 6) {
       this.sub_plan = '';
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
     if (item == 7) {
-      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';this.s_branch='';
+      this.cust_name = ''; this.inv_type = 1; this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.s_branch = '';
     }
 
   };
@@ -160,7 +160,7 @@ export class RenewalReportComponent implements OnInit {
     this.sername = ''; this.sub_plan = ''; this.inv_type = 1;
     this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = '';
     this.serv_type = ''; this.group1 = ''; this.profile = ''; this.res1 = '';
-    this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';this.s_branch='';
+    this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = ''; this.s_branch = '';
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();
@@ -171,29 +171,9 @@ export class RenewalReportComponent implements OnInit {
   async initiallist() {
     this.loading = true;
     let result;
-    if(this.inv_type == 1){
-      result = await this.ser.listInvoice(
-        {
-          index: (this.page - 1) * this.limit,
-          limit: this.limit,
-          bus_id: this.bus_name,
-          groupid: this.group_name,
-          resel_id: this.res_name,
-          inv_no: this.invoice_num,
-          uid: this.cust_name,
-          srvid: this.sername,
-          subplan: this.sub_plan,
-          invtype: this.inv_type,
-          invstatus: this.inv_status,
-          paystatus: this.pay_status,
-          start_date: this.start_date,
-          end_date: this.end_date,
-          srv_type: this.serv_type,
-          role: this.resel_type,
-          location: this.s_branch
-          // res_id:this.reseller_under,
-        })
-    }else{
+    console.log('Invtype', this.inv_type);
+
+    if (this.inv_type == 2) {
       result = await this.ser.listGSTInvoice(
         {
           index: (this.page - 1) * this.limit,
@@ -215,8 +195,30 @@ export class RenewalReportComponent implements OnInit {
           location: this.s_branch
           // res_id:this.reseller_under,
         })
+    } else {
+      result = await this.ser.listInvoice(
+        {
+          index: (this.page - 1) * this.limit,
+          limit: this.limit,
+          bus_id: this.bus_name,
+          groupid: this.group_name,
+          resel_id: this.res_name,
+          inv_no: this.invoice_num,
+          uid: this.cust_name,
+          srvid: this.sername,
+          subplan: this.sub_plan,
+          invtype: this.inv_type ? this.inv_type : '',
+          invstatus: this.inv_status,
+          paystatus: this.pay_status,
+          start_date: this.start_date,
+          end_date: this.end_date,
+          srv_type: this.serv_type,
+          role: this.resel_type,
+          location: this.s_branch
+          // res_id:this.reseller_under,
+        })
     }
-    if(result){
+    if (result) {
       this.data = result[0];
       this.count = result[1]['tot'];
       this.invamnt = result[1]['inv_amount'];
@@ -224,12 +226,12 @@ export class RenewalReportComponent implements OnInit {
       this.totinvamnt = result[1]['totamt'];
       this.loading = false;
       this.setPage();
-    }else this.loading = false;
-    
+    } else this.loading = false;
 
-     
-    
-   
+
+
+
+
     // console.log("Invlist",result)
   }
 
@@ -250,7 +252,7 @@ export class RenewalReportComponent implements OnInit {
   async download() {
     this.loading = true;
     let res;
-    if(this.inv_type == 1){
+    if (this.inv_type == 1) {
       res = await this.ser.listInvoice({
         limit: this.limit,
         bus_id: this.bus_name,
@@ -270,7 +272,7 @@ export class RenewalReportComponent implements OnInit {
         location: this.s_branch
 
       })
-    }else{
+    } else {
       res = await this.ser.listGSTInvoice({
         limit: this.limit,
         bus_id: this.bus_name,
@@ -291,7 +293,7 @@ export class RenewalReportComponent implements OnInit {
 
       })
     }
-    
+
     this.loading = false;
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -309,12 +311,12 @@ export class RenewalReportComponent implements OnInit {
           param['RESELLER NAME'] = temp[i]['company'];
         }
         param['INVOICE NO'] = temp[i]['rollid'];
-        param['RENEWAL TYPE'] = temp[i]['pay_through'] ==1? 'Manual' : temp[i]['pay_through']==2? 'Scheduled' : temp[i]['pay_through'] == 3? 
-        'Through Gateway By Subscriber' : 'Scheduled By Subscriber'
+        param['RENEWAL TYPE'] = temp[i]['pay_through'] == 1 ? 'Manual' : temp[i]['pay_through'] == 2 ? 'Scheduled' : temp[i]['pay_through'] == 3 ?
+          'Through Gateway By Subscriber' : 'Scheduled By Subscriber'
         param['SUBSCRIBER NAME'] = temp[i]['user_name'];
         param['PROFILE ID'] = temp[i]['userid'];
         param['MOBILE'] = temp[i]['mobile'];
-        param['IP TYPE'] = temp[i]['ipmodecpe'] ==0? 'NAS Pool or DHCP': temp[i]['ipmodecpe'] ==1? 'Ippool': temp[i]['ipmodecpe'] == 2? 'Static': '--';
+        param['IP TYPE'] = temp[i]['ipmodecpe'] == 0 ? 'NAS Pool or DHCP' : temp[i]['ipmodecpe'] == 1 ? 'Ippool' : temp[i]['ipmodecpe'] == 2 ? 'Static' : '--';
         param['BRANCH'] = temp[i]['branch'] || '--';
         param['SERVICE TYPE'] = temp[i]['service_name'];
         param['SERVICE NAME'] = temp[i]['srvname'];
@@ -330,10 +332,11 @@ export class RenewalReportComponent implements OnInit {
         temp[i]['expiry_date'] = this.datePipe.transform(temp[i]['expiry_date'], 'd MMM y hh:mm:ss a')
         param['SERVICE EXPIRY'] = temp[i]['expiry_date'];
         param['PAY STATUS'] = temp[i]['pay_status'] == 2 ? 'Paid' : 'Unpaid';
-        temp[i]['paydate'] = temp[i]['paydate'] == "0000-00-00 00:00:00"?'': this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')
+        temp[i]['paydate'] = temp[i]['paydate'] == "0000-00-00 00:00:00" ? '' : this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')
         param['PAY DATE'] = temp[i]['pay_status'] == 2 ? temp[i]['paydate'] : '--';
         param['COLLECTED'] = temp[i]['sub_payed_amt'];
         param['RENEWAL BY'] = temp[i]['renewalby_name'];
+        param['RENEWAL NOTE'] = temp[i]['comment1'] ? temp[i]['comment1'] : '';
         tempdata[i] = param
       }
       const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);
@@ -344,7 +347,7 @@ export class RenewalReportComponent implements OnInit {
   }
 
   View(invdata, view) {
-    if(this.inv_type == 2) view =2
+    if (this.inv_type == 2) view = 2
     else view = 1
     const activeModal = this.nasmodel.open(ViewInvoiceComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'View Invoice';
@@ -370,8 +373,8 @@ export class RenewalReportComponent implements OnInit {
     })
   }
 
-   
- 
+
+
   view_user(item) {
     localStorage.setItem('details', JSON.stringify(item));
     this.router.navigate(['/pages/cust/viewcust']);

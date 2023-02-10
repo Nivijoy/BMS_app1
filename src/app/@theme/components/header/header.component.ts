@@ -77,7 +77,6 @@ export class HeaderComponent implements OnInit {
     this.analyticsService.trackEvent('startSearch');
   }
   //   Add_profile(){
-  //     console.log("inside AddProfile")
   //     const activeModal = this.nasmodel.open(ChangepasswordComponent, { size: 'lg', container: 'nb-layout' });
 
   //     activeModal.componentInstance.modalHeader = 'Change Password';

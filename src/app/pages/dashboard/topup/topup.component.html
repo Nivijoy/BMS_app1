@@ -23,10 +23,13 @@
          <textarea formControlName="trnRemarks" placeholder="Remarks" 
          [ngClass]="{'form-control':true,'form-control-danger':TopupForm.controls.trnRemarks.invalid&&submit}"></textarea>
         </div>
-        <small (click)="condition=!condition">
-           <span style="padding-left: 209px;color: red;cursor: pointer;line-height: 25px;">T & C Applied</span>
-        </small>
-        <div class="col-sm-12" [hidden]="!condition">
+         <button class="btn btn-outline" type="button" style="margin:35px;color: red;cursor: pointer;line-height: 25px;" (click)="onNavigate()">
+            Terms & Conditions Applied
+        </button>
+        <!-- <small (click)="condition=!condition">
+         <span style="padding-left: 209px;color: red;cursor: pointer;line-height: 25px;">T & C Applied</span>
+      </small> -->
+        <!-- <div class="col-sm-12" [hidden]="!condition">
            <p style="white-space: break-spaces;">
             <b>1.</b>LEBSPL (Limras Eronet Broadband services Pvt Ltd.) 
             shall perform its obligations and do inspection under 
@@ -50,7 +53,7 @@
             <b>1.</b>The subscriber shall be provided a Account Number to enable the subscriber to use LEBSPL services ,subject to the compliance of the terms and conditions of this agreement .including any modification alterations, additions, substitution therein, from time to time. The Account number should not be shared to any other.
             <br><b>2.</b>We collect, use and are responsible for certain personal data about you.
            </p>
-        </div>
+        </div> -->
      </div>
   </div>
   <div class="modal-footer" >

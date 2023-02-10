@@ -79,6 +79,12 @@ export class CustService {
   async getImage(params) {
     return await this.http.get("/api/subs/rrdImage", { params }).toPromise();
   }
+  // async downloadFile(params) {
+  //   return await this.http.get("/api/subs/downloadDocument", { params,responseType: 'arraybuffer' }).toPromise();
+  // }
+  downloadFile(params) {
+    return this.http.get("/api/subs/downloadDocument", { params, responseType: 'blob' });
+  }
   async getMacBind(params) {
     return await this.http.post("/api/subs/getMacBind", params).toPromise();
   }
@@ -193,6 +199,20 @@ export class CustService {
   async bulkPwdUpdate(params) {
     return await this.http.post("/api/subs/bulkPwdUpdate", params).toPromise();
   }
+
+  async registerCardUser(params){
+    return await this.http.post("/api/subs/registerCardUser",params).toPromise();
+  }
+  async listCardUser(params){
+    return await this.http.post("/api/subs/listCardUser",params).toPromise();
+  }
+  async addCardUser(params) {
+    return await this.http.post("/api/subs/addCardUser", params).toPromise();
+  }
+  async updateCardUser(params) {
+    return await this.http.post("/api/subs/updateCardUser", params).toPromise();
+  }
+ 
 
 
 }

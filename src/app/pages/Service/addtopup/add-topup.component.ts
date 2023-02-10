@@ -7,13 +7,13 @@ import { S_Service, BusinessService, GroupService, RoleService, NasService, Rese
 @Component({
   selector: 'addtopup',
   templateUrl: './add-topup.component.html',
-  styleUrls:['./add-topup.component.scss'],
+  styleUrls: ['./add-topup.component.scss'],
 })
 
 export class AddTopupComponent implements OnInit {
   submit: boolean = false; AddTopupForm; id; editdatas; resell; busname; grup; pack; alnas: any = []; nasresel: any = []; buresellitems;
-   nas; searchresell = ''; reseldata; resid; state = ''; data = ''; mapdata;
-   resdata;
+  nas; searchresell = ''; reseldata = []; resid; state = ''; data = ''; mapdata;
+  resdata;
   config;
   constructor(
     private router: Router,
@@ -37,14 +37,7 @@ export class AddTopupComponent implements OnInit {
   }
 
   async reseller($event = '') {
-    if (this.role.getroleid() >= 777) {
-      this.resdata = await this.resser.showResellerName({  edit_flag:1,except:1,bus_id: this.AddTopupForm.value['bus_id'], groupid: this.AddTopupForm.value['groupid'],like:$event });
-      // console.log('pack', res)
-    }
-    if (this.role.getroleid() <= 775) {
-      this.resdata = await this.resser.showResellerName({ edit_flag:1,except:1,like:$event});
-      // console.log(this.pack)
-    }
+    this.resdata = await this.resser.showResellerName({ edit_flag: 1, except: 1, bus_id: this.AddTopupForm.value['bus_id'], groupid: this.AddTopupForm.value['groupid'], like: $event });
   }
 
   async resellcheck(check) {
@@ -57,7 +50,9 @@ export class AddTopupComponent implements OnInit {
   }
 
   async addtopup() {
-    if (this.AddTopupForm.invalid) {
+
+    if (this.AddTopupForm.invalid || !this.reseldata.length) {
+      window.alert('Please fill all mandatory fields or select any one reseller')
       this.submit = true;
       return;
     }
@@ -85,8 +80,9 @@ export class AddTopupComponent implements OnInit {
     if (this.role.getroleid() <= 777) {
       this.AddTopupForm.get('bus_id').setValue(this.role.getispid());
       await this.GroupName();
+      await this.reseller();
     }
-    if(this.role.getroleid()<775){
+    if (this.role.getroleid() < 775) {
       this.AddTopupForm.get('groupid').setValue(this.role.getgrupid());
       await this.reseller();
     }
@@ -94,14 +90,14 @@ export class AddTopupComponent implements OnInit {
 
   createForm() {
     this.AddTopupForm = new FormGroup({
-      bus_id: new FormControl('',Validators.required),
-      groupid: new FormControl('',Validators.required),
-      topup_name: new FormControl('',Validators.required),
-      limit_size: new FormControl('',Validators.required),
-      limit : new FormControl('',Validators.required),
-      tax_type: new FormControl('',Validators.required),
-      price : new FormControl('',Validators.required),
-      status : new FormControl(true,Validators.required),
+      bus_id: new FormControl('', Validators.required),
+      groupid: new FormControl(''),
+      topup_name: new FormControl('', Validators.required),
+      limit_size: new FormControl('', Validators.required),
+      limit: new FormControl('', Validators.required),
+      tax_type: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      status: new FormControl(true, Validators.required),
     });
   }
 }

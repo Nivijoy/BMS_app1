@@ -78,7 +78,6 @@ export class CancelGSTInvoiceComponent implements OnInit {
 
   async subplanshow($event = '') {
     this.subplandata = await this.packser.showSubPlan({ srvid: this.sername, like: $event })
-    // console.log(res);
   }
 
   async showService($event = '') {
@@ -87,22 +86,18 @@ export class CancelGSTInvoiceComponent implements OnInit {
 
   async showGroupName($event = '') {
     this.group1 = await this.groupser.showGroupName({ bus_id: this.bus_name, srvid: this.sername, like: $event })
-    // console.log("group:", result)
   }
 
   async showBusName($event = '') {
     this.bus = await this.busser.showBusName({ like: $event })
-    // console.log(result)
   }
 
   async showinvoicenum($event = '') {
     this.invnum = await this.ser.showInvoiceNo({ bus_id: this.bus_name, like: $event });
-    // console.log(this.invnum);
   }
 
   async showProfileReseller($event = '') {
     this.profile = await this.reselser.showProfileReseller({ bus_id: this.bus_name, like: $event })
-    // console.log("prof:", result)
   }
   // alertmsg() {
   //   if (!this.resel_type) {
@@ -110,20 +105,16 @@ export class CancelGSTInvoiceComponent implements OnInit {
   //   }
   // }
   async showResellerName($event = '') {
-    // console.log('inside', this.resel_type)
     if (this.resel_type) {
       this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, groupid: this.group_name, role: this.resel_type, like: $event })
     }
-    // console.log(result)
   }
 
   async showUser($event = '') {
     this.custname = await this.custser.showUser({ bus_id: this.bus_name, groupid: this.group_name, resel_id: this.res_name, srvid: this.sername, like: $event })
-    // console.log("customer", result)
   }
   async servicetype($event = '') {
     this.servtype = await this.busser.showServiceType({ sertype: 1, bus_id: this.bus_name, like: $event })
-    // console.log("sertype",result);
   }
   changeclear(item) {
     if (item == 1) {
@@ -232,7 +223,6 @@ export class CancelGSTInvoiceComponent implements OnInit {
     this.totreselshare = result[1]['reseller_amount'];
     this.loading = false;
     this.setPage();
-    // console.log("Invlist",result)
   }
 
   getlist(page) {
@@ -244,7 +234,6 @@ export class CancelGSTInvoiceComponent implements OnInit {
     }
   }
   setPage() {
-    // console.log(this.data);
     this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
   }
@@ -264,7 +253,7 @@ export class CancelGSTInvoiceComponent implements OnInit {
       start_date: this.start_date,
       end_date: this.end_date,
       srv_type: this.serv_type,
-      role:this.resel_type
+      role: this.resel_type
     })
     if (res) {
       let tempdata = [], temp: any = res[0];

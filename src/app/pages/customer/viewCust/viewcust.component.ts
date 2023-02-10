@@ -11,7 +11,7 @@ import { RenewCustComponent } from '../RenewCustomer/renewCust.component';
 import { ShowAuthpassComponent } from '../showauthpassword/showauthpass.component';
 import {
   AccountService, CustService, RoleService, PagerService,
-  ComplaintService, S_Service, OperationService, AdminuserService,ReportService
+  ComplaintService, S_Service, OperationService, AdminuserService, ReportService
 } from '../../_service/indexService';
 import { ViewInvoiceComponent } from '../../Accounts/viewinvoice/viewinvoice.component';
 import { ViewReceiptComponent } from '../../Accounts/viewreceipt/viewreceipt.component';
@@ -48,7 +48,7 @@ import { ITreeOptions } from 'angular-tree-component';
 import { toJS } from "mobx";
 import { AddSuccessComponent } from '../success/add-success.component';
 import { TopuprenewalComponent } from '../topuprenewal/topuprenewal.component';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'viewCust',
   templateUrl: './viewcust.component.html',
@@ -56,7 +56,7 @@ import { TopuprenewalComponent } from '../topuprenewal/topuprenewal.component';
   encapsulation: ViewEncapsulation.None
 
 })
-export class ViewCustComponent implements OnInit {
+export class ViewCustComponent implements OnInit{
   data: any = []; totalpage = 10; pages = [1, 2, 3, 4, 5]; id; editdata; subedit; schlist_flag;
   trafficdata: any = []; from_date = ''; to_date = ''; serid; datasplitinfo; invoicedata; imgdata; gstinvoice;
   img_result; receiptdata; img_doc; pro_pic; addr: any = 1; trafcount; totdl; totul; overaltot; name = 'angular'; complist;
@@ -67,7 +67,7 @@ export class ViewCustComponent implements OnInit {
   topup_data;
 
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; srvidData: any[] = [];
-   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname; selectdata;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname; selectdata;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
@@ -89,11 +89,14 @@ export class ViewCustComponent implements OnInit {
     private confirmservice: ConfirmationDialogService,
     private datePipe: DatePipe,
     private adminser: AdminuserService,
-    private reportser:ReportService
+    private reportser: ReportService
   ) {
     this.id = JSON.parse(localStorage.getItem('details'));
     this.schlist_flag = JSON.parse(localStorage.getItem('schedflag'))
   }
+  // ngOnDestroy(): void {
+  //    localStorage.removeItem('details')
+  // }
 
   async ngOnInit() {
     // localStorage.removeItem('array');
@@ -119,6 +122,31 @@ export class ViewCustComponent implements OnInit {
     }
   }
 
+  downloadFile(id, username) {
+     this.ser.downloadFile({ uid: id, username: username }).subscribe((resp: any) => {
+      console.log('resp', resp);
+      this.downloadFiles(resp, id)
+    }, (error: any) => {
+      console.log('error', error);
+    })
+
+  }
+
+  downloadFiles(data: any, uid) {
+     var blob, fileName;
+    if (data.type == 'image/png') {
+      blob = new Blob([data], { type: 'application/png' });
+      fileName = `${uid}.PNG`;
+
+    }
+    else {
+      blob = new Blob([data], { type: 'application/zip' });
+      fileName = `${uid}.ZIP`;
+
+    }
+    FileSaver.saveAs(blob, fileName);
+  }
+
   async view() {
     this.loading = true;
     let result = await this.ser.ViewSubscriber({ id: this.id })
@@ -126,7 +154,7 @@ export class ViewCustComponent implements OnInit {
       this.loading = false;
     }
     this.data = result || [];
-    // console.log('data',this.data)
+    console.log('data', this.data)
     this.data['addr'] = 1;
     this.serid = result['srvid'];
     // console.log("Hold", this.data.lastlogoff, 'length', this.data.length)
@@ -261,6 +289,8 @@ export class ViewCustComponent implements OnInit {
   }
 
   async getDocument() {
+    console.log('notverfiy', this.notverify);
+
     this.loading = true;
     // console.log("hit")
     var subsusername = this.data.cust_profile_id
@@ -486,10 +516,10 @@ export class ViewCustComponent implements OnInit {
 
   async invoicelist() {
     this.loading = true
-    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1,index:0,limit:10 })  // Non-GST Invoice
+    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1, index: 0, limit: 10 })  // Non-GST Invoice
     this.loading = false;
     this.invoicedata = res[0];
-   }
+  }
   async downloadInvoice() {
     this.loading = true
     let res = await this.accser.listInvoice({ uid: this.id, invtype: 1 })  // Non-GST Invoice
@@ -528,7 +558,7 @@ export class ViewCustComponent implements OnInit {
 
   async gstInvoice() {
     this.loading = true;
-    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2,index:0,limit:10 })  // GST Invoice
+    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2, index: 0, limit: 10 })  // GST Invoice
     this.loading = false;
     this.gstinvoice = resp[0];
     // console.log(res);
@@ -536,7 +566,7 @@ export class ViewCustComponent implements OnInit {
 
   async ottInvoice() {
     this.loading = true
-    let res = await this.accser.ottInvoice({ uid: this.id,index:0,limit:10 })  // Non-GST Invoice
+    let res = await this.accser.ottInvoice({ uid: this.id, index: 0, limit: 10 })  // Non-GST Invoice
     this.loading = false;
     this.ottInvoiceData = res[0];
   }
@@ -544,7 +574,7 @@ export class ViewCustComponent implements OnInit {
 
   async renewal_history() {
     this.loading = true;
-    let resp = await this.accser.renewalHistory({ uid: this.id,index:0,limit:10 });
+    let resp = await this.accser.renewalHistory({ uid: this.id, index: 0, limit: 10 });
     // console.log('Renewal History Result', resp);
     this.loading = false;
     this.renew_history = resp[0];
@@ -557,9 +587,9 @@ export class ViewCustComponent implements OnInit {
 
   }
 
-  async topupReport(){
+  async topupReport() {
     this.loading = true;
-    const resp = await this.reportser.topupReport({uid:this.id,index:0,limit:10});
+    const resp = await this.reportser.topupReport({ uid: this.id, index: 0, limit: 10 });
     this.loading = false;
     this.topup_data = resp[0];
   }
@@ -727,9 +757,9 @@ export class ViewCustComponent implements OnInit {
 
   setPage() {
     // console.log(this.data);
-       this.pager = this.pageservice.getPager(this.trafcount, this.page, this.limit);
-      this.pagedItems = this.trafficdata;
-    
+    this.pager = this.pageservice.getPager(this.trafcount, this.page, this.limit);
+    this.pagedItems = this.trafficdata;
+
     // console.log('asdfg',this.pagedItems)
   }
 
@@ -787,10 +817,10 @@ export class ViewCustComponent implements OnInit {
 
   }
 
-  renew_user(cust_id, role, cdate, edate) {
+  renew_user(cust_id, role, cdate, edate,acc_type) {
     const activeModal = this.nasmodel.open(RenewCustComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Renew Customer';
-    activeModal.componentInstance.item = { cust_id: cust_id, role: role, cdate: cdate, edate: edate }
+    activeModal.componentInstance.item = { cust_id: cust_id, role: role, cdate: cdate, edate: edate,acc_type:acc_type }
     activeModal.result.then((data) => {
       this.view();
     })

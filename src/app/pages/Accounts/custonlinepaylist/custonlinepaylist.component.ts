@@ -51,13 +51,11 @@ export class CustOnlinePaylistComponent implements OnInit {
 
   ) {
     let nowdate = new Date().toJSON().slice(0, 10);
-    console.log('Nowdate', nowdate)
     // this.dd = nowdate.getDate();
     // this.mm = nowdate.getMonth();
     // let yyyy = nowdate.getFullYear();
     // if (this.dd < 10) { this.dd = '0' + this.dd } if (this.mm < 10) { this.mm = '0' + this.mm }
     // let today = yyyy + '-' + this.mm + '-' + this.dd;
-    //  console.log('Today',today,new Date(today))
     // // this.cdate = this.end_date = nowdate.toISOString().slice(0, 10);
     this.cdate = this.end_date = nowdate;
 
@@ -80,20 +78,15 @@ export class CustOnlinePaylistComponent implements OnInit {
 
   async showBusName($event = '') {
     this.bus = await this.busser.showBusName({ like: $event });
-
-    // console.log(result)
   }
 
   async showProfileReseller($event = '') {
     this.profile = await this.reselser.showProfileReseller({ topup_role: 1, bus_id: this.bus_name, like: $event });
-
-    // console.log("prof:", result)
   }
 
   async showResellerName($event = '') {
-    // console.log('inside', this.resel_type)
-    this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, role: this.resel_type, like: $event });
-    // console.log("resellername",result)
+    if (this.resel_type)
+      this.res1 = await this.reselser.showResellerName({ bus_id: this.bus_name, role: this.resel_type, like: $event });
   }
 
   async showOrderId($event = '') {
@@ -107,7 +100,6 @@ export class CustOnlinePaylistComponent implements OnInit {
 
   async showUser($event = '') {
     this.custname = await this.custser.showUser({ bus_id: this.bus_name, role: this.resel_type, role_flag: 1, resel_id: this.res_name, like: $event })
-    // console.log("customer", this.custname)
   }
 
   changeclear(item) {
@@ -188,7 +180,6 @@ export class CustOnlinePaylistComponent implements OnInit {
 
         // res_id:this.reseller_under,
       })
-    // console.log(result)
 
     if (result) {
       this.loading = false;
@@ -207,7 +198,6 @@ export class CustOnlinePaylistComponent implements OnInit {
     }
   }
   setPage() {
-    // console.log(this.data);
     this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
   }

@@ -48,7 +48,7 @@ export class LogOffComponent implements OnInit {
       this.result = await this.cust.custdisconnect({ disconnect: [{ cust_id: cust_id, session: session }] })
     }
     // console.log('res', this.result)
-    if (this.result != []) {
+    if (this.result) {
       setTimeout(() => {
         const toast: Toast = {
           type: this.result[0]['error_msg'] == 0 ? 'success' : 'warning',

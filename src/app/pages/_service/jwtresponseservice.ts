@@ -34,8 +34,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (err.error.restore === true) {
                     //TODO: Token refreshing
                     this.getRefreshToken().subscribe((resp) => {
-                        // console.log(resp, '------------------------');
-                        // console.log("reqst", request);
                         if (resp[0]['restore'] === false) {
                             const toast: Toast = {
                                 type: resp[0]['status'] == 401 ? 'warning' : 'warning',

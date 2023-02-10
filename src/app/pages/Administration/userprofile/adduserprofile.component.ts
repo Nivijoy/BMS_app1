@@ -429,7 +429,18 @@ export class AddUserprofileComponent implements OnInit {
           ],
         },
       ],
+      
     },
+    {
+      name:'Card-users',
+      children:[
+        {id:1067, name:'Register Card user'},
+        {id:1068,name:'List Card User'},
+        {id:1069,name:'Add Card User'},
+        {id:1070,name:'Update Card User'},
+        {id:1071,name:'Update Profile Password Card User'},
+      ]
+    }
   ];
 
   options: ITreeOptions = {

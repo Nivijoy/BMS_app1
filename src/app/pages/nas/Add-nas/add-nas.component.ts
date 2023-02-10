@@ -6,9 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as FileSaver from 'file-saver';
 import * as JSXLSX from 'xlsx';
 import { GroupService, RoleService, BusinessService, SelectService, NasService } from '../../_service/indexService';
-import { ThemeModule } from '../../../@theme/theme.module';
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
 	selector: 'add-nas',
@@ -18,6 +16,10 @@ const EXCEL_EXTENSION = '.xlsx';
 export class AddNasComponent implements OnInit {
 	submit: boolean = false; AddNasForm; item; data; grup; busname; bulkdata = [];
 	bulk = []; arrayBuffer: any; failure: any[]; s = 0; f = 0; file: any[]; bulkNas = []; id; modalHeader;
+	public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+	public primaryColour = '#dd0031';
+	public secondaryColour = '#006ddd';
+	public loading = false;
 	constructor(
 		private activeModal: NgbActiveModal,
 		private alert: ToasterService,
@@ -200,7 +202,9 @@ export class AddNasComponent implements OnInit {
 
 				// console.log(this.AddNasForm.value)
 				this.bulkdata = [this.AddNasForm.value]
+				this.loading = true;
 				let result = await this.nas[method]({ bulkNas: this.bulkdata });
+				this.loading = false;
 				this.data = result;
 				// console.log(result)
 				const toast: Toast = {
@@ -217,7 +221,9 @@ export class AddNasComponent implements OnInit {
 			}
 			if (this.AddNasForm.value['create_type'] == '1') {
 				// console.log(this.bulk)
+				this.loading = true;
 				let result = await this.nas[method]({ bulkNas: this.bulk });
+				this.loading = false;
 				// console.log(result)
 				const toast: Toast = {
 					type: result[0]['error_msg'] == 0 ? 'success' : 'warning',

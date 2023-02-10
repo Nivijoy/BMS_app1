@@ -253,6 +253,24 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-4">
+                    <label>Select Service </label>
+                    <table>
+                      <td>
+                         <label class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="0"
+                               formControlName="srv_type" name="srv_type">
+                            <span class="custom-control-indicator"></span>Broadband
+                         </label>
+                      </td>
+                      <td>
+                         <label class="custom-control custom-radio">
+                            <input type="radio" value="1" class="custom-control-input"
+                               formControlName="srv_type" name="srv_type" (change)="assignCardService()">
+                            <span class="custom-control-indicator"></span>Card</label>
+                      </td>
+                   </table>
+                  </div>
+                  <div class="col-sm-4" *ngIf="AddServiceForm.value.srv_type == 0">
                     <label>Service Type <span style="color:red;">*</span></label>
                     <select
                       [ngClass]="{'form-control' : true,'form-control-danger':AddServiceForm.controls.Service.invalid&&submit}"

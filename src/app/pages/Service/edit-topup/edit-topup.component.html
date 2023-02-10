@@ -10,7 +10,7 @@
             <label>ISP Name <span style="color:red;">*</span></label>
             <select formControlName="bus_id"
               [ngClass]="{'form-control':true,'form-control-danger':EditTopupForm.controls.invalid&&submit}"
-              (change)="GroupName();">
+              (change)="GroupName();reseller();">
               <option value="" selected>Select ISP Name</option>
               <option *ngFor="let item of busname" [ngValue]=item.id>{{item.busname}}</option>
             </select>
@@ -18,14 +18,14 @@
               Required!</small>
           </div>
           <div class="col-sm-6" *ngIf="role.getroleid()>=775">
-            <label>Circle <span style="color:red;">*</span></label>
+            <label>Circle <!-- <span style="color:red;">*</span> --></label>
             <select formControlName="groupid" (change)="reseller()"
               [ngClass]="{'form-control':true,'form-control-danger':EditTopupForm.controls.groupid.invalid&&submit}">
               <option value="" selected="">Select Circle</option>
               <option *ngFor="let item of grup" [ngValue]=item.groupid>{{item.groupname}}</option>
             </select>
-            <small *ngIf="EditTopupForm.controls.bus_id.invalid&&submit" class="form-text error">Circle Name is
-              Required!</small>
+            <!-- <small *ngIf="EditTopupForm.controls.bus_id.invalid&&submit" class="form-text error">Circle Name is
+              Required!</small> -->
           </div>
         </div>
         <div class="row" >

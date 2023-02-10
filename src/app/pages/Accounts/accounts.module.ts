@@ -28,6 +28,7 @@ import { ConfirmationDialogService } from '../../confirmation-dialog/confrimatio
 import { ChangedateComponent } from './changedate/changedate.component';
 import { WalletShareComponent } from './wallet-share/wallet-share.component';
 import { ListWalletShareComponent } from './list-wallet-share/list-wallet-share.component';
+import { OnlinePaymentReportComponent } from './online-payment-report/online-payment-report.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { ListWalletShareComponent } from './list-wallet-share/list-wallet-share.
     ChangedateComponent,
     WalletShareComponent,
     ListWalletShareComponent,
+    OnlinePaymentReportComponent,
   ],
   entryComponents: [
     AddSuccessComponent,

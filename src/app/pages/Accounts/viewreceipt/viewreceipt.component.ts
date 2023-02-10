@@ -15,7 +15,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ViewReceiptComponent implements OnInit {
   modalHeader: string;
   submit: boolean; cuser: any = []; invdata; data; receiptdata; rcptvalue; paystatus; username;
-  balanceamt; totinvamnt; item; receiptlist;
+  balanceamt; totinvamnt; item; receiptlist;bus_address;
   constructor(
     private router: Router,
     private ser: AccountService,
@@ -77,6 +77,7 @@ export class ViewReceiptComponent implements OnInit {
       let result = await this.ser.listInvReceipt({ invrecid: this.data['recid'] })
       if (result) {
         this.receiptdata = result[0][0];
+        this.bus_address = this.receiptdata['bus_address'].replace(/<br>/g, '');
       }
     }
     if (this.item) {
@@ -84,6 +85,7 @@ export class ViewReceiptComponent implements OnInit {
       let result = await this.ser.listInvReceipt({ invrecid: this.item })
       if (result) {
         this.receiptdata = result[0][0];
+        this.bus_address = this.receiptdata['bus_address'].replace(/<br>/g, '');
         
       }
     }

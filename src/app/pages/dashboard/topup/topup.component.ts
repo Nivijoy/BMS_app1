@@ -5,7 +5,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaymentService } from '../../_service/indexService';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'topup',
@@ -25,7 +26,7 @@ export class TopupComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private alert: ToasterService,
     private payser: PaymentService,
-    private router: Router
+    private router: Router,
   ) { }
 
   closeModal() {
@@ -35,7 +36,6 @@ export class TopupComponent implements OnInit {
 
   async ngOnInit() {
     await this.createForm();
-
   }
 
   async addPay() {
@@ -53,24 +53,25 @@ export class TopupComponent implements OnInit {
     }
     // console.log('Value', this.TopupForm.value)
     let res = await this.payser.payment(this.TopupForm.value);
-    console.log('Response--',res);
-    
+    console.log('Response--', res);
+
     res = JSON.parse(res);
     console.log('Response-----------', res);
-    // console.log(res[0]);
-    // console.log(res['error_msg']);
+
     if (res['error_msg'] == 0) {
-      // console.log(res['ldata']);
-      // let ldata=res['ldata'];
+
       // let header = new HttpHeaders();
       // header = header.set('Content-Text', 'text/html');
+      // header = header.append('Authorization', 'y8tNAC1Ar0Sd8xAHGjZ817UGto5jt37zLJSX/NHK3ok=')
+
       const div = document.createElement('div');
       div.innerHTML = res['ldata'];
       while (div.children.length > 0) {
         document.body.appendChild(div.children[0])
       }
       const form: any = document.getElementById("f1");
-       form.submit();
+      form.submit()
+
       if (res) {
         this.loading = false
       }
@@ -99,7 +100,7 @@ export class TopupComponent implements OnInit {
 
     //  } 
 
-  }p
+  } p
 
   async paysucess() {
     let sucres = await this.payser.paysuccess({});
@@ -115,5 +116,9 @@ export class TopupComponent implements OnInit {
       // pay_mode : new FormControl('1',Validators.required),
       trnRemarks: new FormControl(''),
     });
+  }
+
+  onNavigate() {
+    window.open("http://www.bluelotusservices.com/terms.php#Terms", "_blank");
   }
 }

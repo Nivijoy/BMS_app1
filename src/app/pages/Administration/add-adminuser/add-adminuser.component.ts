@@ -47,7 +47,7 @@ export class AddAdminuserComponent implements OnInit {
   }
 
   async department() {
-    if (this.role.getroleid() > 777) {
+    if (this.role.getroleid() >= 777) {
       this.deptdata = await this.adminuser.showDepartment({ bus_id: this.AddAdminForm.value['bus_id'] });
       // console.log(res)
     } else {
@@ -69,7 +69,7 @@ export class AddAdminuserComponent implements OnInit {
   }
 
   async showReseller($event = '') {
-    this.resell = await this.reselser.showResellerName({ admin_role: 1, bus_id: this.AddAdminForm.value['bus_id'], groupid: this.AddAdminForm.value['groupid'], Role: this.AddAdminForm.value['Role'], like: $event });
+    this.resell = await this.reselser.showResellerName({ admin_role: 1, bus_id: this.AddAdminForm.value['bus_id'], Role: this.AddAdminForm.value['Role'], like: $event });
     // console.log(this.resell);
 
   }

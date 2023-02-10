@@ -6,6 +6,9 @@
 </div>
 <form [formGroup]="editNasForm" (ngSubmit)="editNas();">
   <div class="modal-body">
+    <ngx-loading [show]="loading"
+		[config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+	 </ngx-loading>
     <div class="col-md-12">
       <nb-card>
         <nb-card-header style="background-color :  #01a7ee; height:40px!important">NAS CREATION</nb-card-header>

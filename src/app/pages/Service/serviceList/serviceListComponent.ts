@@ -24,7 +24,7 @@ export class ServiceListComponent implements OnInit {
   groupname = '';
   bus; bus_id; group1; groupid; nas1; nas_name; nam1; name; rescount; nascount; subcount; search;
   bus_name = ''; group_name = ''; res1; res_name = ''; srvmode = ""; Service = ""; Data = ""; profile_name = '';
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25; srvtype = '';
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
@@ -184,6 +184,13 @@ export class ServiceListComponent implements OnInit {
       this.res_name = '';
       this.name = '';
     }
+    if (item == 7) {
+      this.Service = '0';
+      this.Data = '';
+      this.profile_name = '';
+      this.res_name = '';
+      this.name = '';
+    }
   }
 
   async refresh() {
@@ -200,6 +207,7 @@ export class ServiceListComponent implements OnInit {
     this.nam1 = '';
     this.pro = '';
     this.profile_name = '';
+    this.srvtype = '';
     if (this.role.getroleid() <= 777) {
       await this.showGroupName();
       await this.profile();
@@ -224,6 +232,7 @@ export class ServiceListComponent implements OnInit {
       srvid: this.name,
       Resel_id: this.res_name,
       role: this.profile_name,
+      srvtype: this.srvtype
     });
     this.loading = false;
     if (result) {
@@ -257,6 +266,7 @@ export class ServiceListComponent implements OnInit {
       srvid: this.name,
       Resel_id: this.res_name,
       role: this.profile_name,
+      srvtype: this.srvtype
     })
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -275,8 +285,10 @@ export class ServiceListComponent implements OnInit {
           param['CIRCLE'] = temp[i]['groupname'];
         }
         param['SERVICE NAME'] = temp[i]['srvname'];
+        param['SERVICE'] = temp[i]['srv_type'] == 0 ? 'Broadband' : 'Card';
         param['SERVICE MODE'] = temp[i]['srvmode'] == 0 ? 'Regular' : temp[i]['srvmode'] == 1 ? 'Fallback' : temp[i]['srvmode'] == 2 ? 'Expiry' : 'Disable';
-        param['SERVICE TYPE'] = temp[i]['srvtype'] == 0 ? 'Prepaid' : temp[i]['srvtype'] == 2 ? 'PostPaid' : temp[i]['srvtype'] == 3 ? 'Email' : 'Radius AccessList';
+        param['SERVICE TYPE'] = temp[i]['srvtype'] == 0 ? 'Prepaid' : temp[i]['srvtype'] == 2 ? 'PostPaid' : temp[i]['srvtype'] == 3 ? 'Email' :
+          temp[i]['srvtype'] == 1 ? 'Prepaid Card or IAS' : 'Radius AccessList';
         param['SERVICE DATA TYPE'] = temp[i]['srvdatatype'] == 1 ? 'Unlimited' : 'FUP';
         // param['RESELLER TYPE'] = temp[i]['menu_name'];
         param['POLICY'] = temp[i]['policy'] == 1 ? 'Cisco' : 'Rate';

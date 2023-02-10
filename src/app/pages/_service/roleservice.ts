@@ -58,32 +58,33 @@ export class RoleService {
 	getOTT() {
 		return (localStorage.getItem('userinfo') ? JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['ott_platform']) : []);
 	}
+	getAccountType() {
+		return (localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo'))['acc_type'] : null);
+	}
 	getmenurole(menu_role) {
 		this.role = (localStorage.getItem('userinfo') ? JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['menu_role']) : []);
 		return this.role.find(x => x == menu_role) ? false : true;
 	}
 
+
 	setCookie(...args) {
-		console.log('Number of arguments', args,Object.keys(args[0]) ,'Value---------------',Object.values(args[0]));
 		document.cookie = Object.keys(args[0]) + "=" + (Object.values(args[0]) || ""); Object.keys(args[1]) + "=" + (Object.values(args[1]) || "")
 		return document.cookie;
- 	}
+	}
 
 	getCookie(name) {
 		let nameEQ = name + "=";
 		let id = document.cookie.split(';');
-		console.log('id',id)
-		for(var i of id) {
+		for (var i of id) {
 			var c = i;
-			console.log('Inside FOr loop', c,c.charAt(0),c.indexOf(nameEQ))
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 		}
 		return id;
 	}
 
-	  eraseCookie() {
-		this.setCookie({'reselid' : ""});
+	eraseCookie() {
+		this.setCookie({ 'reselid': "" });
 	}
 
 }

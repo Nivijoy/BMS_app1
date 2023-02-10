@@ -816,9 +816,11 @@ export class DashboardComponent implements OnDestroy {
       };
 
    listsubs(event) {
-      // console.log('status', event)
-      localStorage.setItem('dash_status', JSON.stringify(event));
-      this.router.navigate(['/pages/cust/custList'])
+      if(this.role.getroleid() != 331 && this.role.getroleid() != 330){
+         localStorage.setItem('dash_status', JSON.stringify(event));
+         this.router.navigate(['/pages/cust/custList'])
+      }
+      
    }
 
 

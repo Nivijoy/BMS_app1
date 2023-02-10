@@ -122,7 +122,7 @@ export class UpdateShareComponent implements OnInit, AfterViewChecked {
     for (const name in controls) {
       if (controls[name].invalid) invalid.push(name)
     }
-    if (this.shareForm.invalid || (this.bulk.length == 0 && this.val['share_type'] == 2)) {
+    if (this.shareForm.invalid || (this.bulk.length == 0 && this.val['share_type'] == 2 && this.val['share_mode'] == 1)) {
       console.log('Invlaid', invalid);
       window.alert('Please fill all mandatory field or upload file');
       return;
@@ -222,7 +222,9 @@ export class UpdateShareComponent implements OnInit, AfterViewChecked {
       isp_share: new FormControl('', Validators.required),
       sisp_share: new FormControl(''),
       sdisp_share: new FormControl(''),
-      resel_share: new FormControl('', Validators.required)
+      resel_share: new FormControl('', Validators.required),
+      share_mode: new FormControl('0', Validators.required)
+
     });
   }
   get ctrl() {

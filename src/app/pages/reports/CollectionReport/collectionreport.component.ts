@@ -35,7 +35,7 @@ export class CollectionReportComponent implements OnInit {
   subdistshare; Osubdistshare; Vsubdistshare; AONsubdistshare; totsubdistshare;
   reselshare; Vreselshare; Oreselshare; AONreselshare; totreselshare;
   intamnt; intaxamt; Vamt; Vtaxamt; Oamt; Otaxamt; AONamt; AONtaxamt;
-  index; invdetails; share;
+  index; invdetails; share;pay_type='';
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
@@ -69,8 +69,7 @@ export class CollectionReportComponent implements OnInit {
       await this.showResellerName();
       await this.showUser();
       await this.showService();
-      await this.showUser();
-    }
+     }
     if (this.role.getroleid() < 775) {
       await this.initiallist();
     }
@@ -119,7 +118,8 @@ export class CollectionReportComponent implements OnInit {
 
   async showUser($event = '') {
     this.custname = await this.custser.showUser({ bus_id: this.bus_name, groupid: this.group_name, resel_id: this.res_name, srvid: this.sername, like: $event })
-    // console.log("customer", result)
+    
+    console.log("customer", this.custname)
   }
   async servicetype($event = '') {
     this.servtype = await this.busser.showServiceType({ sertype: 1, bus_id: this.bus_name, like: $event })
@@ -191,6 +191,7 @@ export class CollectionReportComponent implements OnInit {
         role: this.resel_type,
         pay_start_date: this.pay_start_date,
         pay_end_date: this.pay_end_date,
+        paytype:this.pay_type
         // res_id:this.reseller_under,
       })
     this.data = result[0];
@@ -271,6 +272,7 @@ export class CollectionReportComponent implements OnInit {
       role: this.resel_type,
       pay_start_date: this.pay_start_date,
       pay_end_date: this.pay_end_date,
+      paytype:this.pay_type
     })
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -372,6 +374,7 @@ export class CollectionReportComponent implements OnInit {
         param['ADDON RESELLER ₹'] = temp[i]['AONreseller_amt'];
 
         param['PAY STATUS'] = temp[i]['pay_status'] == 2 ? 'Paid' : 'Unpaid';
+        param['PAY TYPE'] = temp[i]['paytype'] == 1 ? 'Cash': temp[i]['paytype'] ==2? 'Online Payment': temp[i]['paytype'] == 3? 'Cheque': '';
         temp[i]['paydate'] = this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')
         param['PAY DATE'] = temp[i]['pay_status'] == 2 ? temp[i]['paydate'] : '--';
         tempdata[i] = param

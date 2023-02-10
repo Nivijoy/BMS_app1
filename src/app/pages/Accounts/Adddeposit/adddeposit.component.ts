@@ -16,7 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class AddDepositComponent implements OnInit {
-  submit: boolean = false; AddDepositForm; busdata; groupdata; reseldata; pro;balamt;
+  submit: boolean = false; AddDepositForm; busdata; groupdata; reseldata; pro; balamt;
   selectedfile: File = null;
   fileupload; imageURL: any; file: any[]; files; reasondata; id;
   constructor(
@@ -49,8 +49,8 @@ export class AddDepositComponent implements OnInit {
   }
 
   depmodevalid() {
-    (this.AddDepositForm.value['dep_mode'] == '1' || this.AddDepositForm.value['dep_mode'] == '3'|| this.AddDepositForm.value['dep_mode'] == '6') ? 
-    this.AddDepositForm.get('dep_amount').setValidators([Validators.required]) : this.AddDepositForm.get('dep_amount').clearValidators()
+    (this.AddDepositForm.value['dep_mode'] == '1' || this.AddDepositForm.value['dep_mode'] == '3' || this.AddDepositForm.value['dep_mode'] == '6') ?
+      this.AddDepositForm.get('dep_amount').setValidators([Validators.required]) : this.AddDepositForm.get('dep_amount').clearValidators()
     this.AddDepositForm.get('dep_amount').updateValueAndValidity();
 
     (this.AddDepositForm.value['dep_mode'] == '2' || this.AddDepositForm.value['dep_mode'] == '3') ? this.AddDepositForm.get('paid_amnt').setValidators([Validators.required]) : this.AddDepositForm.get('paid_amnt').clearValidators()
@@ -76,17 +76,15 @@ export class AddDepositComponent implements OnInit {
 
   }
 
-  async resellername($event='') {
-    this.reseldata = await this.resser.showResellerName({ role: this.AddDepositForm.value['Role'],like:$event })
-    // console.log("reseller",this.reseldata)
+  async resellername($event = '') {
+    this.reseldata = await this.resser.showResellerName({ role: this.AddDepositForm.value['Role'], like: $event })
   }
 
-  async resbalance(){
+  async resbalance() {
     let reslid = this.AddDepositForm.value['res_name'];
-    let balance = await this.reseldata.filter(item => item.id == reslid).map(item =>item.balance_amt);
+    let balance = await this.reseldata.filter(item => item.id == reslid).map(item => item.balance_amt);
     this.balamt = balance;
-    if(this.balamt){
-      // console.log("amount",this.balamt);
+    if (this.balamt) {
       this.AddDepositForm.controls.res_balance.setValue(this.balamt)
     }
   }
@@ -103,32 +101,29 @@ export class AddDepositComponent implements OnInit {
   }
 
   async addDeposit() {
-    // console.log(this.AddDepositForm.value)
     if (this.AddDepositForm.invalid) {
       this.submit = true;
       return;
     }
-    // console.log("inside",this.AddDepositForm.value)
     let result = await this.ser.addDeposit(this.AddDepositForm.value)
-    if (result[0]['error_msg']==0) {
-      if(this.AddDepositForm.value['paid_proof']){
-        // console.log("inside");
+    if (result[0]['error_msg'] == 0) {
+      if (this.AddDepositForm.value['paid_proof']) {
         const file = new FormData();
         let id = result[0]['txnid'],
-            name = id + '-'+ this.AddDepositForm.value['res_name'];
-        file.append('file', this.selectedfile,name);
+          name = id + '-' + this.AddDepositForm.value['res_name'];
+        file.append('file', this.selectedfile, name);
         file.append('id', result[0]['id']);
-        file.append('res_id',this.AddDepositForm.value['res_name']);
+        file.append('res_id', this.AddDepositForm.value['res_name']);
         let proofresult = await this.ser.uploadPaymentProof(file);
-        if(proofresult[0]['error_msg']==0){
+        if (proofresult[0]['error_msg'] == 0) {
           this.result_pop(proofresult);
-        }else{
+        } else {
           this.result_pop(result);
         }
-      }else{
+      } else {
         this.result_pop(result);
       }
-    }else{
+    } else {
       this.result_pop(result);
     }
 
@@ -173,7 +168,7 @@ export class AddDepositComponent implements OnInit {
       bus_id: new FormControl('', Validators.required),
       groupid: new FormControl(''),
       Role: new FormControl('', Validators.required),
-      res_balance : new FormControl(''),
+      res_balance: new FormControl(''),
       res_name: new FormControl('', Validators.required),
       dep_mode: new FormControl('', Validators.required),
       credit_date: new FormControl(''),
@@ -184,8 +179,8 @@ export class AddDepositComponent implements OnInit {
       paid_amnt: new FormControl(''),
       dep_amount: new FormControl(''),
       ot_reason: new FormControl(''),
-      reason: new FormControl('',Validators.required),
-      note : new FormControl(''),
+      reason: new FormControl('', Validators.required),
+      note: new FormControl(''),
     });
   }
 }

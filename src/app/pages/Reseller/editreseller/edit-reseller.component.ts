@@ -5,8 +5,8 @@ import { FormControl, FormGroup, Validators, FormArray, FormBuilder, } from '@an
 import { Router } from '@angular/router';
 import { AddSuccessComponent } from './../success/add-success.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BusinessService, GroupService, NasService, IppoolService, ResellerService, SelectService, RoleService, AdminuserService } from '../../_service/indexService';
-
+import { BusinessService, GroupService, NasService, IppoolService, ResellerService, SelectService, RoleService, AdminuserService, S_Service } from '../../_service/indexService';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
   selector: 'editreseller',
@@ -17,9 +17,17 @@ import { BusinessService, GroupService, NasService, IppoolService, ResellerServi
 export class EditResellerComponent implements OnInit {
   submit: boolean = false; EditReselForm; id: any = []; anas; ip; grup; editdatas; resellist;
   data; busname; pro; dist; states; bulkReseller = []; servtype; shareval; ottdata; ott_name = [];
-  sizes = []; sharename; distname; smsgateway; paymentgateway;ottcheckids;upload;imageURL;
+  sizes = []; sharename; distname; smsgateway; paymentgateway; ottcheckids; upload; imageURL;
   change: boolean;
   ispsharedefault = false; isReadonly = false; config;
+
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public primaryColour = '#dd0031';
+  public secondaryColour = '#006ddd';
+  public loading = false;
+  public isOpening = false;
+  assign_service;
+
   constructor(
     private alert: ToasterService,
     private router: Router,
@@ -33,47 +41,40 @@ export class EditResellerComponent implements OnInit {
     private nasser: NasService,
     private poolser: IppoolService,
     private adminser: AdminuserService,
-
+    private service: S_Service
   ) {
     this.id = JSON.parse(localStorage.getItem('array'));
-    // console.log(this.id)
   }
 
   async GroupName() {
     this.grup = await this.groupser.showGroupName({ bus_id: this.value.bus_id });
-    // console.log(res)
   }
 
   async business() {
     this.busname = await this.busser.showBusName({});
-    // console.log(this.busname)
   }
 
   async cityshow($event = '') {
     this.dist = await this.select.showDistrict({ state_id: this.value.State, like: $event });
-    // console.log(result)
   }
 
   async stateshow($event = '') {
     this.states = await this.select.showState({ like: $event });
-    // console.log(result)
   }
 
   async showResellerUnder($event = '') {
-    this.resellist = await this.resell.showResellerUnder({ like: $event, reseller_under: this.value.reseller_under, Role: this.value.Role,
-      bus_id:this.value.bus_id,groupid:this.value.groupid });
-    // console.log(result)
+    this.resellist = await this.resell.showResellerUnder({
+      like: $event, reseller_under: this.value.reseller_under, Role: this.value.Role,
+      bus_id: this.value.bus_id, groupid: this.value.groupid, edit_resel: 1
+    });
   }
 
   async SMSgateway($event = '') {
     this.smsgateway = await this.adminser.getSMSGateway({ bus_id: this.value.bus_id, like: $event });
-    // console.log("smsgateway",this.smsgateway);
   }
 
   async PAYGateway() {
     this.paymentgateway = await this.resell.getPayGateway({ bus_id: this.value.bus_id });
-    // console.log(this.paymentgateway);
-
   }
 
   async ottplatform($event = '') {
@@ -83,7 +84,6 @@ export class EditResellerComponent implements OnInit {
   }
 
   prefixChange() {
-    console.log('Prfix Change')
     if (this.value.prefix_enable == false) {
       this.ctrl.prefix.setValue('');
     }
@@ -92,28 +92,23 @@ export class EditResellerComponent implements OnInit {
   async profile() {
     if (this.role.getroleid() > 777) {
       this.pro = await this.resell.showProfileReseller({ bus_id: this.value.bus_id });
-      // console.log(res)
     }
     if (this.role.getroleid() <= 777) {
       this.pro = await this.resell.showProfileReseller({});
-      // console.log(result)
     }
   }
 
   async Nas($event = '') {
     this.anas = await this.nasser.showGroupNas({ like: $event, edit_flag: 1, bus_id: this.value.bus_id, groupid: this.value.groupid });
-    // console.log(res)
   }
 
   async PoolName($event = '') {
     this.ip = await this.poolser.showPoolName({ like: $event, edit_flag: 1, bus_id: this.value.bus_id, ipflag: 1, nas_id: this.value.ass_nas, groupid: this.value.groupid });
-    // console.log(result)
   }
 
 
   async servicetype() {
     this.servtype = await this.busser.showServiceType({ bus_id: this.value.bus_id, sertype: 1 })
-    // console.log(result);
   }
 
   duevalid() {
@@ -135,23 +130,23 @@ export class EditResellerComponent implements OnInit {
     }
   }
 
-  ottchange(){
-    if(this.value.disney_flag == false){
+  ottchange() {
+    if (this.value.disney_flag == false) {
       this.ctrl.disneyshare_type.setValue('');
     }
-    if(this.value.amazon_flag == false){
+    if (this.value.amazon_flag == false) {
       this.ctrl.amazonshare_type.setValue('');
-    }if(this.value.netflix_flag == false){
+    } if (this.value.netflix_flag == false) {
       this.ctrl.netflixshare_type.setValue('');
-    }if(this.value.sun_flag == false){
+    } if (this.value.sun_flag == false) {
       this.ctrl.sunshare_type.setValue('');
-    }if(this.value.zee_flag == false){
+    } if (this.value.zee_flag == false) {
       this.ctrl.zeeshare_type.setValue('');
-    }if(this.value.raj_flag == false){
+    } if (this.value.raj_flag == false) {
       this.ctrl.rajshare_type.setValue('');
-    }if(this.value.sony_flag == false){
+    } if (this.value.sony_flag == false) {
       this.ctrl.sonyshare_type.setValue('');
-    }if(this.value.hunga_flag == false){
+    } if (this.value.hunga_flag == false) {
       this.ctrl.hungashare_type.setValue('');
     }
   }
@@ -184,11 +179,9 @@ export class EditResellerComponent implements OnInit {
   }
 
   async sharedefault() {
-    // console.log(this.value.reseller_under);
     await this.shareempty();
     //SUB DISTRIBUTOR BULK UNDER SUB ISP BULK
     if (this.value.Role == 661) {
-      // console.log("661 under sub isp bulk");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
       this.shareval = result[0];
       if (this.value.serv_type == 2) {
@@ -232,10 +225,8 @@ export class EditResellerComponent implements OnInit {
     }
     // UNDER SUB ISP BULK
     if (this.value.reseller_under == 1) {
-      // console.log("under sub isp bulk");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
       this.shareval = result[0];
-      //  console.log("sharevalue",this.shareval);
 
       //BULK RESELLER UNDER SUB ISP BULK
       if (this.value.serv_type == 2 && this.value.Role == 444) {
@@ -395,7 +386,6 @@ export class EditResellerComponent implements OnInit {
     }
     //UNDER SUB ISP DEPOSIT
     if (this.value.reseller_under == 2) {
-      // console.log("under sub isp deposit");
       let result = await this.resell.showResellerUnder({ resel_id: this.value.subdep_name });
       this.shareval = result[0]
 
@@ -463,12 +453,10 @@ export class EditResellerComponent implements OnInit {
     //UNDER SUB DIST BULK AND SUB DIST DEPOSIT
     if (this.value.reseller_under == 3 || this.value.reseller_under == 4) {
       if (this.value.subdist_bulk != '') {
-        // console.log("under sub dist bulk");
         let result = await this.resell.showResellerUnder({ resel_id: this.value.subdist_bulk });
         this.shareval = result[0];
       }
       if (this.value.subdis_name != '') {
-        // console.log("under sub dist deposit");
         let result = await this.resell.showResellerUnder({ resel_id: this.value.subdis_name });
         this.shareval = result[0];
       }
@@ -703,7 +691,6 @@ export class EditResellerComponent implements OnInit {
   async provalid() {
     await this.validclear();
     const pro = this.value.Role
-    // console.log(pro);
     switch (pro) {
       case 555:
         // Sub ISP Deposit
@@ -1171,7 +1158,6 @@ export class EditResellerComponent implements OnInit {
         }
         //RESELLER UNDER SUB ISP BULK
         if (this.value.reseller_under == '1' && this.value.serv_type == '1') {
-          // console.log("under subisp bulk");   
           this.ctrl.subisp_bulk.setValidators([Validators.required]);
           this.ctrl.subisp_bulk.updateValueAndValidity();
           this.ctrl.isp_share.setValidators([Validators.required]);
@@ -2053,10 +2039,10 @@ export class EditResellerComponent implements OnInit {
   }
 
   exptimesetting() {
-    if(this.value.exp_mode == 2){
+    if (this.value.exp_mode == 2) {
       this.ctrl.exp_time.setValidators(Validators.required);
       this.ctrl.exp_time.updateValueAndValidity();
-    }else{
+    } else {
       this.ctrl.exp_time.clearValidators();
       this.ctrl.exp_time.updateValueAndValidity();
     }
@@ -2072,11 +2058,8 @@ export class EditResellerComponent implements OnInit {
     };
     if (this.EditReselForm.invalid) {
       this.submit = true;
-      // console.log('invalid',invalid)
       return;
     }
-    // console.log('qwert')
-    // console.log(this.value)
     this.value.id = this.id
     this.value.disney_flag == true ? this.ott_name.push(1) : '';
     this.value.amazon_flag == true ? this.ott_name.push(2) : '';
@@ -2087,13 +2070,13 @@ export class EditResellerComponent implements OnInit {
     this.value.sony_flag == true ? this.ott_name.push(7) : '';
     this.value.hunga_flag == true ? this.ott_name.push(8) : '';
     this.value.ott_name = this.ott_name;
-    // console.log(this.value.ott_name)
     let editresell = [this.value]
+    this.loading = true;
     let res = await this.resell.editReseller({ bulkReseller: editresell });
+    this.loading = false;
     if (res[0]['error_msg'] != 0) {
       this.ott_name = [];
     }
-    // console.log(res)
     if (res) {
       this.result_pop(res);
     }
@@ -2144,11 +2127,11 @@ export class EditResellerComponent implements OnInit {
     }
   }
 
-  paymentType(){
-    if(!this.EditReselForm.value['pay_gateway']){
+  paymentType() {
+    if (!this.EditReselForm.value['pay_gateway']) {
       this.EditReselForm.value['pay_gateway_type'] = 0;
     }
-    if(!this.EditReselForm.value['subpay_gateway']){
+    if (!this.EditReselForm.value['subpay_gateway']) {
       this.EditReselForm.value['subpay_gateway_type'] = 0;
     }
   }
@@ -2162,9 +2145,7 @@ export class EditResellerComponent implements OnInit {
         var ottid = this.editdatas['ott_platform'].slice(1, -1),
           ott_id = ottid.split(',')
         this.ottcheckids = ott_id.map((i) => Number(i));
-        // console.log("IDs", this.ottcheckids);
       }
-      // console.log("edit",result)
     }
     this.createForm();
     await this.GroupName();
@@ -2178,11 +2159,20 @@ export class EditResellerComponent implements OnInit {
     await this.SMSgateway();
     await this.PAYGateway();
     await this.ottplatform();
+    await this.getService();
     // await this.sharedefault();
   }
 
   cancel() {
     this.router.navigate(['/pages/reseller/resellerList']);
+  }
+
+
+  async getService($event = '') {
+    if (this.value.Role == 331) {
+      const result = await this.service.showServiceName({ bus_id: this.value.bus_id, show_service: 1, like: $event, resel_id: this.id });
+      this.assign_service = result;
+    }
   }
 
   createForm() {
@@ -2226,61 +2216,61 @@ export class EditResellerComponent implements OnInit {
       share_show: new FormControl(this.editdatas ? this.editdatas['sharing_show'] : ''),
       share_imed: new FormControl(this.editdatas ? this.editdatas['share_immediate'] : ''),
       //disney
-      disney_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(1) ? true:false : ''),
-      disneyshare_type: new FormControl(this.editdatas ? this.editdatas['disney_share_type'] :''),
-      disney_isp_share: new FormControl(this.editdatas ? this.editdatas['disneyIspShare'] :''),
-      disney_subisp_share: new FormControl(this.editdatas ? this.editdatas['disneySubispShare'] :''),
-      disney_dist_share: new FormControl(this.editdatas ? this.editdatas['disneySubDistShare'] :''),
-      disney_resel_share: new FormControl(this.editdatas ? this.editdatas['disneyResellerShare'] :''),
+      disney_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(1) ? true : false : ''),
+      disneyshare_type: new FormControl(this.editdatas ? this.editdatas['disney_share_type'] : ''),
+      disney_isp_share: new FormControl(this.editdatas ? this.editdatas['disneyIspShare'] : ''),
+      disney_subisp_share: new FormControl(this.editdatas ? this.editdatas['disneySubispShare'] : ''),
+      disney_dist_share: new FormControl(this.editdatas ? this.editdatas['disneySubDistShare'] : ''),
+      disney_resel_share: new FormControl(this.editdatas ? this.editdatas['disneyResellerShare'] : ''),
       //amazon
-      amazon_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(2) ? true:false :''),
-      amazonshare_type: new FormControl(this.editdatas ? this.editdatas['amazon_share_type'] :''),
-      amazon_isp_share: new FormControl(this.editdatas ? this.editdatas['amazonIspShare'] :''),
-      amazon_subisp_share: new FormControl(this.editdatas ? this.editdatas['amazonSubispShare'] :''),
-      amazon_dist_share: new FormControl(this.editdatas ? this.editdatas['amazonSubDistShare'] :''),
-      amazon_resel_share: new FormControl(this.editdatas ? this.editdatas['amazonResellerShare'] :''),
+      amazon_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(2) ? true : false : ''),
+      amazonshare_type: new FormControl(this.editdatas ? this.editdatas['amazon_share_type'] : ''),
+      amazon_isp_share: new FormControl(this.editdatas ? this.editdatas['amazonIspShare'] : ''),
+      amazon_subisp_share: new FormControl(this.editdatas ? this.editdatas['amazonSubispShare'] : ''),
+      amazon_dist_share: new FormControl(this.editdatas ? this.editdatas['amazonSubDistShare'] : ''),
+      amazon_resel_share: new FormControl(this.editdatas ? this.editdatas['amazonResellerShare'] : ''),
       //netflix
-      netflix_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(3) ? true:false :''),
-      netflixshare_type: new FormControl(this.editdatas ? this.editdatas['netflix_share_type'] :''),
-      netflix_isp_share: new FormControl(this.editdatas ? this.editdatas['netflixIspShare'] :''),
-      netflix_subisp_share: new FormControl(this.editdatas ? this.editdatas['netflixSubispShare'] :''),
-      netflix_dist_share: new FormControl(this.editdatas ? this.editdatas['netflixSubDistShare'] :''),
-      netflix_resel_share: new FormControl(this.editdatas ? this.editdatas['netflixResellerShare'] :''),
+      netflix_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(3) ? true : false : ''),
+      netflixshare_type: new FormControl(this.editdatas ? this.editdatas['netflix_share_type'] : ''),
+      netflix_isp_share: new FormControl(this.editdatas ? this.editdatas['netflixIspShare'] : ''),
+      netflix_subisp_share: new FormControl(this.editdatas ? this.editdatas['netflixSubispShare'] : ''),
+      netflix_dist_share: new FormControl(this.editdatas ? this.editdatas['netflixSubDistShare'] : ''),
+      netflix_resel_share: new FormControl(this.editdatas ? this.editdatas['netflixResellerShare'] : ''),
       //sun
-      sun_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(4) ? true:false :''),
-      sunshare_type: new FormControl(this.editdatas ? this.editdatas['sunnext_share_type'] :''),
-      sun_isp_share: new FormControl(this.editdatas ? this.editdatas['sunnextIspShare'] :''),
-      sun_subisp_share: new FormControl(this.editdatas ? this.editdatas['sunnextSubispShare'] :''),
-      sun_dist_share: new FormControl(this.editdatas ? this.editdatas['sunnextSubDistShare'] :''),
-      sun_resel_share: new FormControl(this.editdatas ? this.editdatas['sunnextResellerShare'] :''),
+      sun_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(4) ? true : false : ''),
+      sunshare_type: new FormControl(this.editdatas ? this.editdatas['sunnext_share_type'] : ''),
+      sun_isp_share: new FormControl(this.editdatas ? this.editdatas['sunnextIspShare'] : ''),
+      sun_subisp_share: new FormControl(this.editdatas ? this.editdatas['sunnextSubispShare'] : ''),
+      sun_dist_share: new FormControl(this.editdatas ? this.editdatas['sunnextSubDistShare'] : ''),
+      sun_resel_share: new FormControl(this.editdatas ? this.editdatas['sunnextResellerShare'] : ''),
       //zee
-      zee_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(5) ? true:false :''),
-      zeeshare_type: new FormControl(this.editdatas ? this.editdatas['zee5_share_type'] :''),
-      zee_isp_share: new FormControl(this.editdatas ? this.editdatas['zee5IspShare'] :''),
-      zee_subisp_share: new FormControl(this.editdatas ? this.editdatas['zee5SubispShare'] :''),
-      zee_dist_share: new FormControl(this.editdatas ? this.editdatas['zee5SubDistShare'] :''),
-      zee_resel_share: new FormControl(this.editdatas ? this.editdatas['zee5ResellerShare'] :''),
+      zee_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(5) ? true : false : ''),
+      zeeshare_type: new FormControl(this.editdatas ? this.editdatas['zee5_share_type'] : ''),
+      zee_isp_share: new FormControl(this.editdatas ? this.editdatas['zee5IspShare'] : ''),
+      zee_subisp_share: new FormControl(this.editdatas ? this.editdatas['zee5SubispShare'] : ''),
+      zee_dist_share: new FormControl(this.editdatas ? this.editdatas['zee5SubDistShare'] : ''),
+      zee_resel_share: new FormControl(this.editdatas ? this.editdatas['zee5ResellerShare'] : ''),
       //raj
-      raj_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(6) ? true:false :''),
-      rajshare_type: new FormControl(this.editdatas ? this.editdatas['raj_share_type'] :''),
-      raj_isp_share: new FormControl(this.editdatas ? this.editdatas['rajIspShare'] :''),
-      raj_subisp_share: new FormControl(this.editdatas ? this.editdatas['rajSubispShare'] :''),
-      raj_dist_share: new FormControl(this.editdatas ? this.editdatas['rajSubDistShare'] :''),
-      raj_resel_share: new FormControl(this.editdatas ? this.editdatas['rajResellerShare'] :''),
+      raj_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(6) ? true : false : ''),
+      rajshare_type: new FormControl(this.editdatas ? this.editdatas['raj_share_type'] : ''),
+      raj_isp_share: new FormControl(this.editdatas ? this.editdatas['rajIspShare'] : ''),
+      raj_subisp_share: new FormControl(this.editdatas ? this.editdatas['rajSubispShare'] : ''),
+      raj_dist_share: new FormControl(this.editdatas ? this.editdatas['rajSubDistShare'] : ''),
+      raj_resel_share: new FormControl(this.editdatas ? this.editdatas['rajResellerShare'] : ''),
       //sony
-      sony_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(7) ? true:false :''),
-      sonyshare_type: new FormControl(this.editdatas ? this.editdatas['sony_share_type'] :''),
-      sony_isp_share: new FormControl(this.editdatas ? this.editdatas['sonyIspShare'] :''),
-      sony_subisp_share: new FormControl(this.editdatas ? this.editdatas['sonySubispShare'] :''),
-      sony_dist_share: new FormControl(this.editdatas ? this.editdatas['sonySubDistShare'] :''),
-      sony_resel_share: new FormControl(this.editdatas ? this.editdatas['sonyResellerShare'] :''),
+      sony_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(7) ? true : false : ''),
+      sonyshare_type: new FormControl(this.editdatas ? this.editdatas['sony_share_type'] : ''),
+      sony_isp_share: new FormControl(this.editdatas ? this.editdatas['sonyIspShare'] : ''),
+      sony_subisp_share: new FormControl(this.editdatas ? this.editdatas['sonySubispShare'] : ''),
+      sony_dist_share: new FormControl(this.editdatas ? this.editdatas['sonySubDistShare'] : ''),
+      sony_resel_share: new FormControl(this.editdatas ? this.editdatas['sonyResellerShare'] : ''),
       //hunga
-      hunga_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(8) ? true:false :''),
-      hungashare_type: new FormControl(this.editdatas ? this.editdatas['hun_share_type'] :''),
-      hunga_isp_share: new FormControl(this.editdatas ? this.editdatas['hunIspShare'] :''),
-      hunga_subisp_share: new FormControl(this.editdatas ? this.editdatas['hunSubispShare'] :''),
-      hunga_dist_share: new FormControl(this.editdatas ? this.editdatas['hunSubDistShare'] :''),
-      hunga_resel_share: new FormControl(this.editdatas ? this.editdatas['hunResellerShare'] :''),
+      hunga_flag: new FormControl(this.ottcheckids ? this.ottcheckids.includes(8) ? true : false : ''),
+      hungashare_type: new FormControl(this.editdatas ? this.editdatas['hun_share_type'] : ''),
+      hunga_isp_share: new FormControl(this.editdatas ? this.editdatas['hunIspShare'] : ''),
+      hunga_subisp_share: new FormControl(this.editdatas ? this.editdatas['hunSubispShare'] : ''),
+      hunga_dist_share: new FormControl(this.editdatas ? this.editdatas['hunSubDistShare'] : ''),
+      hunga_resel_share: new FormControl(this.editdatas ? this.editdatas['hunResellerShare'] : ''),
       FName: new FormControl(this.editdatas ? this.editdatas['firstname'] : '', Validators.required),
       LName: new FormControl(this.editdatas ? this.editdatas['lastname'] : '', Validators.required),
       gender: new FormControl(this.editdatas ? this.editdatas['gender'] : '', Validators.required),
@@ -2303,7 +2293,7 @@ export class EditResellerComponent implements OnInit {
       sms_app: new FormControl(this.editdatas ? this.editdatas['MobileAppAccess'] : ''),
       topup_min: new FormControl(this.editdatas ? this.editdatas['topup_minimum'] : ''),
       min_amount: new FormControl(this.editdatas ? this.editdatas['minimum_amt'] : ''),
-      gateway_type: new FormControl(this.editdatas ? this.editdatas['sms_gtwy_th'] : ''),
+      gateway_type: new FormControl(this.editdatas ? this.editdatas['sms_gtwy_id'] : ''),
       sms_gateway: new FormControl(this.editdatas ? this.editdatas['sms_gateway'] : ''),
       subpay_gateway: new FormControl(this.editdatas ? this.editdatas['sub_pay_gtwy'] : ''),
       subpay_gateway_type: new FormControl(this.editdatas ? this.editdatas['sub_pay_gtwy_id'] : '0'),
@@ -2315,7 +2305,7 @@ export class EditResellerComponent implements OnInit {
       credit_limit: new FormControl(this.editdatas ? this.editdatas['credit_limit'] : ''),
       due_invoice: new FormControl(this.editdatas ? this.editdatas['check_due_invoices'] : ''),
       exp_mode: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expmode']) : ''),
-      exp_time:new FormControl(this.editdatas ? this.editdatas['exptime']:''),
+      exp_time: new FormControl(this.editdatas ? this.editdatas['exptime'] : ''),
       ereceipt: new FormControl(this.editdatas ? this.editdatas['ereceipt'] : ''),
       ecaf: new FormControl(this.editdatas ? this.editdatas['ecaf'] : ''),
       prefix_enable: new FormControl(this.editdatas ? (this.editdatas['prefix_on'] == 'false' ? false : true) : ''),
@@ -2367,6 +2357,9 @@ export class EditResellerComponent implements OnInit {
       agrmnt_status: new FormControl(this.editdatas ? this.editdatas['agg_status'] : '1', Validators.required),
       drop_date: new FormControl(this.editdatas ? this.editdatas['drop_date'] : ''),
       drop_reason: new FormControl(this.editdatas ? this.editdatas['drop_reason'] : ''),
+
+      srsrvid: new FormControl(this.editdatas ? this.editdatas['srsrvid'] : ''),
+      srtime: new FormControl(this.editdatas ? this.editdatas['srtime'] : '')
     });
   }
 }

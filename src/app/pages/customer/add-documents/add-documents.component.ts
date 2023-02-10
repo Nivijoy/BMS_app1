@@ -74,7 +74,7 @@ export class DocpopComponent implements OnInit {
     if (this.addrflag == 2 && this.AddDocForm.value['same_proof'] == false) {
       let filename = this.AddDocForm.value['addr_proof'] == 1 ? 'Aadhar' : this.AddDocForm.value['addr_proof'] == 2 ? 'Ration Card' :
         this.AddDocForm.value['addr_proof'] == 3 ? 'Voter ID' : this.AddDocForm.value['addr_proof'] == 4 ? 'Passport' : this.AddDocForm.value['addr_proof'] == 5 ? 'Gas Bill' :
-          this.AddDocForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddDocForm.value['addr_proof'] == 7 ? 'Water Bill' : '--'
+          this.AddDocForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddDocForm.value['addr_proof'] == 7 ? 'Water Bill' : this.AddDocForm.value['addr_proof'] == 8 ? 'Home Tax': '--'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
       file.append('addr_proof', this.AddDocForm.value['addr_proof'])
       file.append('file', this.add_proof_file[0], first);
@@ -104,7 +104,7 @@ export class DocpopComponent implements OnInit {
     if (this.addrflag == 2 && this.AddDocForm.value['same_proof'] == true) {
       let filename = this.AddDocForm.value['addr_proof'] == 1 ? 'Aadhar' : this.AddDocForm.value['addr_proof'] == 2 ? 'Ration' :
         this.AddDocForm.value['addr_proof'] == 3 ? 'Voter ID' : this.AddDocForm.value['addr_proof'] == 4 ? 'Passport' : this.AddDocForm.value['addr_proof'] == 5 ? 'Gas Bill' :
-          this.AddDocForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddDocForm.value['addr_proof'] == 7 ? 'Water Bill' : '--'
+          this.AddDocForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddDocForm.value['addr_proof'] == 7 ? 'Water Bill' : this.AddDocForm.value['addr_proof'] == 8 ? 'Home tax' : '--'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
       file.append('addr_proof', this.AddDocForm.value['addr_proof'])
       file.append('file', this.add_proof_file[0], first);

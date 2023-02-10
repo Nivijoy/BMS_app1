@@ -26,7 +26,7 @@
 //   };
 
 
- 
+
 
 //   createForm() {
 //     this.Failedform = new FormGroup({
@@ -39,43 +39,42 @@
 //   }
 // }
 
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import 'style-loader!angular2-toaster/toaster.css';
-import { FormControl,FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'FailedDeposit',
- templateUrl: './faileddeposit.component.html',
+  templateUrl: './faileddeposit.component.html',
   // styleUrls:['./custstyle.scss'],
 })
 
-export class FailedDepositComponent implements OnInit{
-	submit:boolean=false;Failedform;modalHeader;
-	constructor(
-	 	private alert: ToasterService,
+export class FailedDepositComponent implements OnInit {
+  submit: boolean = false; Failedform; modalHeader;
+  constructor(
+    private alert: ToasterService,
     private router: Router,
-    public activeModal   :NgbActiveModal,
+    public activeModal: NgbActiveModal,
 
-  ) {}
-  
-  closeModal(){
-    // console.log(this.item)
+  ) { }
+
+  closeModal() {
     this.activeModal.close(true);
     // this.router.navigate(['/pages/Accounts/depositlist']);
   }
-  ngOnInit(){
-	  this.createForm();
+  ngOnInit() {
+    this.createForm();
   }
-  addNas(){
-    
+  addNas() {
+
   }
-   createForm() {
+  createForm() {
     this.Failedform = new FormGroup({
-   
+
     });
   }
 }

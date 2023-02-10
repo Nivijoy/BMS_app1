@@ -7,14 +7,13 @@ import { RoleService } from './roleservice';
 // Handle Request
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private commonSrv: RoleService) {}
+    constructor(private commonSrv: RoleService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        
+
         //Add Base Url
-         // console.log("Req URL",request.url);
-        request = request.clone({url: env.baseUrl+request.url});
-        
+        request = request.clone({ url: env.baseUrl + request.url });
+
         // add authorization header with jwt token if available
         const token = this.commonSrv.getToken();
         const ref_token = this.commonSrv.getRefreshtoken();
@@ -22,7 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
             request = request.clone({
                 setHeaders: {
                     authorization: token,
-                    refresh:ref_token
+                    refresh: ref_token
                 }
             });
         }

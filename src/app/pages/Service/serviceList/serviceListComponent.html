@@ -40,10 +40,19 @@
           </select>
         </div>
         <div class="col-sm-2">
+          <label>Select Service</label>
+          <select name="srvtype" [(ngModel)]="srvtype" class="form-control" (change)="showService();changeclear(7)">
+            <option value="" selected>Select Service </option>
+            <option value="0">Broadband</option>
+            <option value="1">Card</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
           <label>Service Type</label>
           <select name="Service" [(ngModel)]="Service" class="form-control" (change)="showService();changeclear(4)">
             <option value="" selected>Select Service Type</option>
             <option value="0">Prepaid</option>
+            <!-- <option value="1">Prepaid Card or IAS</option> -->
             <option value="2">Postpaid</option>
           </select>
         </div>
@@ -55,6 +64,9 @@
             <option value="2">FUP</option>
           </select>
         </div>
+       
+      </div>
+      <div class="form-group row">
         <div class="col-sm-2" *ngIf="role.getroleid()>=775">
           <label>Profile</label>
           <auto-completen [(ngModel)]="profile_name" addclass="form-control"
@@ -63,8 +75,6 @@
           </auto-completen>
           <small style="color: blueviolet;">Select ProfileToSelect Reseller</small>
         </div>
-      </div>
-      <div class="form-group row">
         <div class="col-sm-2" *ngIf="(role.getroleid()>=775) || (role.getroleid() > 444)">
           <label>Reseller Name</label>
           <auto-completen [(ngModel)]="res_name" addclass="form-control" (changed)="showService();name=''"
@@ -116,15 +126,15 @@
     </div>
     <!-- <div class="table-wrapper">
       <table class="table table-hover table-striped"> -->
-        <div class="table-responsive">
-        <table class="table">
+    <div class="table-responsive">
+      <table class="table">
         <tr>
           <th rowspan="2" style="border: 3px solid #aeb8b9;color: white;"
             *ngIf="(!role.getmenurole(316) || !role.getmenurole(317))"><br>Action</th>
           <th rowspan="2" style="border: 3px solid #aeb8b9;color: white;" *ngIf="role.getroleid()>777"><br> ID</th>
           <th rowspan="2" style="border: 3px solid #aeb8b9;color: white;" *ngIf="role.getroleid()>777"><br>ISP Name</th>
           <th rowspan="2" style="border: 3px solid #aeb8b9;color: white;" *ngIf="role.getroleid()>=775"><br>Circle</th>
-          <th colspan="5" style="border: 3px solid #aeb8b9;color: white;">Service</th>
+          <th colspan="6" style="border: 3px solid #aeb8b9;color: white;">Service</th>
           <th rowspan="2" style="border: 3px solid #aeb8b9;color: white;"><br>policy</th>
           <th colspan="2" style="border: 3px solid #aeb8b9;color: white;">Rate</th>
           <th colspan="3" style="border: 3px solid #aeb8b9;color: white;">Limit</th>
@@ -143,6 +153,7 @@
         <tr style="background-color :  #01a7ee;color:white;position: sticky;top: 34px;">
           <!-- <th *ngIf="role.getroleid()>777">Service ID</th> -->
           <th style="border: 3px solid #aeb8b9;color: white;">Name</th>
+          <th style="border: 3px solid #aeb8b9;color: white;">Service</th>
           <th style="border: 3px solid #aeb8b9;color: white;"> Mode</th>
           <th style="border: 3px solid #aeb8b9;color: white;"> Type</th>
           <th style="border: 3px solid #aeb8b9;color: white;"> Data Type</th>
@@ -176,16 +187,17 @@
               </ul>
             </div>
           </td>
-          
+
           <td *ngIf="role.getroleid()>777">{{item.srvid}}</td>
           <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
           <td *ngIf="role.getroleid()>=775">{{item.groupname}}</td>
           <!-- <td *ngIf="role.getroleid()>777">{{item.srvid}}</td> -->
           <td style="text-transform: none !important">{{item.srvname}}</td>
+          <td>{{item.srv_type == 0 ? 'Broadband': 'Card'}}</td>
           <td>{{item.srvmode == 0 ? 'Regular':item.srvmode == 1 ?
             'Fallback':item.srvmode == 2 ? 'Expiry':'Disable'}}</td>
           <td>{{item.srvtype == 0 ? 'Prepaid':item.srvtype == 2 ? 'Postpaid':
-            item.srvtype ==3 ? 'Email':'RADIUS accesslist'}}</td>
+            item.srvtype ==3 ? 'Email':item.srvtype == 1 ? 'Prepaid Card or IAS':'RADIUS accesslist'}}</td>
           <td>{{item.srvdatatype == 1 ? 'Unlimited':'Fup'}}</td>
           <td>{{item.nservname==null ? '--' : item.nservname}}</td>
 

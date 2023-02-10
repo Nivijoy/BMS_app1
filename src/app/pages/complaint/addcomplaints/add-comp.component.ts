@@ -73,11 +73,11 @@ export class AddCompComponent implements OnInit {
 
   async profile() {
     if (this.role.getroleid() > 777) {
-      this.pro = await this.reselser.showProfileReseller({ bus_id: this.AddComplaintForm.value['bus_id'] });
+      this.pro = await this.reselser.showProfileReseller({ bus_id: this.AddComplaintForm.value['bus_id'], rec_role: 1 });
       // console.log(res)
     }
     if (this.role.getroleid() <= 777) {
-      this.pro = await this.reselser.showProfileReseller({bus_id: this.AddComplaintForm.value['bus_id']});
+      this.pro = await this.reselser.showProfileReseller({ bus_id: this.AddComplaintForm.value['bus_id'], rec_role: 1 });
       // console.log(result)
     }
   }
@@ -97,7 +97,7 @@ export class AddCompComponent implements OnInit {
 
   async showResellerName($event = '') {
     if (!this.id) {
-      this.resell = await this.reselser.getResellerName({ role: this.AddComplaintForm.value['Role'], bus_id: this.AddComplaintForm.value['bus_id'], nameflag: this.AddComplaintForm.value['resel_flag'], like: $event })
+      this.resell = await this.reselser.getResellerName({ edit_flag: 1, role: this.AddComplaintForm.value['Role'], bus_id: this.AddComplaintForm.value['bus_id'], nameflag: this.AddComplaintForm.value['resel_flag'], like: $event })
       // console.log("resname",this.resell)
     }
     if (this.id) {
@@ -130,7 +130,7 @@ export class AddCompComponent implements OnInit {
 
   async subsdetails() {
     this.subsdata = await this.custser.ViewSubscriber({ id: this.AddComplaintForm.value['cust_id'] });
-    // console.log("subsdetails",this.subsdata);
+    console.log("subsdetails", this.subsdata);
     this.subsresel = this.subsdata['reseller_id'];
     if (this.subsresel) {
       this.AddComplaintForm.get('reseller').setValue(this.subsresel);
@@ -201,5 +201,12 @@ export class AddCompComponent implements OnInit {
       Notes: new FormControl(this.editdatas ? this.editdatas['note'] : ''),
       status: new FormControl(this.editdatas ? this.editdatas['status'] : ''),
     });
+  }
+
+  get ctrl() {
+    return this.AddComplaintForm.controls;
+  }
+  get val() {
+    return this.AddComplaintForm.value;
   }
 }

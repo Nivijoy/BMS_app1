@@ -43,36 +43,16 @@
         </div>
         <div class="col-sm-2">
           <label>Order ID</label>
-          <!-- <input type="text" [(ngModel)]="order_id" (change)="changeclear(4);" class="form-control" placeholder="Order ID"> -->
-          <auto-completen [(ngModel)]="order_id" addclass="form-control" optValues="order_id" (changed)="changeclear(4);"
+           <auto-completen [(ngModel)]="order_id" addclass="form-control" optValues="order_id" (changed)="changeclear(4);"
           placeholder='Select OrderId' (keyUp)="showOrderId($event)" optId="opid" [item]="order">
         </auto-completen>
         </div>
-        
-        <!-- <div class="col-sm-2">
-          <label>Date</label>
-          <input type="text" [nbDatepicker]="from_date_layout" [(ngModel)]="cdate" class="form-control" placeholder="Select Date" />
-          <nb-datepicker #from_date_layout></nb-datepicker>
-        </div> -->
+      
       </div>
       <div class="form-group row">
-        <!-- <div class="col-sm-2">
-          <label>Start Date</label>
-          <input type="text" class="form-control" [owlDateTime]="renstart_date" [owlDateTimeTrigger]="renstart_date"
-            [(ngModel)]="cdate" placeholder="Select Start Date">
-          <owl-date-time [pickerType]="'calendar'" #renstart_date></owl-date-time>
-        </div>
-        <div class="col-sm-2">
-          <label>End Date</label>
-          <input type="text" class="form-control" [owlDateTime]="renend_date" [owlDateTimeTrigger]="renend_date"
-            [(ngModel)]="end_date" placeholder="Select End Date">
-          <owl-date-time [pickerType]="'calendar'" #renend_date></owl-date-time>
-        </div> -->
-
         <div class="col-sm-2">
           <label>Transaction ID</label>
-          <!-- <input type="number" [(ngModel)]="txnid" class="form-control" placeholder="Transaction ID"> -->
-          <auto-completen [(ngModel)]="txnid" addclass="form-control" optValues="txnid" 
+           <auto-completen [(ngModel)]="txnid" addclass="form-control" optValues="txnid" 
           placeholder='Select Transaction ID' (keyUp)="showTransId($event)" optId="opid" [item]="trans">
         </auto-completen>
         </div>
@@ -88,7 +68,7 @@
         <div class="col-sm-2">
           <label>status</label>
           <select  class="form-control"  [(ngModel)]="opstatus">
-          <option value="" selected>Select Renewal type</option>
+          <option value="" selected>Select Status</option>
           <option value="0">Success</option>
           <option value="1">Initialized</option>
           <option value="4">Canceled(Failure)</option>

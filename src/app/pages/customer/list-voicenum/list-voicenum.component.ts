@@ -60,7 +60,7 @@ export class ListVoiceNumComponent implements OnInit {
     this.res_name = '';
     this.voice_num = '';
     this.status = '';
-    this.cust_name='';
+    this.cust_name = '';
     await this.initiallist();
   }
 
@@ -72,7 +72,7 @@ export class ListVoiceNumComponent implements OnInit {
       resel_id: this.res_name,
       voice_num: this.voice_num,
       status: this.status,
-      uid:this.cust_name
+      uid: this.cust_name
     })
     // console.log(result)
     if (result) {
@@ -90,7 +90,7 @@ export class ListVoiceNumComponent implements OnInit {
       resel_id: this.res_name,
       voice_num: this.voice_num,
       status: this.status,
-      uid:this.cust_name
+      uid: this.cust_name
     });
     if (res) {
       let tempdata = [], temp: any = res[0];
@@ -99,6 +99,7 @@ export class ListVoiceNumComponent implements OnInit {
         if (this.role.getroleid() > 777) {
           param['ISP NAME'] = temp[i]['busname'];
         }
+        if (this.res_name) param['RESELLER'] = temp[i]['resel_name']
         param['SUBSCRIBER ID'] = !temp[i]['cust_profile_id'] ? '--' : temp[i]['cust_profile_id'];
         param['VOICE NUMBER'] = temp[i]['vnumber'];
         param['CURRENT PASSWORD'] = !temp[i]['lpwd'] ? '--' : temp[i]['lpwd'];

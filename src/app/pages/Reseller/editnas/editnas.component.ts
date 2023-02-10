@@ -5,6 +5,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResellerService, RoleService,NasService } from '../../_service/indexService';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+
 @Component({
   selector: 'editnas',
   templateUrl: './editnas.component.html',
@@ -14,6 +16,10 @@ import { ResellerService, RoleService,NasService } from '../../_service/indexSer
 export class EditNasComponent implements OnInit {
   submit: boolean = false; AddNasForm; datas; id; modalHeader; config;anas;
   item;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+	public primaryColour = '#dd0031';
+	public secondaryColour = '#006ddd';
+	public loading = false;
   constructor(
     private activeModal: NgbActiveModal,
     private alert: ToasterService,
@@ -42,7 +48,9 @@ export class EditNasComponent implements OnInit {
       return;
     }
     this.AddNasForm.value['id'] = this.item['id']
+    this.loading = true;
     let result = await this.ser.updateResellerNas(this.AddNasForm.value)
+    this.loading = false;
     this.datas = result;
 
     const toast: Toast = {

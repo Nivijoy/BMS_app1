@@ -18,7 +18,7 @@ import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 
 export class AddToolsComponent implements OnInit {
   submit: boolean = false; ToolForm; groups; id; datas; editdatas;
-  busname; grup; resell; config;radiusmsg;
+  busname; grup; resell; config; radiusmsg;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -31,7 +31,7 @@ export class AddToolsComponent implements OnInit {
     private alert: ToasterService,
     private toolser: ToolService,
     public activeModal: NgbModal,
-    private confirmser : ConfirmationDialogService,
+    private confirmser: ConfirmationDialogService,
 
   ) { }
 
@@ -41,11 +41,9 @@ export class AddToolsComponent implements OnInit {
 
   }
 
-  async RadiusInfo(){
-    let result = await this.toolser.radiusserver({flag:20})
-    this.radiusmsg = result[0]['msg'].replace('\\n','<br />')
-    // console.log(this.radiusmsg)
-    // console.log(info)
+  async RadiusInfo() {
+    let result = await this.toolser.radiusserver({ flag: 20 })
+    this.radiusmsg = result[0]['msg'].replace('\\n', '<br />')
   }
 
   async toolsubmit(tflag) {
@@ -54,11 +52,10 @@ export class AddToolsComponent implements OnInit {
       return;
     }
     // window.confirm('Are Sure you want to complete the action!')
-    this.confirmser.confirm('Please Confirm','Are you Sure Want to complete the action').then(async (confirmed) => {
-      if(confirmed){
+    this.confirmser.confirm('Please Confirm', 'Are you Sure Want to complete the action').then(async (confirmed) => {
+      if (confirmed) {
         this.loading = true;
         let result = await this.toolser.radiusserver({ flag: tflag });
-        // console.log(result);
         if (result) {
           this.loading = false
           this.result_pop(result)
@@ -88,7 +85,7 @@ export class AddToolsComponent implements OnInit {
     this.alert.popAsync(toast);
   }
 
-  
+
   createForm() {
     this.ToolForm = new FormGroup({
 

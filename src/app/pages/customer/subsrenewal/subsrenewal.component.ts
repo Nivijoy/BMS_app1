@@ -19,6 +19,7 @@ export class SubsRenewalComponent implements OnInit {
   submit: boolean = false; SubsRenewForm; config; modalHeader; servtype; pack; subser; id; condition;
   subpack; datas; item; packc; expdate; lastpack; lastsubplan; sstatus; cu_date; expirydate; curentdate;
   reselData; ottplans; ottPlanDetails; ottPlatforms; ottsched_date; sched_date;
+  acc_type = 0;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -39,9 +40,9 @@ export class SubsRenewalComponent implements OnInit {
 
   ) { }
 
-
-
   async ngOnInit() {
+    this.acc_type = this.role.getAccountType();
+    console.log('Account type',this.acc_type);
     this.createForm();
     await this.Service();
     await this.previouspack();
@@ -201,7 +202,7 @@ export class SubsRenewalComponent implements OnInit {
       const form: any = document.getElementById("f1");
       // console.log('form',form)
       form.submit();
-    }else{
+    } else {
       // this.toastalert(result['msg'],result['error_msg']);
       window.alert(result['msg'])
     }
@@ -241,11 +242,15 @@ export class SubsRenewalComponent implements OnInit {
     });
   }
 
+  onNavigate() {
+    window.open("http://www.bluelotusservices.com/terms.php#Terms", "_blank");
+  }
+
   createForm() {
-     this.SubsRenewForm = new FormGroup({
+    this.SubsRenewForm = new FormGroup({
       last_pack: new FormControl(''),
-      srvid: new FormControl('',Validators.required),
-      sub_plan_id: new FormControl('',Validators.required),
+      srvid: new FormControl('', Validators.required),
+      sub_plan_id: new FormControl('', Validators.required),
       // pay_status: new FormControl('1'),
       pay_date: new FormControl(''),
       pay_type: new FormControl('2'),

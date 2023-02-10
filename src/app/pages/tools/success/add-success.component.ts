@@ -22,7 +22,6 @@ export class AddSuccessComponent implements OnInit {
    ) { }
 
    closeModal() {
-      // console.log(this.addprice)
       this.activeModal.close(true);
    }
 

@@ -142,7 +142,6 @@ export class AutoCompleteNComponent implements ControlValueAccessor, OnInit, Aft
         this.itemsFilter = this.items.filter(x => (x[this.optValues] + '').toLowerCase().includes((this.textbox + '').toLowerCase()));
         this.index = -1;
         this.dropDown.nativeElement.scrollTop = 0;
-
       }
       // Manual search 
     // } else {

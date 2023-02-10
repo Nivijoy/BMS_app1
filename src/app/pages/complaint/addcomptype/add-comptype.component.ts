@@ -57,7 +57,7 @@ export class AddComplaintTypeComponent implements OnInit {
 
   async showResellerName($event = '') {
     // console.log('inside', this)
-    this.resell = await this.reselser.showResellerName({ role: this.AddComptypeForm.value['Role'], like: $event })
+    this.resell = await this.reselser.showResellerName({ bus_id: this.AddComptypeForm.value['bus_id'],role: this.AddComptypeForm.value['Role'], like: $event })
     // console.log("resname",this.resell)
   }
 

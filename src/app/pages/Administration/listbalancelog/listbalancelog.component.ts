@@ -140,6 +140,7 @@ export class ListBalanceLogComponent implements OnInit {
         }
         param['BEFORE AMOUNT'] = temp[i]['before_balance_amt'];
         param['AMOUNT'] = temp[i]['amt'];
+        param['BALANCE'] = Number(temp[i]['before_balance_amt']) + Number(temp[i]['amt']);
         param['NOTES'] = temp[i]['rnote'] == null ? '--' : temp[i]['rnote'];
         param['DATE'] = this.datePipe.transform(temp[i]['c_date'], 'd MMM y hh:mm:ss a');
         param['PERFORMED BY'] = temp[i]['cname'];

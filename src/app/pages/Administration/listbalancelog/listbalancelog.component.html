@@ -86,6 +86,7 @@
           <th *ngIf="role.getroleid()>444">Reseller Business</th>
           <th>Before Amount</th>
           <th>Amount</th>
+          <th>Balance</th>
           <th>Notes</th>
           <th>Date</th>
           <th>Performed By</th>
@@ -98,6 +99,7 @@
           <td *ngIf="role.getroleid()>444">{{item.company}}</td>
           <td>{{item.before_balance_amt}}</td>
           <td>{{item.amt}}</td>
+          <td>{{((item.before_balance_amt * 1 + item.amt * 1) |  number : '1.2-3')}}</td>
           <td>{{item.rnote==null ? '--':item.rnote}}</td>
           <td>{{item.c_date | date :'d MMM y h:mm:ss a'}}</td>
           <td>{{item.cname}}</td>

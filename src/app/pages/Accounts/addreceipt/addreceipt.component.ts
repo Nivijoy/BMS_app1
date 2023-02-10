@@ -51,34 +51,28 @@ export class AddreceiptComponent implements OnInit {
       this.AddreceiptForm.get('bus_id').setValue(this.role.getispid());
       await this.profile();
     }
-    // console.log(this.item)
   }
 
   async business($event = '') {
     this.busdata = await this.busser.showBusName({ like: $event })
-
   }
 
   async profile() {
     this.pro = await this.resser.showProfileReseller({ rec_role: 1, bus_id: this.AddreceiptForm.value['bus_id'] })
-
-    // console.log(res)
   }
 
-  async resellername($event='') {
-    if(this.role.getroleid()> 777){
-      this.reseldata = await this.resser.showResellerName({ bus_id:this.AddreceiptForm.value['bus_id'],role: this.AddreceiptForm.value['Role'],like:$event })
+  async resellername($event = '') {
+    if (this.role.getroleid() > 777) {
+      this.reseldata = await this.resser.showResellerName({ bus_id: this.AddreceiptForm.value['bus_id'], role: this.AddreceiptForm.value['Role'], like: $event })
     }
     if (this.role.getroleid() <= 777) {
-      this.reseldata = await this.resser.showResellerName({ role: this.AddreceiptForm.value['Role'],like:$event })
-      // console.log(res)
+      this.reseldata = await this.resser.showResellerName({ role: this.AddreceiptForm.value['Role'], like: $event })
     }
   }
 
 
   async receiptsubmit() {
     // this.loading = true;
-    // console.log("entry")
     if (this.AddreceiptForm.invalid) {
       this.submit = true;
       return;
@@ -88,11 +82,7 @@ export class AddreceiptComponent implements OnInit {
       method = 'editReceipt'
       this.AddreceiptForm.value['id'] = this.item.receiptid;
     }
-    // console.log("inside")
-    // console.log(this.AddreceiptForm.value)
     this.data = await this.acntser[method](this.AddreceiptForm.value)
-
-    // console.log(result)
     // this.loading = false;
     const toast: Toast = {
       type: this.data[0]['error_msg'] == 0 ? 'success' : 'warning',
@@ -115,7 +105,7 @@ export class AddreceiptComponent implements OnInit {
       groupid: new FormControl(''),
       Role: new FormControl(this.item ? this.item.role : ''),
       reseller: new FormControl(this.item ? this.item.reseller_id : ''),
-      initial: new FormControl('BLSS/2021/R/',Validators.required),
+      initial: new FormControl('BLSS/2021/R/', Validators.required),
       st_num: new FormControl(this.item ? this.item.start_num : '', Validators.required),
       end_num: new FormControl(this.item ? this.item.end_num : '', Validators.required),
       rstatus: new FormControl(this.item ? this.item.rstatus : ''),

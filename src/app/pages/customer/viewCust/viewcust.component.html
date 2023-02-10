@@ -14,7 +14,7 @@
          <div class="row" style="padding-left: 10px;">
             <div style="padding: 2px;">
                <button *ngIf="(data.acc_type!=3 && (!role.getmenurole(705)))" class="btn btn-xs btn-outline-primary "
-                  (click)='renew_user(id,data.mrole,data.c_date,data.expiration)'><b>Renewal</b></button>
+                  (click)='renew_user(id,data.mrole,data.c_date,data.expiration,data.acc_type)'><b>Renewal</b></button>
             </div>
             <div style="padding: 2px;">
                <button
@@ -222,15 +222,19 @@
                                     </th>
                                  </tr>
                                  <tr>
-                                    <th>Auto Renewal</th>
+                                    <th>Reseller Auto Renewal</th>
                                     <td>
-                                       <a [ngStyle]="{'color' :data.renewal==1 ? 'green' : 'red' }"
-                                          [ngClass]="{'ion-close-round':data.renewal!=1? true:false,'ion-checkmark-round': data.renewal==1 ? true:false  }"></a>
+                                       <a [ngStyle]="{'color' :data.auto_renewal_resel==1 ? 'green' : 'red' }"
+                                          [ngClass]="{'ion-close-round':data.auto_renewal_resel!=1? true:false,'ion-checkmark-round': data.auto_renewal_resel==1 ? true:false  }"></a>
                                     </td>
                                  </tr>
                                  <tr>
                                     <th>GST No</th>
                                     <td>{{data.gst}}</td>
+                                 </tr>
+                                 <tr>
+                                    <th>Description</th>
+                                    <td>{{data.descr || '--'}}</td>
                                  </tr>
                               </table>
                            </nb-card-body>
@@ -482,6 +486,15 @@
                      <div class="col-lg-6" *ngIf="data.acc_type!=3">
                         <nb-card>
                            <nb-card-header style="background-color :  #01a7ee;color: white;">Documents
+                              <!--                               
+                                 <i *ngIf="data.address_photo_status == 1 || data.address_photo_status == 2 || data.id_photo_status ==1 || data.id_photo_status == 2"
+                                  (click)="downloadFile(id,data.cust_profile_id)"class="right fas fa-download fa-2x" aria-hidden="true"></i> -->
+                              <button
+                                 *ngIf="data.address_photo_status == 1 || data.address_photo_status == 2 || data.id_photo_status ==1 || data.id_photo_status == 2"
+                                 type="button" (click)="downloadFile(id,data.cust_profile_id)"
+                                 class="btn btn-md btn-success "
+                                 style="float: right;cursor: pointer;background-color: royalblue;border-radius: unset;padding: 1px;margin:2px">
+                                 <i class="fas fa-download fa-2x"></i> </button>
                            </nb-card-header>
                            <nb-card-body>
                               <table class="table table-hover table-striped">
@@ -494,8 +507,9 @@
                                        style="cursor:pointer;color: darkblue;text-decoration: underline;" *ngIf="(data.caf_photo_status == 0 || data.caf_photo_status ==3 ) && ((data.address_photo_status==1 || data.id_photo_status==1) ||
                                        (data.address_photo_status==2||data.id_photo_status==2))">CAF Generated Click
                                        here to view</th>
-                                       <th (click)="cafform()"
-                                       style="cursor:pointer;color: darkblue;text-decoration: underline;" *ngIf="(data.caf_photo_status == 1 || data.caf_photo_status ==2 )">  Click
+                                    <th (click)="cafform()"
+                                       style="cursor:pointer;color: darkblue;text-decoration: underline;"
+                                       *ngIf="(data.caf_photo_status == 1 || data.caf_photo_status ==2 )"> Click
                                        here to view Uploaded CAF</th>
                                     <th
                                        *ngIf="((data.address_photo_status==0 || data.id_photo_status==0) ||
@@ -517,17 +531,19 @@
                                              <li (click)='cafform()' style="cursor: pointer;">&nbsp;
                                                 <i style="color: black" class="fa fa-eye"></i>&nbsp;View
                                              </li>
-                                             <li *ngIf="(data.caf_photo_status == 0 || data.caf_photo_status ==3 )" (click)='cafuploadproof(data.uid,data.cust_profile_id,3)'
-                                                style="cursor: pointer;"  >&nbsp;
+                                             <li *ngIf="(data.caf_photo_status == 0 || data.caf_photo_status ==3 )"
+                                                (click)='cafuploadproof(data.uid,data.cust_profile_id,3)'
+                                                style="cursor: pointer;">&nbsp;
                                                 <i style="color: #00ff81;" class="fa fa-upload"></i>&nbsp;Upload
                                              </li>
                                              <!-- [hidden]="cafnotverify" -->
-                                             <li (click)="docverify(5)"  *ngIf="data.caf_photo_status == 1"
+                                             <li (click)="docverify(5)" *ngIf="data.caf_photo_status == 1"
                                                 style="cursor: pointer;">&nbsp;
                                                 <i style="color: #00ff81;" class="fa fa-check"></i>&nbsp;Verified
                                              </li>
                                              <!-- [hidden]="cafverify"  -->
-                                             <li (click)="docverify(10)"  *ngIf="data.caf_photo_status == 1" style="cursor: pointer;">
+                                             <li (click)="docverify(10)" *ngIf="data.caf_photo_status == 1"
+                                                style="cursor: pointer;">
                                                 &nbsp;
                                                 <i style="color: red;" class="fas fa-sync"></i>&nbsp;Recollect
                                              </li>
@@ -539,8 +555,8 @@
                                  <tr>
                                     <th>Address Proof</th>
                                     <th>
-                                       {{data.address_photo_status==1?'Collected':data.address_photo_status==2?'Verified':data.address_photo_status==3?'Recollect':'Not
-                                       Uploaded'}}</th>
+                                       {{data.address_photo_status==1?'Collected':data.address_photo_status==2?'Verified':data.address_photo_status==3?'Recollect':'NotUploaded'}}
+                                    </th>
                                     <th *ngIf="data.address_photo_status==0 || data.address_photo_status==3 || data.address_photo_status ==null"
                                        style=" padding: 1px;" class=" last" data-title="'Action'">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -567,7 +583,8 @@
                                  <tr>
                                     <th>Identity Proof</th>
                                     <th>
-                                       {{data.id_photo_status==1?'Collected':data.id_photo_status==2?'Verified':data.id_photo_status==3?'Recollect':'Not Uploaded'}}</th>
+                                       {{data.id_photo_status==1?'Collected':data.id_photo_status==2?'Verified':data.id_photo_status==3?'Recollect':'Not
+                                       Uploaded'}}</th>
                                     <th *ngIf="data.id_photo_status==0 || data.id_photo_status==3 || data.id_photo_status == null"
                                        style=" padding: 1px;" class=" last" data-title="'Action'">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -596,7 +613,8 @@
                                  <tr>
                                     <th>Customer Pic</th>
                                     <th>
-                                       {{data.user_photo_status==1?'Collected':data.user_photo_status==2?'Verified':data.user_photo_status==3?'Recollect':'Not Uploaded'}}</th>
+                                       {{data.user_photo_status==1?'Collected':data.user_photo_status==2?'Verified':data.user_photo_status==3?'Recollect':'Not
+                                       Uploaded'}}</th>
                                     <th *ngIf="data.user_photo_status==0 || data.user_photo_status==3 || data.user_photo_status ==null"
                                        style=" padding: 1px;" class=" last" data-title="'Action'">
                                        <div class="dropdown ghost-dropdown" ngbDropdown>
@@ -1007,13 +1025,14 @@
                            </ngx-flip>
                            <br>
                            <div class="form-group row">
-                              <div class="col-sm-6" [hidden]="notverify">
+                              <div class="col-sm-6"
+                                 [hidden]="data.address_photo_status ==2 || data.address_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(11)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
-                              <div class="col-sm-6" [hidden]="verify">
+                              <div class="col-sm-6" [hidden]="data.address_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(15)" class="btn btn-depth btn-secondary middle"><a
@@ -1044,13 +1063,13 @@
                               </div>
                            </ngx-flip>
                            <div class="form-group row">
-                              <div class="col-sm-6" [hidden]="notverifyid">
+                              <div class="col-sm-6" [hidden]="data.id_photo_status ==2 || data.id_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(21)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
-                              <div class="col-sm-6" [hidden]="verifyid">
+                              <div class="col-sm-6" [hidden]="data.address_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style=" background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(25)" class="btn btn-depth btn-secondary middle"><a
@@ -1083,13 +1102,15 @@
                               </div>
                            </ngx-flip>
                            <div class="form-group row">
-                              <div class="col-sm-6" [hidden]="notverifyaddr">
+                              <div class="col-sm-6"
+                                 [hidden]="(data.id_photo_status ==2 || data.id_photo_status == 0) && (data.address_photo_status ==2 || data.address_photo_status == 0)">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(31)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
-                              <div class="col-sm-6" [hidden]="verifyaddr">
+                              <div class="col-sm-6"
+                                 [hidden]="data.address_photo_status == 0 && data.id_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="  background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(35)" class="btn btn-depth btn-secondary middle"><a
@@ -1105,13 +1126,14 @@
                            </nb-card-header>
                            <img [src]='pro_pic ? pro_pic.profile_photo:""' />
                            <div class="form-group row">
-                              <div class="col-sm-6" [hidden]="notverifypic">
+                              <div class="col-sm-6"
+                                 [hidden]="data.user_photo_status == 0 || data.user_photo_status == 2">
                                  <button *ngIf="role.getroleid()>=775"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(51)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
-                              <div class="col-sm-6" [hidden]="verifypic">
+                              <div class="col-sm-6" [hidden]="data.user_photo_status == 0">
                                  <button *ngIf="role.getroleid()>=775"
                                     style=" background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(55)" class="btn btn-depth btn-secondary middle"><a

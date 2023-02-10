@@ -26,11 +26,14 @@ export class ProfilePasswordComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close();
-    if(this.id){
+    if(this.id && !this.item['card_flag']){
       this.router.navigate(['/pages/cust/viewcust'])
     }else{
-      this.router.navigate(['/pages/cust/custList'])
-
+      if(this.item.card_flag){
+        this.router.navigate(['/pages/cust/list-card-user'])
+      }else{
+        this.router.navigate(['/pages/cust/custList'])
+      }
     }
   }
   ngOnInit() {
@@ -43,8 +46,7 @@ export class ProfilePasswordComponent implements OnInit {
       this.submit = true;
       return;
     }
-    // console.log('qqqq')
-    if(this.id){
+     if(this.id){
       this.PropassForm.value['id'] = this.id;
     }else{
       this.PropassForm.value['id'] = this.item['id'];

@@ -163,10 +163,13 @@ export class InvoicelistComponent implements OnInit {
     this.serv_type = ''; this.group1 = ''; this.profile = ''; this.res1 = '';
     this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';
     await this.initiallist();
-    if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
-      await this.showProfileReseller();
-      await this.showResellerName();
-    }
+    await this.showGroupName();
+    await this.showProfileReseller();
+    await this.showResellerName();
+    // if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
+    //   await this.showProfileReseller();
+    //   await this.showResellerName();
+    // }
   }
 
   async initiallist() {
@@ -291,7 +294,7 @@ export class InvoicelistComponent implements OnInit {
         param['SERVICE TYPE'] = temp[i]['service_name'];
         param['SERVICE NAME'] = temp[i]['srvname'];
         param['SUB PLAN'] = temp[i]['sub_plan'];
-        param['TIME UNIT'] = temp[i]['unit_type'] == 0? temp[i]['time_unit'] + ' Days' : temp[i]['time_unit'] + ' Months';
+        param['TIME UNIT'] = temp[i]['unit_type'] == 0 ? temp[i]['time_unit'] + ' Days' : temp[i]['time_unit'] + ' Months';
         param['ADDITIONAL DAYS'] = temp[i]['additional_days'];
         param['PACK PRICE'] = temp[i]['invoice_amount'];
         param['TAX AMOUNT PRICE'] = temp[i]['tax_amount'];
@@ -373,7 +376,7 @@ export class InvoicelistComponent implements OnInit {
         temp[i]['expiry_date'] = this.datePipe.transform(temp[i]['expiry_date'], 'd MMM y hh:mm:ss a')
         param['SERVICE EXPIRY'] = temp[i]['expiry_date'];
         param['PAY STATUS'] = temp[i]['pay_status'] == 2 ? 'Paid' : 'Unpaid';
-        temp[i]['paydate'] = this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')
+        temp[i]['paydate'] = temp[i]['paydate'] != '0000-00-00 00:00:00' ? (this.datePipe.transform(temp[i]['paydate'], 'd MMM y hh:mm:ss a')) : '--';
         param['PAY DATE'] = temp[i]['pay_status'] == 2 ? temp[i]['paydate'] : '--';
         param['COLLECTED'] = temp[i]['sub_payed_amt'];
         param['RENEWAL BY'] = temp[i]['renewalby_name'];

@@ -62,8 +62,8 @@ export class UpdateUsernameComponent implements OnInit,AfterViewInit {
 
   createForm() {
     this.AddNasForm = new FormGroup({
-      username: new FormControl('', [Validators.required,Validators.pattern("[a-z0-9._\-\]{5,20}$"),UsernameValidator.cannotContainSpace]),
-
+      // username: new FormControl('', [Validators.required,Validators.pattern("[a-z0-9._\-\]{5,20}$"),UsernameValidator.cannotContainSpace]),
+      username: new FormControl()
     });
   }
 }

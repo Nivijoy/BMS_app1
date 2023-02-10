@@ -20,6 +20,8 @@ import { CustOnlinePaylistComponent } from './custonlinepaylist/custonlinepaylis
 import { ListInvoiceAckComponent } from './ackowledg-list/acknowledg-list.component';
 import { WalletShareComponent } from './wallet-share/wallet-share.component';
 import { ListWalletShareComponent } from './list-wallet-share/list-wallet-share.component';
+import { OnlinePaymentReportComponent } from './online-payment-report/online-payment-report.component';
+
 const routes: Routes = [{
   path: '',
   component: AccountsComponent,
@@ -43,6 +45,7 @@ const routes: Routes = [{
     { path: 'acknowledg-list', component: ListInvoiceAckComponent },
     { path: 'wallet-share', component: WalletShareComponent },
     { path: 'list-wallet', component: ListWalletShareComponent },
+    { path: 'list-online-report', component: OnlinePaymentReportComponent }
   ],
 }];
 @NgModule({
@@ -71,4 +74,5 @@ export const routedComponents = [
   ListInvoiceAckComponent,
   WalletShareComponent,
   ListWalletShareComponent,
+  OnlinePaymentReportComponent
 ];

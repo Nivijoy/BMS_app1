@@ -14,7 +14,7 @@ import { ngxLoadingAnimationTypes } from 'ngx-loading';
 export class BalancePayComponent implements OnInit {
   modalHeader: string; item; busname; grup; resell; pro;
   PayBalanceForm; id; resel;
-  submit: boolean;
+  submit: boolean = false;
   Make;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -50,7 +50,9 @@ export class BalancePayComponent implements OnInit {
 
   async payment() {
     // console.log(this.PayBalanceForm.value)
+    this.submit = true;
     if (this.PayBalanceForm.invalid) {
+      window.alert('Please fill all mandatory fields')
       return;
     }
     this.loading = true;
@@ -86,8 +88,8 @@ export class BalancePayComponent implements OnInit {
       pay_amt: new FormControl(this.item['payamt'] || '', Validators.required),
       receipt_date: new FormControl(nowdate.toISOString().slice(0, 10)),
       rnote: new FormControl(''),
-      collect_by: new FormControl('')
-
+      collect_by: new FormControl(''),
+      paytype:new FormControl('',Validators.required)
     });
   }
 }

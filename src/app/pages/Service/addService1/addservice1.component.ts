@@ -19,7 +19,7 @@ export class addService1Component implements OnInit {
   @ViewChild('multiSelect') multiSelect; file: any;
   public loadContent: boolean = false; tab: boolean = false;
   submit: boolean = false; AddServiceForm; resell; alnas: any = []; nasresel: any = []; busname;
-  datas; settings; nassettings; grup; searchnas: string; searchresell:string;busresel: any = []; nas; reseldata;
+  datas; settings; nassettings; grup; searchnas: string; searchresell: string; busresel: any = []; nas; reseldata;
   buresellitems; config; falback; arrayBuffer: any; bulk: any = []; data: any;
 
   constructor(
@@ -54,13 +54,13 @@ export class addService1Component implements OnInit {
     }
   }
 
-  async busresell($event='') {
+  async busresell($event = '') {
     if (this.AddServiceForm.value['serassign_type'] == '2') {
       this.buresellitems = await this.nasser.showGroupNas({ bus_id: this.AddServiceForm.value['bus_id'], groupid: this.AddServiceForm.value['groupid'], serassign_type: this.AddServiceForm.value['serassign_type'], edit_flag: 1 });
       // console.log("resell",this.buresellitems)
     }
-    if(this.AddServiceForm.value['create_type']==2){
-      this.buresellitems = await this.nasser.showGroupNas({ bus_id: this.AddServiceForm.value['bus_id'], groupid: this.AddServiceForm.value['groupid'], serassign_type: 2,like:$event });
+    if (this.AddServiceForm.value['create_type'] == 2) {
+      this.buresellitems = await this.nasser.showGroupNas({ bus_id: this.AddServiceForm.value['bus_id'], groupid: this.AddServiceForm.value['groupid'], serassign_type: 2, like: $event });
 
     }
   }
@@ -159,7 +159,7 @@ export class addService1Component implements OnInit {
       this.AddServiceForm.controls['bus_id'].setValue(this.role.getispid());
       await this.group();
     }
-    if(this.role.getroleid()<775){
+    if (this.role.getroleid() < 775) {
       this.AddServiceForm.get('create_type').setValue('1')
     }
     if (this.role.getroleid() <= 444) {
@@ -168,10 +168,10 @@ export class addService1Component implements OnInit {
       this.AddServiceForm.get('create_type').clearValidators();
       this.AddServiceForm.get('create_type').updateValueAndValidity();
     }
-    if (this.role.getroleid() >=775 || this.role.getroleid() == 666 || this.role.getroleid() == 665) {
-     this.AddServiceForm.get('ser_validity').setValidators([Validators.required]);
+    if (this.role.getroleid() >= 775 || this.role.getroleid() == 666 || this.role.getroleid() == 665) {
+      this.AddServiceForm.get('ser_validity').setValidators([Validators.required]);
     }
-    if(this.role.getroleid()<661){
+    if (this.role.getroleid() < 661) {
       this.AddServiceForm.get('ser_validity').setValue('1')
     }
   }
@@ -298,7 +298,7 @@ export class addService1Component implements OnInit {
           invalid.push(name)
         }
       };
-    // console.log('Invalid', invalid);
+      // console.log('Invalid', invalid);
       if (this.AddServiceForm.invalid) {
         this.submit = true;
         return;
@@ -352,11 +352,11 @@ export class addService1Component implements OnInit {
       ser_price: [''],
       time_unit: [''],
       timeunit_type: [''],
-      dayflag : [''],
+      dayflag: [''],
       add_days: [''],
-      subplan_validity:['1'],
-      subst_date:[''],
-      subend_date:[''],
+      subplan_validity: ['1'],
+      subst_date: [''],
+      subend_date: [''],
     });
   }
 
@@ -389,6 +389,10 @@ export class addService1Component implements OnInit {
     }
   }
 
+  assignCardService() {
+    if (this.AddServiceForm.value.srv_type == 1) this.AddServiceForm.get('Service').setValue('0');
+  }
+
   createForm() {
     this.AddServiceForm = new FormGroup({
       create_type: new FormControl('', Validators.required),
@@ -412,14 +416,15 @@ export class addService1Component implements OnInit {
       timeunit: new FormControl(''),
       datadl_rate: new FormControl('0'),
       dataul_rate: new FormControl('0'),
-      Service: new FormControl('', Validators.required),
+      Service: new FormControl('0', Validators.required),
+      srv_type: new FormControl('0', Validators.required),
       Expiry: new FormControl('1', Validators.required),
       ser_validity: new FormControl(''),
       st_date: new FormControl(''),
       end_date: new FormControl(''),
       data_split: new FormControl(''),
       serstatus: new FormControl(true),
-      Data: new FormControl('',Validators.required),
+      Data: new FormControl('', Validators.required),
       Time: new FormControl('0'),
       Time1: new FormControl('0'),
       Limit: new FormControl('0'),
