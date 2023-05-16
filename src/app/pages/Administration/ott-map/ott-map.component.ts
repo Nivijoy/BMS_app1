@@ -14,7 +14,7 @@ import { AddSuccessComponent } from '../success/add-success.component';
 })
 export class OttMapComponent implements OnInit {
   submit: boolean = false; busdata; resell; AddOttMapForm; ottplans;
-  taxtype = []; days = []; ostatus = []; selectedRows;
+  taxtype = []; days = []; ostatus = []; selectedRows;vendor=[];
   config; settings;
   pager;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
@@ -43,6 +43,10 @@ export class OttMapComponent implements OnInit {
       this.ostatus = [
         { value: '1', title: 'Enable' },
         { value: '0', title: 'Disable' },
+      ],
+      this.vendor = [
+        { value: '1', title: 'M2MIT' },
+        { value: '2', title: 'PLAYBOX' }
       ],
 
       this.settings = {
@@ -116,6 +120,20 @@ export class OttMapComponent implements OnInit {
               config: {
                 selectText: 'Select',
                 list: this.days,
+              },
+            },
+            filter: true,
+          },
+          ott_vendor: {
+            title: 'Vendor',
+            valuePrepareFunction: (ott_vendor: any) => {
+              return (ott_vendor == 1 ? 'M2MIT' : 'PLAYBOX');
+            },
+            editor: {
+              type: 'list',
+              config: {
+                selectText: 'Select',
+                list: this.vendor,
               },
             },
             filter: true,
@@ -197,6 +215,7 @@ export class OttMapComponent implements OnInit {
       this.result_pop(result);
       if (result[0].error_msg == 0) {
         this.AddOttMapForm.reset();
+        this.source.reset();
       }
     }
   }

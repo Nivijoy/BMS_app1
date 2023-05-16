@@ -49,6 +49,7 @@ import { toJS } from "mobx";
 import { AddSuccessComponent } from '../success/add-success.component';
 import { TopuprenewalComponent } from '../topuprenewal/topuprenewal.component';
 import * as FileSaver from 'file-saver';
+import { MessageComponent } from '../message/message.component';
 @Component({
   selector: 'viewCust',
   templateUrl: './viewcust.component.html',
@@ -67,6 +68,8 @@ export class ViewCustComponent implements OnInit{
   topup_data;
 
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; srvidData: any[] = [];
+  invpage:number =1;invcount;gstinvcount;gstinvpage:number=1;
+  renewalpage:number=1;renewalcount;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname; selectdata;
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
@@ -516,10 +519,28 @@ export class ViewCustComponent implements OnInit{
 
   async invoicelist() {
     this.loading = true
-    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1, index: 0, limit: 10 })  // Non-GST Invoice
+    let res = await this.accser.listInvoice({ uid: this.id, invtype: 1, index: (this.invpage-1) * this.limit, limit: this.limit })  // Non-GST Invoice
     this.loading = false;
+    console.log('Response',res);
     this.invoicedata = res[0];
+    this.invcount = res[1]['tot']
+    this.setInvoicePage()
   }
+
+  getInvoiceList(page) {
+    var total = Math.ceil(this.invcount / this.limit);
+    let result = this.pageservice.pageValidator(this.invpage, page, total);
+    this.invpage = result['value'];
+    if (result['result']) {
+      this.invoicelist();
+    }
+  }
+
+  setInvoicePage() {
+    this.pager = this.pageservice.getPager(this.invcount, this.invpage, this.limit);
+    this.pagedItems = this.invoicedata;
+  }
+
   async downloadInvoice() {
     this.loading = true
     let res = await this.accser.listInvoice({ uid: this.id, invtype: 1 })  // Non-GST Invoice
@@ -558,10 +579,26 @@ export class ViewCustComponent implements OnInit{
 
   async gstInvoice() {
     this.loading = true;
-    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2, index: 0, limit: 10 })  // GST Invoice
+    let resp = await this.accser.listInvoice({ uid: this.id, invtype: 2, index: (this.gstinvpage-1) * this.limit, limit: this.limit })  // GST Invoice
     this.loading = false;
     this.gstinvoice = resp[0];
+    this.gstinvcount = resp[1]['tot']
+    this.setGSTInvoicePage()
     // console.log(res);
+  }
+
+  getGSTInvoiceList(page) {
+    var total = Math.ceil(this.gstinvcount / this.limit);
+    let result = this.pageservice.pageValidator(this.gstinvpage, page, total);
+    this.gstinvpage = result['value'];
+    if (result['result']) {
+      this.gstInvoice();
+    }
+  }
+
+  setGSTInvoicePage() {
+    this.pager = this.pageservice.getPager(this.gstinvcount, this.gstinvpage, this.limit);
+    this.pagedItems = this.gstinvoice;
   }
 
   async ottInvoice() {
@@ -574,7 +611,7 @@ export class ViewCustComponent implements OnInit{
 
   async renewal_history() {
     this.loading = true;
-    let resp = await this.accser.renewalHistory({ uid: this.id, index: 0, limit: 10 });
+    let resp = await this.accser.renewalHistory({ uid: this.id, index: (this.renewalpage-1) * this.limit, limit: this.limit });
     // console.log('Renewal History Result', resp);
     this.loading = false;
     this.renew_history = resp[0];
@@ -584,7 +621,23 @@ export class ViewCustComponent implements OnInit{
       this.renew_history[i]['total'] = this.renew_history[i]['trafficunitcomb'] == 0 ? 0 : this.bytefunct(this.renew_history[i]['trafficunitcomb']);
       // console.log( "speed",this.trafficdata[i]['total'])
     }
+    this.renewalcount = resp[1]['count'];
+    this.setRenewalPage()
 
+  }
+
+  getRenewalList(page) {
+    var total = Math.ceil(this.renewalcount / this.limit);
+    let result = this.pageservice.pageValidator(this.renewalpage, page, total);
+    this.renewalpage = result['value'];
+    if (result['result']) {
+      this.renewal_history();
+    }
+  }
+
+  setRenewalPage() {
+    this.pager = this.pageservice.getPager(this.renewalcount, this.renewalpage, this.limit);
+    this.pagedItems = this.gstinvoice;
   }
 
   async topupReport() {
@@ -610,17 +663,29 @@ export class ViewCustComponent implements OnInit{
     })
   }
 
-  pay(invid, uid, amnt) {
+  pay(invid, uid, amnt,type) {
     const activeModal = this.nasmodel.open(BalancePayComponent, { size: 'sm', container: 'nb-layout' })
     activeModal.componentInstance.modalHeader = 'Balance Payment';
     activeModal.componentInstance.item = { invid: invid, uid: uid, payamt: amnt };
     activeModal.result.then((data) => {
       console.log('Result', data);
-      this.invoicelist();
+     if(type == 1) this.invoicelist();
+     else this.gstInvoice();
       // this.view();
     })
 
   }
+
+  changePayStatus(invid,uid,type){
+    const activeModal = this.nasmodel.open(MessageComponent, { size: 'lg', container: 'nb-layout' })
+    activeModal.componentInstance.modalHeader = 'Change Payment Status';
+    activeModal.componentInstance.item = { invid: invid, uid: uid,inv_type:type };
+    activeModal.result.then((data) => {
+      console.log('Result', data);
+      if(type == 1) this.invoicelist();
+      else this.gstInvoice();
+      // this.view();
+    })  }
 
   async receiptlist() {
     this.loading = true;
@@ -723,6 +788,7 @@ export class ViewCustComponent implements OnInit{
       let tempdata = [], temp: any = result[0];
       for (var i = 0; i < temp.length; i++) {
         let param = {};
+        param['USERNAME'] = temp[i]['username'];
         temp[i]['acctstarttime'] = this.datePipe.transform(temp[i]['acctstarttime'], 'd MMM y h:mm:ss a');
         temp[i]['acctstoptime'] = this.datePipe.transform(temp[i]['acctstoptime'], 'd MMM y h:mm:ss a');
         param['START TIME'] = temp[i]['acctstarttime'];
@@ -817,10 +883,10 @@ export class ViewCustComponent implements OnInit{
 
   }
 
-  renew_user(cust_id, role, cdate, edate,acc_type) {
+  renew_user(cust_id, role, cdate, edate,acc_type,expmode,exptime) {
     const activeModal = this.nasmodel.open(RenewCustComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Renew Customer';
-    activeModal.componentInstance.item = { cust_id: cust_id, role: role, cdate: cdate, edate: edate,acc_type:acc_type }
+    activeModal.componentInstance.item = { cust_id: cust_id, role: role, cdate: cdate, edate: edate,acc_type:acc_type,expmode:expmode,exptime:exptime }
     activeModal.result.then((data) => {
       this.view();
     })

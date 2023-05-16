@@ -17,6 +17,8 @@ import { DatePipe } from '@angular/common';
 import * as JSXLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { BalancePayComponent } from '../../customer/paybalance/paybalance.component';
+
 
 @Component({
   selector: 'DuesReport',
@@ -421,6 +423,16 @@ export class DuesReportComponent implements OnInit {
     this.router.navigate(['/pages/Accounts/adddeposit']);
   }
 
+
+  pay(invid, uid, amnt) {
+     const activeModal = this.nasmodel.open(BalancePayComponent, { size: 'sm', container: 'nb-layout' })
+    activeModal.componentInstance.modalHeader = 'Balance Payment';
+    activeModal.componentInstance.item = { invid: invid, uid: uid, payamt: amnt };
+    activeModal.result.then((data) => {
+        this.initiallist();
+     })
+
+  }
   toastalert(msg, status = 0) {
     const toast: Toast = {
       type: status == 1 ? 'success' : 'warning',

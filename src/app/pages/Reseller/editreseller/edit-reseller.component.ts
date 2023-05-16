@@ -19,7 +19,7 @@ export class EditResellerComponent implements OnInit {
   data; busname; pro; dist; states; bulkReseller = []; servtype; shareval; ottdata; ott_name = [];
   sizes = []; sharename; distname; smsgateway; paymentgateway; ottcheckids; upload; imageURL;
   change: boolean;
-  ispsharedefault = false; isReadonly = false; config;
+  ispsharedefault = true; isReadonly = false; config;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -84,8 +84,15 @@ export class EditResellerComponent implements OnInit {
   }
 
   prefixChange() {
+   
     if (this.value.prefix_enable == false) {
       this.ctrl.prefix.setValue('');
+      this.ctrl.prefix.clearValidators();
+      this.ctrl.prefix.updateValueAndValidity()
+    }else{
+      this.ctrl.prefix.setValidators([Validators.required]);
+      this.ctrl.prefix.updateValueAndValidity()
+
     }
   }
 
@@ -153,10 +160,10 @@ export class EditResellerComponent implements OnInit {
 
 
   shareempty() {
-    this.ctrl.isp_share.setValue('');
-    this.ctrl.subisp_share.setValue('');
-    this.ctrl.subdis_share.setValue('');
-    this.ctrl.resel_share.setValue('');
+    // this.ctrl.isp_share.setValue('');
+    // this.ctrl.subisp_share.setValue('');
+    // this.ctrl.subdis_share.setValue('');
+    // this.ctrl.resel_share.setValue('');
     this.ctrl.VOisp_share.setValue('');
     this.ctrl.VOsubisp_share.setValue('');
     this.ctrl.VOsubdis_share.setValue('');
@@ -2304,6 +2311,7 @@ export class EditResellerComponent implements OnInit {
       credit_flag: new FormControl(this.editdatas ? this.editdatas['credit_flag'] : ''),
       credit_limit: new FormControl(this.editdatas ? this.editdatas['credit_limit'] : ''),
       due_invoice: new FormControl(this.editdatas ? this.editdatas['check_due_invoices'] : ''),
+      expiry_type: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expiry_type']) :'1'),
       exp_mode: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expmode']) : ''),
       exp_time: new FormControl(this.editdatas ? this.editdatas['exptime'] : ''),
       ereceipt: new FormControl(this.editdatas ? this.editdatas['ereceipt'] : ''),

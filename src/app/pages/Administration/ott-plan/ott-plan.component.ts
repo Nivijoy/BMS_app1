@@ -260,6 +260,7 @@ export class OTTPlanComponent implements OnInit {
       timeunit: new FormControl(this.editdatas ? this.editdatas['dayormonth'] : '', Validators.required),
       taxtyp: new FormControl(this.editdatas ? this.editdatas['otttaxtype'] : '0', Validators.required),
       amt: new FormControl(this.editdatas ? this.editdatas['ottamount'] : '', Validators.required),
+      ott_vendor: new FormControl(this.editdatas ? this.editdatas['ott_vendor'] : '', Validators.required),
       // ott_plt : new FormControl(this.editdatas ? JSON.parse(this.editdatas['ottplatform'] ):'',Validators.required),
       ott_plt: new FormControl(this.checkids || '', Validators.required),
       unit_type: new FormControl(this.editdatas ? this.editdatas['days'] : '', Validators.required),

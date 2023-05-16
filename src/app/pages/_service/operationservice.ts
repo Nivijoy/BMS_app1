@@ -37,6 +37,9 @@ export class OperationService {
   topup(params) {
     return this.http.post("/api/operations/subscriber_data_topup", params);
   }
+  async changePaymentStatus(params) {
+    return await this.http.post("/api/operations/changePaymentStatus", params).toPromise();
+  }
 
 
 

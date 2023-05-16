@@ -9,6 +9,8 @@ import * as JSXLSX from 'xlsx';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfilePasswordComponent } from '../ProfilePassword/profilepass.component';
 import {AuthpassComponent} from '../ChangeauthPassword/authpass.component';
+import { ChangeValidityComponent } from '../changevalidity/changevalidity.component';
+import { ChangeSimUseComponent } from '../change-sim-use/change-sim-use.component';
 const EXCEL_EXTENSION = '.xlsx';
 
 
@@ -21,7 +23,8 @@ export class ListCardUserComponent implements OnInit {
   submit: boolean = false;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; total;
   bus; resel; bus_name; resel_name; data; count; search; group1; group_name; servtype; srv;
-  serv_type; cust_name; custname;
+  serv_type; cust_name; custname;active_status;expiry_status;online_status;disconnected;
+  suspend;hold
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -86,8 +89,16 @@ export class ListCardUserComponent implements OnInit {
     });
     if (result) {
       this.loading = false
+      console.log('Result card user',result);
+      
       this.data = result[0];
       this.count = result[1]['count'];
+      this.active_status = result[1]['active_status'];
+      this.expiry_status = result[1]['expiry_status'];
+      this.suspend = result[1]['suspend'];
+      this.disconnected = result[1]['disconnected'];
+      this.hold = result[1]['hold'];
+      this.online_status = result[1]['online_status'];
       this.setPage();
     } else this.loading = false;
   }
@@ -109,6 +120,26 @@ export class ListCardUserComponent implements OnInit {
       this.list();
     })
   }
+
+  changeValidity(item) {
+    const activeModal = this.nasmodel.open(ChangeValidityComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Change Validity';
+    activeModal.componentInstance.item = { cust_id: item, card_flag: true }
+    activeModal.result.then((data) => {
+      this.list();
+    })
+  }
+
+  
+  changeSimUse(item) {
+    const activeModal = this.nasmodel.open(ChangeSimUseComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Change Simultaneous Use';
+    activeModal.componentInstance.item = { cust_id: item, card_flag: true }
+    activeModal.result.then((data) => {
+      this.list();
+    })
+  }
+
 
 
 

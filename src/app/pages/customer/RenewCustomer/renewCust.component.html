@@ -154,7 +154,7 @@
               <tr *ngIf="packc">
                 <td>Internet + Tax Amount</td>
                 <th>{{(packc[0].base_amount - packc[0].vamt ) | currency: 'INR': 'symbol'}} +
-                  {{(packc[0].tax_amount -packc[0].vtax_amt) | number: '.2-3' | currency: 'INR': 'symbol'}}
+                  {{(packc[0].tax_amount -packc[0].vtax_amt) | currency: 'INR': 'symbol'}}
                   = {{(packc ?((packc[0].base_amount - packc[0].vamt )+ (packc[0].tax_amount -packc[0].vtax_amt) |
                   currency: 'INR': 'symbol') : 0)}}
                 </th>
@@ -184,12 +184,16 @@
               </tr>
               <tr *ngIf="RenewSubsForm.value['ottplanid']">
                 <td>Tax</td>
-                <th>{{packc? (packc[0].tax_amount+ottPlanDetails['otax'] | number:'1.0-2' | currency: 'INR':
-                  'symbol'):0}}</th>
+                <!-- <th>{{packc? (packc[0].tax_amount+ottPlanDetails['otax'] | number:'1.0-2' | currency: 'INR':
+                  'symbol'):0}}</th> -->
+                  <th>{{packc? (packc[0].tax_amount+ottPlanDetails['otax']  | currency: 'INR':
+                    'symbol'):0}}</th>
               </tr>
               <tr [hidden]="RenewSubsForm.value['ottplanid']">
                 <td>Tax</td>
-                <th>{{packc? (packc[0].tax_amount | number:'1.0-2' | currency: 'INR': 'symbol'):0}}</th>
+                <!-- <th>{{packc? (packc[0].tax_amount | number:'1.0-2' | currency: 'INR': 'symbol'):0}}</th> -->
+                <th>{{packc? (packc[0].tax_amount |  currency: 'INR': 'symbol'):0}}</th>
+
               </tr>
               <tr [hidden]="RenewSubsForm.value['ottplanid']">
                 <td>Total Amount</td>

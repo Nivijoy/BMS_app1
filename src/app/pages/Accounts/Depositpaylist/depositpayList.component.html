@@ -68,6 +68,13 @@
           </select>
         </div>
         <div class="col-sm-2">
+          <label>Deposit Type</label>
+          <select [(ngModel)]="dep_type" name="dep_type" id="dep_type"
+            class="form-control no-range-feature-val video-codec-list">
+             <option *ngFor="let item of deposit_type" [ngValue]="item.id">{{ item.label }}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
           <label>Start Date</label>
           <input type="date" pattern="Start Date" [(ngModel)]="start_date" class="form-control">
         </div>

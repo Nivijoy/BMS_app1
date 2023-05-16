@@ -13,17 +13,18 @@
               <nb-card>
                 <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == ''">Bulk
                   Update</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 1">
+                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 1  ">
                   Subscriber Expiry</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 2">Bulk
+                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 2 ">Bulk
                   Service Update</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 3">Update
+                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 3 ">Update
                   Data Split</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 4">Bulk
+                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 4 ">Bulk
                   Reseller Replace</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 5">
+                <nb-card-header style="background-color :  #01a7ee"
+                  *ngIf="bulkUpdateForm.value['format'] == 5 && role.getroleid() >= 555">
                   Service Replace</nb-card-header>
-                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 6">
+                <nb-card-header style="background-color :  #01a7ee" *ngIf="bulkUpdateForm.value['format'] == 6 ">
                   Authentication Password Update</nb-card-header>
                 <nb-card-body>
                   <div class="form-group row">
@@ -48,7 +49,8 @@
                     </div>
                     <div class="col-sm-4" *ngIf="bulkUpdateForm.value['format'] ==6">
                       <a href="/assets/public/AuthPwdUpdate.xlsx" target="_blank" download>
-                        <b style="color: blue;word-wrap: break-word;display:inline-block  ">Download Sample Here Note:(Update Authentication Pawword Only For
+                        <b style="color: blue;word-wrap: break-word;display:inline-block  ">Download Sample Here
+                          Note:(Update Authentication Pawword Only For
                           Regular Users)</b></a>
                     </div>
                   </div>
@@ -57,12 +59,13 @@
                       <label>Select Service<span style="color:red;">*</span></label>
                       <select formControlName="format" class="form-control" (change)="clearSetValidation();">
                         <option value="">Select Service</option>
-                        <option value="1" selected>customer Expiry (EX :dd-mm-yyyy hh:mm:ss)</option>
-                        <option value="2">Customer Service Mode</option>
-                        <option value="3">Update Data Split</option>
-                        <option value="4">Reseller Replace</option>
-                        <option value="5">Service Replace</option>
-                        <option value="6">Authentication Password Update</option>
+                        <option value="1" *ngIf="role.getroleid()>=775" selected>customer Expiry (EX :dd-mm-yyyy
+                          hh:mm:ss)</option>
+                        <option value="2" *ngIf="role.getroleid()>=555">Customer Service Mode</option>
+                        <option value="3" *ngIf="role.getroleid()>=775">Update Data Split</option>
+                        <option value="4" *ngIf="role.getroleid()>=775">Reseller Replace</option>
+                        <option value="5" *ngIf="role.getroleid()>=775">Service Replace</option>
+                        <option value="6" *ngIf="role.getroleid()>=775">Authentication Password Update</option>
 
                       </select>
                     </div>

@@ -211,9 +211,11 @@
             </a> </td>
           <td style="text-transform: none !important;text-align: center;" (click)="View_user(item.id,1)"><a
               [ngStyle]="{'color' :item.status==1 ? 'green' : 'red' }">{{item.managername}}</a></td>
-          <td *ngIf="item.menu_name=='Bulk Reseller'">{{'--'}}</td>
+          <!-- <td *ngIf="item.menu_name=='Bulk Reseller'">{{'--'}}</td>
           <td *ngIf="item.menu_name!='Bulk Reseller' " style="text-align: center;font-weight: 900;">
-            <b>&nbsp;{{item.balance_amt | currency:'INR':'symbol'}}</b></td>
+            <b>&nbsp;{{item.balance_amt | currency:'INR':'symbol'}}</b></td> -->
+          <td  style="text-align: center;font-weight: 900;">
+              <b>&nbsp;{{item.balance_amt | currency:'INR':'symbol'}}</b></td>
           <td style="text-align: center;font-weight: 900;">{{item.ucount || '--'}}</td>
           <td style="text-align: center;font-weight: 900;">{{item.oncount || '--'}}</td>
           <td>{{item.menu_name}}</td>

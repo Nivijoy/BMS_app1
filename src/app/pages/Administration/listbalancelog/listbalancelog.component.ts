@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RoleService, BusinessService, PagerService, ReportService, ResellerService } from '../../_service/indexService';
+import { RoleService, BusinessService, PagerService, ReportService, ResellerService,AccountService } from '../../_service/indexService';
 import * as JSXLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -17,7 +17,7 @@ import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 
 export class ListBalanceLogComponent implements OnInit {
   tot; proid; custlog; search; bus_name = ''; resel_type = ''; res_name = '';
-  bus; pro; res1;start_date;end_date;
+  bus; pro; res1;start_date;end_date;reasondata;deposit_reason = '';
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public primaryColour = '#dd0031';
@@ -32,7 +32,8 @@ export class ListBalanceLogComponent implements OnInit {
     private resser: ResellerService,
     public role: RoleService,
     public pageservice: PagerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private ser: AccountService,
 
   ) { }
 
@@ -50,6 +51,9 @@ export class ListBalanceLogComponent implements OnInit {
     this.res1 = await this.resser.showResellerName({ bus_id: this.bus_name, role: this.resel_type, like: $event });
     // console.log("resellername",result)
   }
+  async showreason() {
+    this.reasondata = await this.ser.showDepReason()
+  }
   changeclear(item) {
     if (item == 1) {
       this.resel_type = ''; this.res_name = '';
@@ -60,6 +64,7 @@ export class ListBalanceLogComponent implements OnInit {
     this.bus_name = '';
     this.resel_type = '';
     this.res_name = ''; this.pro = ''; this.res1 = '';this.start_date='';this.end_date='';
+    this.deposit_reason = '';
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();
@@ -71,6 +76,7 @@ export class ListBalanceLogComponent implements OnInit {
     localStorage.removeItem('array');
     await this.initiallist();
     await this.showBusName();
+    await this.showreason();
     if (this.role.getroleid() <= 777) {
       this.bus_name = this.role.getispid();
       await this.profile();
@@ -79,6 +85,7 @@ export class ListBalanceLogComponent implements OnInit {
   }
 
   async initiallist() {
+    console.log('start',this.start_date,this.end_date,this.deposit_reason)
     this.loading = true;
     let result = await this.repser.listBalanceLog(
       {
@@ -88,7 +95,8 @@ export class ListBalanceLogComponent implements OnInit {
         role: this.resel_type,
         resel_id: this.res_name,
         start_date: this.start_date,
-        end_date:this.end_date
+        end_date:this.end_date,
+        deposit_reason:this.deposit_reason,
       });
     // console.log("balancelog",result)
     if (result) {
@@ -122,7 +130,8 @@ export class ListBalanceLogComponent implements OnInit {
       role: this.resel_type,
       resel_id: this.res_name,
       start_date: this.start_date,
-      end_date:this.end_date
+      end_date:this.end_date,
+      deposit_reason:this.deposit_reason,
     })
     if (res) {
       this.loading = false;
@@ -140,6 +149,7 @@ export class ListBalanceLogComponent implements OnInit {
         }
         param['BEFORE AMOUNT'] = temp[i]['before_balance_amt'];
         param['AMOUNT'] = temp[i]['amt'];
+        param['REASON'] = temp[i]['reason'];
         param['BALANCE'] = Number(temp[i]['before_balance_amt']) + Number(temp[i]['amt']);
         param['NOTES'] = temp[i]['rnote'] == null ? '--' : temp[i]['rnote'];
         param['DATE'] = this.datePipe.transform(temp[i]['c_date'], 'd MMM y hh:mm:ss a');

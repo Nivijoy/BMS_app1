@@ -123,4 +123,13 @@ td,th{
   content: "\f28b";
   font-size: 13px;
 }
+
+.show-icon{
+  display: none;
+}
+
+.online-sort:focus + .show-icon{
+  display: block;
+}
+
  

@@ -212,6 +212,9 @@ export class CustService {
   async updateCardUser(params) {
     return await this.http.post("/api/subs/updateCardUser", params).toPromise();
   }
+  async changeSimUse(params) {
+    return await this.http.post("/api/subs/changeSimUse", params).toPromise();
+  }
  
 
 

@@ -34,9 +34,9 @@ export class UserProfileListComponent implements OnInit {
       await this.department();
       await this.showloginid();
     }
-    if(this.role.getroleid()<775){
-      this.pro_name = this.role.getroleid();
-    }
+    // if(this.role.getroleid()<775){
+    //   this.pro_name = this.role.getroleid();
+    // }
   }
 
   async showBusName($event = '') {
@@ -64,7 +64,11 @@ export class UserProfileListComponent implements OnInit {
 
   async showloginid($event = '') {
     if(this.role.getroleid()<775){
-      this.userlogid = await this.reselser.showResellerName({ bus_id:this.bus_name,dep_id:this.dept_name,manager_id:this.role.getresellerid() , l_like:$event })
+      if([666,555].includes(this.role.getroleid())){
+        this.userlogid = await this.reselser.showResellerName({ bus_id:this.bus_name,manager_id:this.role.getresellerid() , l_like:$event })
+      }else{
+        this.userlogid = await this.reselser.showResellerName({ bus_id:this.bus_name,dep_id:this.dept_name,manager_id:this.role.getresellerid() , l_like:$event })
+      }
     }else {
       this.userlogid = await this.reselser.showResellerName({ bus_id:this.bus_name,dep_id:this.dept_name,role:this.pro_name ,l_like:$event })
     }

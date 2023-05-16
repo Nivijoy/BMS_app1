@@ -70,7 +70,7 @@ export class CancelInvoiceComponent implements OnInit {
       body: result[0]['msg'],
       timeout: 3000,
       showCloseButton: true,
-      bodyOutputType: BodyOutputType.TrustedHtml,
+      // bodyOutputType: BodyOutputType.TrustedHtml,
     };
     this.alert.popAsync(toast);
     if (result[0]['error_msg'] == 0) {

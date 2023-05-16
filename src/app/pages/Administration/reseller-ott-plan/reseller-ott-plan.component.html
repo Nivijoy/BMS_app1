@@ -27,8 +27,9 @@
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
           <label>Circle</label>
-          <auto-completen [(ngModel)]="group_name" addclass="form-control" optValues="groupname" (changed)="showReseller();"
-            placeholder='Select Circle' (keyUp)="showGroupName($event)" optId="groupid" [item]="group1">
+          <auto-completen [(ngModel)]="group_name" addclass="form-control" optValues="groupname"
+            (changed)="showReseller();" placeholder='Select Circle' (keyUp)="showGroupName($event)" optId="groupid"
+            [item]="group1">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
@@ -52,6 +53,14 @@
           <auto-completen [(ngModel)]="ottplan_code" addclass="form-control" optValues="ottplancode"
             placeholder='Select OTTPlanCode' (keyUp)="showOTTPlanCode($event)" optId="ottplanid" [item]="ottplandata">
           </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Select Vendor</label>
+          <select [(ngModel)]="ott_vendor" class="form-control">
+            <option value="">Select Vendor</option>
+            <option value="1">M2MIT</option>
+            <option value="2">PLAYBOX</option>
+          </select>
         </div>
       </div>
 
@@ -82,6 +91,7 @@
         <th *ngIf="role.getroleid()>444">Reseller Name</th>
         <th>OTT Plan Name</th>
         <th>OTT PlanCode</th>
+        <th>Vendor</th>
         <!-- <th>GLTV Code</th> -->
         <th>Tax Type</th>
         <th>Time Unit</th>
@@ -94,6 +104,7 @@
         <td *ngIf="role.getroleid()>444">{{item.company}}</td>
         <td>{{item.ottplan_name}}</td>
         <td>{{item.ottplancode}}</td>
+        <td>{{item.ott_vendor == 1 ? 'M2MIT': 'PLAYBOX'}}</td>
         <!-- <td>{{item.gltvplanid}}</td> -->
         <td>{{item.taxtype == 0? 'Inclusive':'Exclusive'}}</td>
         <td>{{item.dayormonth == 1 ? item.days +" "+ "Days": item.days +" "+ "Months"}}</td>
@@ -102,8 +113,8 @@
             (click)="ottcount(item.ottplanid)">{{item.tot}}</a></td>
         <!-- <td>{{item.omstatus==1 ? 'Enable':'Disable'}}</td> -->
         <td style="text-align: center;"> <a [ngStyle]="{'color' :item.omstatus==1 ? 'green' : 'red' }"
-          [ngClass]="{'ion-close-round':item.omstatus!=1? true:false,'ion-checkmark-round': item.omstatus==1 ? true:false  }">
-        </a> </td>
+            [ngClass]="{'ion-close-round':item.omstatus!=1? true:false,'ion-checkmark-round': item.omstatus==1 ? true:false  }">
+          </a> </td>
       </tr>
       <tr>
         <td colspan="4" *ngIf="pagedItems==''">NO DATA FOUND</td>

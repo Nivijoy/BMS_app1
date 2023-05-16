@@ -14,7 +14,7 @@
          <div class="row" style="padding-left: 10px;">
             <div style="padding: 2px;">
                <button *ngIf="(data.acc_type!=3 && (!role.getmenurole(705)))" class="btn btn-xs btn-outline-primary "
-                  (click)='renew_user(id,data.mrole,data.c_date,data.expiration,data.acc_type)'><b>Renewal</b></button>
+                  (click)='renew_user(id,data.mrole,data.c_date,data.expiration,data.acc_type,data.expmode,data.exptime)'><b>Renewal</b></button>
             </div>
             <div style="padding: 2px;">
                <button
@@ -688,12 +688,15 @@
                                     <button style="width: 70px;font-size: 10px" class="btn btn-primary btn-icon"
                                        type="button" ngbDropdownToggle>Action
                                     </button>
-                                    <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                                    <ul style="width: 124px;" class="dropdown-menu" ngbDropdownMenu>
                                        <li class="dropdown-item" title="View" (click)="view_invoice(item.invid,1)"><i
                                              style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View</li>
                                        <li [hidden]="item.inv_status==3||item.pay_status==2" class="dropdown-item"
-                                          title="View" (click)="pay(item.invid,id,item.topay)"><i
+                                          title="View" (click)="pay(item.invid,id,item.topay,item.inv_type)"><i
                                              style="font-size: 20px;" class="fa fa-credit-card "></i>&nbsp;Pay</li>
+                                       <li *ngIf="item.pay_status==2 && item.inv_status == 1  && role.getroleid()>=775" class="dropdown-item"
+                                          title="View" (click)="changePayStatus(item.invid,id,item.inv_type)"><i
+                                             style="font-size: 20px;" class="fa fa-retweet "></i>&nbsp;Paid to Unpaid</li>
 
                                        <li class="dropdown-item" title="View" (click)="view_invoice(item.invid,3)"><i
                                              style="font-size: 20px;" class="fa fa-receipt "></i>&nbsp;Reference</li>
@@ -724,6 +727,17 @@
                         </tr>
                      </table>
                   </div>
+                  <div class="pagination">
+                     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getInvoiceList();">First</a>
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getInvoiceList();">Previous</a>
+                       <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                         (click)="getInvoiceList(page)">{{page}}</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getInvoiceList();">Next</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+                         (click)="page=pager.totalPages;getInvoiceList();">Last</a>
+                     </ul>
+                   </div>
                </ng-template>
             </ngb-tab>
             <ngb-tab>
@@ -773,6 +787,7 @@
                         </td>
                      </tr>
                   </table>
+                 
                </ng-template>
             </ngb-tab>
             <!-- <ngb-tab title="Proforma Invoice">
@@ -810,13 +825,15 @@
                                  <button style="width: 70px;font-size: 10px" class="btn btn-primary btn-icon"
                                     type="button" ngbDropdownToggle>Action
                                  </button>
-                                 <ul style="width: 75px;" class="dropdown-menu" ngbDropdownMenu>
+                                 <ul style="width: 124px;" class="dropdown-menu" ngbDropdownMenu>
                                     <li class="dropdown-item" title="View" (click)="view_invoice(item.invid,2)"><i
                                           style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View</li>
                                     <li [hidden]="item.inv_status==3||item.pay_status==2" class="dropdown-item"
                                        title="View" (click)="pay(item.invid,id,item.topay)"><i style="font-size: 20px;"
                                           class="fa fa-credit-card "></i>&nbsp;Pay</li>
-
+                                          <li *ngIf="item.pay_status==2 && item.inv_status == 1 && role.getroleid()>=775" class="dropdown-item"
+                                          title="View" (click)="changePayStatus(item.invid,id,item.inv_type)"><i
+                                             style="font-size: 20px;" class="fa fa-retweet "></i>&nbsp;Paid to Unpaid</li>
                                     <li class="dropdown-item" title="View" (click)="view_invoice(item.invid,4)"><i
                                           style="font-size: 20px;" class="fa fa-receipt "></i>&nbsp;Reference</li>
                                  </ul>
@@ -840,6 +857,17 @@
                         <td>{{item.pay_status==2 ? (item.paydate | date:'d MMM y '):'--'}}</td>
                      </tr>
                   </table>
+                  <div class="pagination">
+                     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getGSTInvoiceList();">First</a>
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getGSTInvoiceList();">Previous</a>
+                       <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                         (click)="getGSTInvoiceList(page)">{{page}}</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getGSTInvoiceList();">Next</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+                         (click)="page=pager.totalPages;getGSTInvoiceList();">Last</a>
+                     </ul>
+                   </div>
                </ng-template>
             </ngb-tab>
 
@@ -936,6 +964,17 @@
                         <td style="text-align: center;">{{item.total}}</td>
                      </tr>
                   </table>
+                  <div class="pagination">
+                     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getRenewalList();">First</a>
+                       <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getRenewalList();">Previous</a>
+                       <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                         (click)="getRenewalList(page)">{{page}}</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getRenewalList();">Next</a>
+                       <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+                         (click)="page=pager.totalPages;getRenewalList();">Last</a>
+                     </ul>
+                   </div>
                </ng-template>
             </ngb-tab>
 
@@ -1027,13 +1066,13 @@
                            <div class="form-group row">
                               <div class="col-sm-6"
                                  [hidden]="data.address_photo_status ==2 || data.address_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(11)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
                               <div class="col-sm-6" [hidden]="data.address_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(15)" class="btn btn-depth btn-secondary middle"><a
                                        class="fas fa-ban">&nbsp;Recollect</a></button>
@@ -1064,13 +1103,13 @@
                            </ngx-flip>
                            <div class="form-group row">
                               <div class="col-sm-6" [hidden]="data.id_photo_status ==2 || data.id_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(21)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
                               <div class="col-sm-6" [hidden]="data.address_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style=" background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(25)" class="btn btn-depth btn-secondary middle"><a
                                        class="fas fa-ban">&nbsp;Recollect</a></button>
@@ -1104,14 +1143,14 @@
                            <div class="form-group row">
                               <div class="col-sm-6"
                                  [hidden]="(data.id_photo_status ==2 || data.id_photo_status == 0) && (data.address_photo_status ==2 || data.address_photo_status == 0)">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(31)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
                               <div class="col-sm-6"
                                  [hidden]="data.address_photo_status == 0 && data.id_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="  background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(35)" class="btn btn-depth btn-secondary middle"><a
                                        class="fas fa-ban">&nbsp;Recollect</a></button>
@@ -1128,13 +1167,13 @@
                            <div class="form-group row">
                               <div class="col-sm-6"
                                  [hidden]="data.user_photo_status == 0 || data.user_photo_status == 2">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style="background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block; "
                                     (click)="docverify(51)" class="btn btn-depth btn-secondary middle"> <a
                                        class="fas fa-check-circle">&nbsp;Verified</a></button>
                               </div>
                               <div class="col-sm-6" [hidden]="data.user_photo_status == 0">
-                                 <button *ngIf="role.getroleid()>=775"
+                                 <button *ngIf="role.getroleid()>=775 || !role.getmenurole(1075)"
                                     style=" background-color: #3b484d; color: #ebeff2;  margin: auto; box-shadow: 3px 4px 9px 1px grey; display: block;"
                                     (click)="docverify(55)" class="btn btn-depth btn-secondary middle"><a
                                        class="fas fa-ban">&nbsp;Recollect</a></button>
@@ -1263,6 +1302,7 @@
                   <div class="table-wrapper">
                      <table class="table table-hover table-striped">
                         <tr style="background-color :  #01a7ee;color:white;font-size: medium;">
+                           <th>Username</th>
                            <th>Running Service</th>
                            <th>Service Type</th>
                            <th>Start Time</th>
@@ -1278,6 +1318,7 @@
                            <th>Terminate Cause</th>
                         </tr>
                         <tr *ngFor="let item of pagedItems">
+                           <td>{{item.username }}</td>
                            <td>{{item.srvname || '--'}}</td>
                            <td>{{item.srvmode ==0? 'Regular': item.srvmode ==1? 'Fallback': item.srvmode
                               ==2?'Expired':item.srvmode==3?'Disabled':''}}</td>

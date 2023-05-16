@@ -212,6 +212,14 @@ export class RenewCustComponent implements OnInit {
   async packcal() {
     // console.log(this.RenewSubsForm.value['sub_plan_id'])
     this.packc = this.subpack.filter(item => item.id == this.RenewSubsForm.value['sub_plan_id'])
+    console.log('itemsssssss',this.item)
+    if(this.item.expmode == 1){
+      this.packc[0].days = new Date(this.packc[0].days).setHours(23,59,59,999)
+    }
+    if(this.item.expmode == 2){
+      const time = this.item.exptime.split(':')
+      this.packc[0].days = new Date(this.packc[0].days).setHours(time[0],time[1],59,999)
+    }
     console.log('pack value', this.packc)
     await this.paidamount();
 
@@ -246,6 +254,13 @@ export class RenewCustComponent implements OnInit {
         const days = this.packc[0]['additional_days']
         if (days != 0) this.sched_date.setDate(this.sched_date.getDate() + days);
         this.sched_date.setMonth(this.sched_date.getMonth() + this.packc[0]['time_unit'])
+      }
+      if(this.item.expmode == 1){
+        this.sched_date = new Date(this.sched_date).setHours(23,59,59,999)
+      }
+      if(this.item.expmode == 2){
+        const time = this.item.exptime.split(':')
+        this.sched_date = new Date(this.sched_date).setHours(time[0],time[1],59,999)
       }
 
     }

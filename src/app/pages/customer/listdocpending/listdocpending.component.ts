@@ -4,10 +4,11 @@ import { ToasterService, Toast, BodyOutputType } from 'angular2-toaster';
 import { ResellerService, GroupService, BusinessService, RoleService, PagerService, DashboardService, CustService } from '../../_service/indexService';
 import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 import * as JSXLSX from 'xlsx';
+import { DocpopComponent } from '../add-documents/add-documents.component';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
-
-@Component({
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+ @Component({
   selector: 'listdocpending',
   templateUrl: './listdocpending.component.html',
   styleUrls: ['./listdocpending.component.scss']
@@ -24,15 +25,15 @@ export class ListSubsDocPendingomponent implements OnInit {
 
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25;
   constructor(
-    private route: Router,
+    private router: Router,
     private ser: ResellerService,
     private groupser: GroupService,
     private busser: BusinessService,
     public role: RoleService,
     public pageservice: PagerService,
     private dashser : DashboardService,
-    private custser : CustService
-
+    private custser : CustService,
+    private modal:NgbModal
   ) { }
 
   async ngOnInit() {
@@ -175,6 +176,7 @@ export class ListSubsDocPendingomponent implements OnInit {
         }
         param['RESELLER NAME'] = temp[i]['reseller_name'];
         param['BUSINESS NAME'] = temp[i]['company'];
+        param['SUBSCRIBER PROFILEID'] = temp[i]['cust_profile_id'];
         param['SUBSCRIBER NAME'] = temp[i]['cust_name'];
         param['MOBILE'] = temp[i]['mobile'];
         temp[i]['caf_status'] = temp[i]['caf_photo_status']==1 ? 'Collected':temp[i]['caf_photo_status']==2?'Verified':'Pending';
@@ -194,5 +196,32 @@ export class ListSubsDocPendingomponent implements OnInit {
       JSXLSX.writeFile(wb, 'CAF Pending List' + EXCEL_EXTENSION);
     }
   }
+
+  view_user(item) {
+    localStorage.setItem('details', JSON.stringify(item));
+    this.router.navigate(['/pages/cust/viewcust']);
+  }
+
+  snapProof(uid, item, picflag) {
+    localStorage.setItem('array', JSON.stringify(item));
+    localStorage.setItem('flag', JSON.stringify(picflag));
+    localStorage.setItem('subid', JSON.stringify(uid));
+    localStorage.setItem('doc',JSON.stringify(1))
+
+    this.router.navigate(['/pages/cust/add-custpic']);
+  }
+
+  uploadProof(uid, proid, flag,addorid =0) {
+    const activeModal = this.modal.open(DocpopComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = addorid == 1 ? 'Address Proof' :  addorid == 2 ?'Identity Proof': 'Subscriber Picture';
+    activeModal.componentInstance.item = addorid == 1 ? { uid:uid,proid:proid,addr:flag}: addorid == 2 ? { uid:uid,proid:proid,idproof:flag} :
+    { uid: uid, proid: proid, subpicflag: flag } ;
+    activeModal.result.then((data) => {
+      this.initiallist();
+    })
+  }
+ 
+ 
+
 
 }

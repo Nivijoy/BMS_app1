@@ -73,11 +73,12 @@
           <th *ngIf="role.getroleid()>=775">Circle</th>
           <th>Reseller Name</th>
           <th>Business Name</th>
+          <th>Subscriber ProfileID</th>
           <th>Subscriber Name</th>
           <th>Mobile</th>
           <th>CAF</th>
-          <th>Address Proof</th>
-          <th>ID Proof</th>
+          <th>Address </th>
+          <th>ID </th>
           <th>Customer Pic</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
@@ -88,25 +89,88 @@
           <td *ngIf="role.getroleid()>=775">{{item.groupname}}</td>
           <td>{{item.reseller_name}}</td>
           <td>{{item.company}}</td>
+          <td style="cursor:pointer;text-transform: none !important;" (click)="view_user(item.uid)"><b>{{item.cust_profile_id}}</b></td>
           <td>{{item.cust_name}}</td>
           <td>{{item.mobile}}</td>
           <td><a [ngStyle]="{'color' :(item.caf_photo_status==1||item.caf_photo_status==2) ? 'green' :'red' }"
             [ngClass]="{'ion-close-round':(item.caf_photo_status!=1&&item.caf_photo_status!=2)? true:false,'ion-checkmark-round': item.caf_photo_status==1 ? true:false,
-            'fa fa-check-double':item.caf_photo_status==2 ? true:false}"> </a></td>
-          <!-- <td>{{item.caf_photo_status==1 ? 'Collected':item.caf_photo_status==2 ? 'Verified':'Pending'}}</td> -->
-          <td><a [ngStyle]="{'color' :(item.address_photo_status==1||item.address_photo_status==2) ? 'green' :'red' }"
+            'fa fa-check-double':item.caf_photo_status==2 ? true:false}"> </a>
+          </td>
+
+           <td><a [ngStyle]="{'color' :(item.address_photo_status==1||item.address_photo_status==2) ? 'green' :'red' }"
             [ngClass]="{'ion-close-round':(item.address_photo_status!=1&&item.address_photo_status!=2)? true:false,'ion-checkmark-round': item.address_photo_status==1 ? true:false,
-            'fa fa-check-double':item.address_photo_status==2 ? true:false}"> </a></td>
-          <!-- <td>{{item.id_photo_status==1 ? 'Collected':item.id_photo_status==2 ? 'Verified':'Pending'}}</td> -->
-          <td><a [ngStyle]="{'color' :(item.id_photo_status==1||item.id_photo_status==2) ? 'green' :'red' }"
+            'fa fa-check-double':item.address_photo_status==2 ? true:false}"> </a>
+            <!-- <a [ngClass]="{'right fas fa-upload' : (item.address_photo_status == 0 || item.address_photo_status == 3)? true :false}"></a> -->
+            <div class="dropdown ghost-dropdown" ngbDropdown *ngIf="(item.address_photo_status == 0 || item.address_photo_status == 3)">
+              <button
+                 style="width: 70px;font-size: 10px;margin:3px;height:27px;background-color: #0380fc;color: white; font-weight: bold;"
+                 class="btn btn-primary btn-icon" type="button"
+                 ngbDropdownToggle>Action&nbsp;
+              </button>
+              <ul style="width: 75px;margin:3px;z-index: 1;line-height: 30px;"
+                 class="dropdown-menu" ngbDropdownMenu>
+                 <li (click)='uploadProof(item.uid,item.cust_profile_id,2,1)'
+                    style="cursor: pointer;">
+                    &nbsp;
+                    <i style="color: #00ff81;" class="fa fa-upload"></i>&nbsp;Upload
+                 </li>
+                 <li (click)='snapProof(item.uid,item.cust_profile_id,3)'
+                    style="cursor: pointer;">&nbsp;
+                    <i style="color:royalblue;" class="fa fa-camera"></i>&nbsp;Camera
+                 </li>
+              </ul>
+           </div>
+          </td>
+
+           <td><a [ngStyle]="{'color' :(item.id_photo_status==1||item.id_photo_status==2) ? 'green' :'red' }"
             [ngClass]="{'ion-close-round':(item.id_photo_status!=1&&item.id_photo_status!=2)? true:false,'ion-checkmark-round': item.id_photo_status==1 ? true:false,
-            'fa fa-check-double':item.id_photo_status==2 ? true:false}"> </a></td>
-          <!-- <td>{{item.id_photo_status==1 ? 'Collected':item.id_photo_status==2 ? 'Verified':'Pending'}}</td> -->
-          <td><a [ngStyle]="{'color' :(item.user_photo_status==1||item.user_photo_status==2) ? 'green' :'red' }"
+            'fa fa-check-double':item.id_photo_status==2 ? true:false}"> </a>
+            <!-- <a [ngClass]="{'right fas fa-upload' : (item.id_photo_status == 0 || item.id_photo_status == 3)? true :false}"></a> -->
+            <div class="dropdown ghost-dropdown" ngbDropdown *ngIf="(item.id_photo_status == 0 || item.id_photo_status == 3)">
+              <button
+                 style="width: 70px;font-size: 10px;margin:3px;height:27px;background-color: #0380fc;color: white; font-weight: bold;"
+                 class="btn btn-primary btn-icon" type="button"
+                 ngbDropdownToggle>Action&nbsp;
+              </button>
+              <ul style="width: 75px;margin:3px;z-index: 1;line-height: 30px;"
+                 class="dropdown-menu" ngbDropdownMenu>
+                 <li (click)='uploadProof(item.uid,item.cust_profile_id,2,2)'
+                    style="cursor: pointer;">
+                    &nbsp;
+                    <i style="color: #00ff81;" class="fa fa-upload"></i>&nbsp;Upload
+                 </li>
+                 <li (click)='snapProof(item.uid,item.cust_profile_id,2)'
+                    style="cursor: pointer;">&nbsp;
+                    <i style="color:royalblue;" class="fa fa-camera"></i>&nbsp;Camera
+                 </li>
+              </ul>
+           </div>
+          </td>
+
+           <td><a [ngStyle]="{'color' :(item.user_photo_status==1||item.user_photo_status==2) ? 'green' :'red' }"
             [ngClass]="{'ion-close-round':(item.user_photo_status!=1&&item.user_photo_status!=2)? true:false,'ion-checkmark-round': item.user_photo_status==1 ? true:false,
-            'fa fa-check-double':item.user_photo_status==2 ? true:false}"> </a></td>
-          <!-- <td>{{item.user_photo_status==1 ?'Collected' : item.user_photo_status==2 ? 'Verified':'Pending'}}</td> -->
-        </tr>
+            'fa fa-check-double':item.user_photo_status==2 ? true:false}"> </a>
+            <div class="dropdown ghost-dropdown" ngbDropdown *ngIf="(item.user_photo_status == 0 || item.user_photo_status == 3)">
+              <button
+                 style="width: 70px;font-size: 10px;margin:3px;height:27px;background-color: #0380fc;color: white; font-weight: bold;"
+                 class="btn btn-primary btn-icon" type="button"
+                 ngbDropdownToggle>Action&nbsp;
+              </button>
+              <ul style="width: 75px;margin:3px;z-index: 1;line-height: 30px;"
+                 class="dropdown-menu" ngbDropdownMenu>
+                 <li (click)='uploadProof(item.uid,item.cust_profile_id,4)'
+                    style="cursor: pointer;">
+                    &nbsp;
+                    <i style="color: #00ff81;" class="fa fa-upload"></i>&nbsp;Upload
+                 </li>
+                 <li (click)='snapProof(item.uid,item.cust_profile_id,1)' style="cursor: pointer;">
+                    &nbsp;
+                    <i style="color:royalblue;" class="fa fa-camera"></i>&nbsp;Camera
+                 </li>
+              </ul>
+           </div>
+          </td>
+         </tr>
         <tr>
           <td colspan="5" *ngIf="pagedItems==''">NO DATA FOUND</td>
         </tr>

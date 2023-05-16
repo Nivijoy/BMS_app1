@@ -299,7 +299,7 @@ export class InvoicelistComponent implements OnInit {
         param['PACK PRICE'] = temp[i]['invoice_amount'];
         param['TAX AMOUNT PRICE'] = temp[i]['tax_amount'];
         param['TOTAL PRICE'] = temp[i]['total_amount'];
-        param['DEDUCTED AMOUNT'] = temp[i]['allispamt'];
+        if (this.role.getroleid() > 111) param['DEDUCTED AMOUNT'] = temp[i]['allispamt'];
         // if (this.role.getroleid() >= 775) {
         //   param['ISP SHARE'] = temp[i]['isp_share'] + " " + '%';
         //   param['ISP AMOUNT'] = temp[i]['isp_amt'];

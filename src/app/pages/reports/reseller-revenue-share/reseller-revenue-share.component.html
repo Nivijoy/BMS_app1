@@ -70,7 +70,7 @@
           <label>End Date</label>
           <input type="date" placeholder="End Date" [(ngModel)]="end_date" class="form-control">
         </div>
-       
+
       </div>
       <button type="button" class="btn btn-md btn-success middle" (click)='initiallist();page=1;'
         style="margin: auto; display: block;">Search</button>
@@ -99,20 +99,20 @@
             </b>
           </td>
           <td style="text-align: center;" class="changesize"><b> Total Reseller Share Amount <br>
-          </b>
-        </td>
+            </b>
+          </td>
           <td style="text-align: center;" class="changesize"><b> Total Tax Amount <br>
             </b>
           </td>
 
         </tr>
         <tr>
-          <td class="rupee">{{invamnt || 0  | currency:'INR':'symbol' }}</td>
+          <td class="rupee">{{invamnt || 0 | currency:'INR':'symbol' }}</td>
           <td class="rupee">{{isp_amt || 0| currency:'INR':'symbol' }}</td>
           <td class="rupee">{{subisp_amt || 0 | currency:'INR':'symbol' }}</td>
           <td class="rupee">{{subdist_amt || 0 | currency:'INR':'symbol' }}</td>
           <td class="rupee">{{resel_amt || 0 | currency:'INR':'symbol' }}</td>
-          <td class="rupee">{{taxamount || 0 | currency:'INR':'symbol'  }}</td>
+          <td class="rupee">{{taxamount || 0 | currency:'INR':'symbol' }}</td>
         </tr>
       </tbody>
     </table>
@@ -139,7 +139,7 @@
     <div class="table-wrapper">
       <table class="table table-hover table-striped">
         <tr style="background-color :  #01a7eee5;color:white;font-size: medium;">
-          <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2"  *ngIf="role.getroleid()>777">Id</th>
+          <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2" *ngIf="role.getroleid()>777">Id</th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Invoice NO</th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2" *ngIf="role.getroleid()>777">ISP Name</th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2" *ngIf="role.getroleid()>444">Reseller Name
@@ -150,6 +150,9 @@
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Invoice Amount</th>
           <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Tax Amount</th>
           <th style="border: 3px solid #aeb8b9;color: white;" colspan="8">Internet
+            Share Details
+          </th>
+          <th style="border: 3px solid #aeb8b9;color: white;" colspan="8">Voice
             Share Details
           </th>
           <th style="border: 3px solid #aeb8b9;color: white;" colspan="8">OTT Share
@@ -169,6 +172,16 @@
           <th style="border: 3px solid #aeb8b9;">Sub ISP</th>
           <th style="border: 3px solid #aeb8b9;">Sub Dist</th>
           <th style="border: 3px solid #aeb8b9;">Reseller</th>
+
+          <th style="border: 3px solid #aeb8b9;">ISP %</th>
+          <th style="border: 3px solid #aeb8b9;">Sub ISP %</th>
+          <th style="border: 3px solid #aeb8b9;">Sub Dist %</th>
+          <th style="border: 3px solid #aeb8b9;">Reseller %</th>
+          <th style="border: 3px solid #aeb8b9;">ISP</th>
+          <th style="border: 3px solid #aeb8b9;">Sub ISP</th>
+          <th style="border: 3px solid #aeb8b9;">Sub Dist</th>
+          <th style="border: 3px solid #aeb8b9;">Reseller</th>
+
 
           <th style="border: 3px solid #aeb8b9;">ISP %</th>
           <th style="border: 3px solid #aeb8b9;">Sub ISP %</th>
@@ -210,14 +223,24 @@
             '1.0-2' }}&nbsp;<b>%</b></td>
           <td style="font-weight:bold;color:#181818">{{item.reseller_per | number :
             '1.0-2' }}&nbsp;<b>%</b></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.isp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.sub_isp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.sub_dist_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.resel_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.isp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.sub_isp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.sub_dist_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.resel_amt}}</i></td>
+
+          <td style="font-weight:bold;color:#181818">{{item.Visp_share | number :
+            '1.0-2' }}&nbsp;<b>%</b></td>
+          <td style="font-weight:bold;color:#181818">{{item.Vsub_isp_share | number :
+            '1.0-2' }}&nbsp;<b>%</b></td>
+          <td style="font-weight:bold;color:#181818">{{item.Vsub_dist_share | number :
+            '1.0-2' }}&nbsp;<b>%</b></td>
+          <td style="font-weight:bold;color:#181818">{{item.Vreseller_share | number :
+            '1.0-2' }}&nbsp;<b>%</b></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Visp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Vsub_isp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Vsub_dist_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Vreseller_amt}}</i></td>
+
 
 
           <td style="font-weight:bold;color:#181818">{{item.Oisp_share | number :
@@ -228,14 +251,10 @@
             '1.0-2' }}&nbsp;<b>%</b></td>
           <td style="font-weight:bold;color:#181818">{{item.Oreseller_share | number :
             '1.0-2' }}&nbsp;<b>%</b></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.Oisp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.Osub_isp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.Osub_dist_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.Oreseller_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Oisp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Osub_isp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Osub_dist_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.Oreseller_amt}}</i></td>
 
           <td style="font-weight:bold;color:#181818">{{item.AONisp_share | number :
             '1.0-2' }}&nbsp;<b>%</b></td>
@@ -245,14 +264,10 @@
             : '1.0-2' }}&nbsp;<b>%</b></td>
           <td style="font-weight:bold;color:#181818">{{item.AONreseller_share | number
             : '1.0-2' }}&nbsp;<b>%</b></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.AONisp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.AONsub_isp_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.AONsub_dist_amt}}</i></td>
-          <td style="text-align: center;"><i
-              class="fas fa-rupee-sign">&nbsp;{{item.AONreseller_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.AONisp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.AONsub_isp_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.AONsub_dist_amt}}</i></td>
+          <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.AONreseller_amt}}</i></td>
           <td>{{item.pay_through ==1? 'Manual' : item.pay_through==2? 'Scheduled' : item.pay_through == 3? 'Through
             Gateway By Subscriber' : 'Scheduled By Subscriber' }}</td>
 

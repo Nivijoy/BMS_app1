@@ -25,7 +25,33 @@ export class DepositpaylistComponent implements OnInit {
   submit: boolean = false; addNas; data; search; bus_name; bus; group1; group_name; profile; resel_type;
   res1; res_name; count; dep_by; depositer; dep_amt; totalDepositAmount;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; start_date: any; end_date: any;
-  depReason = 0; reasondata; dd: any; mm: any; showtype = 0
+  depReason = 0; reasondata; dd: any; mm: any; showtype = 0;dep_type;
+  deposit_type=[
+    {
+      id:1,
+      label:'Cash'
+    },
+    {
+      id:2,
+      label:'Bank Deposit'
+    },
+    {
+      id:3,
+      label:'Net Banking'
+    },
+    {
+      id:4,
+      label:'UPI'
+    },
+    {
+      id:5,
+      label:'Customer Renewal'
+    },
+    {
+      id:6,
+      label:'Wallet Sharing'
+    }
+  ]
 
 
   constructor(
@@ -102,6 +128,7 @@ export class DepositpaylistComponent implements OnInit {
       this.dep_amt = '';
       this.start_date = '';
       this.end_date = '';
+      this.dep_type='';
     }
     if (item == 2) {
       this.resel_type = '';
@@ -110,6 +137,7 @@ export class DepositpaylistComponent implements OnInit {
       this.dep_amt = '';
       this.start_date = '';
       this.end_date = '';
+      this.dep_type='';
     }
     if (item == 3) {
       this.res_name = '';
@@ -117,6 +145,7 @@ export class DepositpaylistComponent implements OnInit {
       this.dep_amt = '';
       this.start_date = '';
       this.end_date = '';
+      this.dep_type='';
     }
 
   }
@@ -136,6 +165,7 @@ export class DepositpaylistComponent implements OnInit {
     this.end_date = '';
     this.depReason = 0;
     this.showtype = 0;
+    this.dep_type='';
 
     await this.initiallist();
     await this.showBusName();
@@ -161,7 +191,8 @@ export class DepositpaylistComponent implements OnInit {
         start_date: this.start_date,
         end_date: this.end_date,
         dep_reason: this.depReason,
-        showtype: this.showtype
+        showtype: this.showtype,
+        dep_type:this.dep_type
         // res_id:this.reseller_under,
       })
     this.data = result[0];
@@ -194,7 +225,8 @@ export class DepositpaylistComponent implements OnInit {
       start_date: this.start_date,
       end_date: this.end_date,
       dep_reason: this.depReason,
-      showtype: this.showtype
+      showtype: this.showtype,
+      dep_type:this.dep_type
 
     })
     if (res) {

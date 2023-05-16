@@ -47,7 +47,7 @@
             <option value="1">Card</option>
           </select>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2" *ngIf="">
           <label>Service Type</label>
           <select name="Service" [(ngModel)]="Service" class="form-control" (change)="showService();changeclear(4)">
             <option value="" selected>Select Service Type</option>

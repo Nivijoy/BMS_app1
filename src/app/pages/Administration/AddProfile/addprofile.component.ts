@@ -119,6 +119,12 @@ export class AddprofileComponent implements OnInit {
       ]
     },
     {
+      name: 'TOOLS',
+      children: [
+        { id: 1073, name: 'Tools Operation' }
+      ]
+    },
+    {
       name: 'OTT',
       children: [
         { id: 1028, name: 'List OTT' },
@@ -248,6 +254,8 @@ export class AddprofileComponent implements OnInit {
         { id: 1054, name: 'Show Services For Subscriber' },
         { id: 1055, name: 'Bulk Update' },
         { id: 1065, name: 'Topup Renewal' },
+        { id: 1074, name: 'CAF Verification' },
+        { id: 1075, name: 'Document & profile picture Verification' },
 
         {
           name: 'CAF Book',
@@ -375,7 +383,8 @@ export class AddprofileComponent implements OnInit {
         { id: 1013, name: 'Nas Status' },
         { id: 1041, name: 'Subscriber Traffic' },
         { id: 1061, name: 'Reseller Revenue Sharing' },
-        { id: 1066, name: 'Topup Report' }
+        { id: 1066, name: 'Topup Report' },
+        { id: 1077, name: 'Traffic Report' },
       ]
     },
     {
@@ -429,13 +438,15 @@ export class AddprofileComponent implements OnInit {
       ],
     },
     {
-      name:'Card-users',
-      children:[
-        {id:1067, name:'Register Card user'},
-        {id:1068,name:'List Card User'},
-        {id:1069,name:'Add Card User'},
-        {id:1070,name:'Update Card User'},
-        {id:1071,name:'Update Profile Password Card User'},
+      name: 'Card-users',
+      children: [
+        { id: 1067, name: 'Register Card user' },
+        { id: 1068, name: 'List Card User' },
+        { id: 1069, name: 'Add Card User' },
+        { id: 1070, name: 'Update Card User' },
+        { id: 1071, name: 'Update Profile Password Card User' },
+        { id: 1072, name: 'Update Validity For Card User' },
+        { id: 1076, name: 'Update Simultaneous Use for Card Users' }
       ]
     }
   ];

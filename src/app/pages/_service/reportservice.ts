@@ -36,5 +36,8 @@ export class ReportService {
    async topupReport(params){
       return await this.http.post("/api/reports/topupReport",params).toPromise();
    }
+   async trafficReport(params){
+      return await this.http.post("/api/reports/trafficReport",params).toPromise();
+   }
    
 }

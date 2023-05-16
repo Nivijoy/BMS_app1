@@ -67,7 +67,7 @@
                         required! </small>
                   </div>
                </div>
-               <div class="col-sm-12" *ngIf="(sharetyp==1&&reselrole==333)||(reselrole==444)">
+               <div class="col-sm-12" *ngIf="(sharetyp==1&&reselrole==333)||(reselrole==444 || reselrole == 443)">
                   <nb-card>
                      <nb-card-header style="background-color :  #01a7ee; height:40px!important">Pricing</nb-card-header>
                      <nb-card-body style="overflow: visible;">
@@ -220,19 +220,23 @@
                                  <div class="form-group row" [formGroupName]="idx">
                                     <div class="col-sm-2" *ngIf="user.value['subplan_validity']==2">
                                        <label>Start Date <span style="color: red;">*</span></label>
-                                       <input type="text" placeholder="Start Date" [nbDatepicker]="subst_date"
+                                       <!-- <input type="text" placeholder="Start Date" [nbDatepicker]="subst_date"
                                           class="form-control" formControlName="subst_date"
                                           style=" height:40px; width:137px!important"
                                           [ngClass]="{'form-control':true,'form-control-danger':user['controls']['subst_date'].invalid&&submit}">
-                                       <nb-datepicker #subst_date></nb-datepicker>
+                                       <nb-datepicker #subst_date></nb-datepicker> -->
+                                       <input type="datetime-local" formControlName="subst_date"
+                                       [ngClass]="{'form-control' : true,'form-control-danger':user.controls.subst_date.invalid&&submit}" />
                                     </div>
                                     <div class="col-sm-2" *ngIf="user.value['subplan_validity']==2">
                                        <label>End Date</label>
-                                       <input type="text" placeholder="End Date" [nbDatepicker]="subend_date"
+                                       <!-- <input type="text" placeholder="End Date" [nbDatepicker]="subend_date"
                                           class="form-control" formControlName="subend_date"
                                           style=" height:40px; width:137px!important"
                                           [ngClass]="{'form-control':true,'form-control-danger':user['controls']['subend_date'].invalid&&submit}">
-                                       <nb-datepicker #subend_date></nb-datepicker>
+                                       <nb-datepicker #subend_date></nb-datepicker> -->
+                                       <input type="datetime-local" formControlName="subend_date"
+                                       [ngClass]="{'form-control' : true,'form-control-danger':user.controls.subend_date.invalid&&submit}" />
                                     </div>
                                  </div>
                                  <div class="form-group row" [formGroup]="user" *ngIf="user.value['serv_type']=='3'||user.value['serv_type']=='5'||user.value['serv_type']=='7'
@@ -594,19 +598,23 @@
                                     </div>
                                     <div class="col-sm-2" *ngIf="user.value['subplan_validity']==2">
                                        <label>Start Date <span style="color: red;">*</span></label>
-                                       <input type="text" placeholder="Start Date" [nbDatepicker]="subst_date"
+                                       <!-- <input type="text" placeholder="Start Date" [nbDatepicker]="subst_date"
                                           class="form-control" formControlName="subst_date"
                                           style=" height:40px; width:137px!important"
                                           [ngClass]="{'form-control':true,'form-control-danger':user['controls']['subst_date'].invalid&&submit}">
-                                       <nb-datepicker #subst_date></nb-datepicker>
+                                       <nb-datepicker #subst_date></nb-datepicker> -->
+                                       <input type="datetime-local" formControlName="subst_date"
+                                       [ngClass]="{'form-control' : true,'form-control-danger':user.controls.subst_date.invalid&&submit}" />
                                     </div>
                                     <div class="col-sm-2" *ngIf="user.value['subplan_validity']==2">
                                        <label>End Date</label>
-                                       <input type="text" placeholder="End Date" [nbDatepicker]="subend_date"
+                                       <!-- <input type="text" placeholder="End Date" [nbDatepicker]="subend_date"
                                           class="form-control" formControlName="subend_date"
                                           style=" height:40px; width:137px!important"
                                           [ngClass]="{'form-control':true,'form-control-danger':user['controls']['subend_date'].invalid&&submit}">
-                                       <nb-datepicker #subend_date></nb-datepicker>
+                                       <nb-datepicker #subend_date></nb-datepicker> -->
+                                       <input type="datetime-local" formControlName="subend_date"
+                                       [ngClass]="{'form-control' : true,'form-control-danger':user.controls.subend_date.invalid&&submit}" />
                                     </div>
                                  </div>
                                  <div class="form-group row" [formGroup]="user" *ngIf="user.value['serv_type']=='3'||user.value['serv_type']=='5'||user.value['serv_type']=='7'

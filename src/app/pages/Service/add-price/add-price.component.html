@@ -88,7 +88,7 @@
                   </div>
                </div>
                <div class="col-sm-12"
-                  *ngIf="((sharetyp==1&&reselrole==333) && AddPriceForm.value['create_type']=='0')||(reselrole==444 && AddPriceForm.value['create_type']=='0')">
+                  *ngIf="((sharetyp==1&&reselrole==333) && AddPriceForm.value['create_type']=='0')||((reselrole==444 || reselrole ==443) && AddPriceForm.value['create_type']=='0')">
                   <nb-card>
                      <nb-card-header style="background-color :  #01a7ee; height:40px!important">Pricing</nb-card-header>
                      <nb-card-body style="overflow: visible;">

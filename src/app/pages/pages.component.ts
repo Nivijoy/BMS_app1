@@ -71,9 +71,10 @@ export class PagesComponent {
       ],
     },
     {
+
       title: 'Tools',
       icon: 'fa fa-cogs',
-      hidden: this.roleid < 999,
+      hidden: this.roleid < 999 || !this.role.find(x => x == 1073),
       children: [
         {
           title: 'App Tools',
@@ -688,6 +689,12 @@ export class PagesComponent {
           title: 'Topup',
           link: '/pages/reports/topupreport',
           hidden: (!this.role.find(x => x == 1066))
+
+        },
+        {
+          title: 'Traffic',
+          link: '/pages/reports/trafficreport',
+          hidden: (!this.role.find(x => x == 1077))
 
         },
         {

@@ -118,6 +118,13 @@ export class SubsRenewalComponent implements OnInit {
         if (days != 0) this.sched_date.setDate(this.sched_date.getDate() + days);
         this.sched_date.setMonth(this.sched_date.getMonth() + this.packc[0]['time_unit'])
       }
+      if(this.reselData.expmode == 1){
+        this.sched_date = new Date(this.sched_date).setHours(23,59,59,999)
+      }
+      if(this.reselData.expmode == 2){
+        const time = this.reselData.exptime.split(':')
+        this.sched_date = new Date(this.sched_date).setHours(time[0],time[1],59,999)
+      }
 
     }
   }
@@ -217,6 +224,13 @@ export class SubsRenewalComponent implements OnInit {
   async packcal() {
     // console.log(this.SubsRenewForm.value['sub_plan_id'])
     this.packc = this.subpack.filter(item => item.id == this.SubsRenewForm.value['sub_plan_id'])
+    if(this.reselData.expmode == 1){
+      this.packc[0].days = new Date(this.packc[0].days).setHours(23,59,59,999)
+    }
+    if(this.reselData.expmode == 2){
+      const time = this.reselData.exptime.split(':')
+      this.packc[0].days = new Date(this.packc[0].days).setHours(time[0],time[1],59,999)
+    }
     console.log('asd', this.packc)
     await this.paidamount();
 

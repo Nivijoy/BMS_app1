@@ -7,7 +7,9 @@ import * as JSXLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 import { OTTPlanComponent } from '../ott-plan/ott-plan.component';
-import { OttcountComponent } from '../ottcount/ottcount.component'
+import { OttcountComponent } from '../ottcount/ottcount.component';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+
 
 @Component({
   selector: 'list-ottplan',
@@ -19,7 +21,11 @@ import { OttcountComponent } from '../ottcount/ottcount.component'
 export class ListOTTPlanComponent implements OnInit {
   submit: boolean = false; ottdata; total; bus; bus_name; config; search; group1; group_name;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25; ottplan_code; ottplandata; ottplan_name; ottplanname;
-  status='';days='';
+  status='';days='';ott_vendor='';
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public primaryColour = '#dd0031';
+  public secondaryColour = '#006ddd';
+  public loading = false;
   constructor(
     private route: Router,
     private ser: BusinessService,
@@ -66,10 +72,12 @@ export class ListOTTPlanComponent implements OnInit {
     this.ottplan_name = '';
     this.status='';
     this.days='';
+    this.ott_vendor ='';
     await this.initiallist();
   }
 
   async initiallist() {
+    this.loading = true;
     let result = await this.adminser.listOTTPlan(
       {
         index: (this.page - 1) * this.limit,
@@ -78,9 +86,11 @@ export class ListOTTPlanComponent implements OnInit {
         ottplan_code: this.ottplan_code,
         ottplan_name: this.ottplan_name,
         status:this.status,
-        days:this.days
+        days:this.days,
+        ott_vendor:this.ott_vendor
       })
     // console.log("result")
+    this.loading = false
     if (result) {
       this.ottdata = result[0];
       this.total = result[1]["count"];
@@ -129,13 +139,16 @@ export class ListOTTPlanComponent implements OnInit {
 
 
   async download() {
+    this.loading = true
     let res = await this.adminser.listOTTPlan({
       bus_id: this.bus_name,
       ottplan_code: this.ottplan_code,
       ottplan_name: this.ottplan_name,
       status:this.status,
-      days:this.days
-    })
+      days:this.days,
+      ott_vendor:this.ott_vendor
+    });
+    this.loading = false
     if (res) {
       let tempdata = [], temp: any = res[0];
       for (var i = 0; i < temp.length; i++) {
@@ -145,6 +158,7 @@ export class ListOTTPlanComponent implements OnInit {
         param['OTTPLANNAME'] = temp[i]['ottplan_name'];
         param['OTTPLANCODE'] = temp[i]['ottplancode'];
         param['GLTVCODE'] = temp[i]['gltvplanid'];
+        param['VENDOR'] = temp[i]['ott_vendor'] == 1 ? 'M2MIT' : 'PLAYBOX';
         param['TAXTYPE'] = temp[i]['otttaxtype'] == 0 ? 'Inclusive' : 'Exclusive';
         param['TIMEUNIT'] = temp[i]['dayormonth'] == 1 ? temp[i]['days'] + "Days" : temp[i]['days'] + "Months";
         param['AMOUNT'] = temp[i]['ottamount'];

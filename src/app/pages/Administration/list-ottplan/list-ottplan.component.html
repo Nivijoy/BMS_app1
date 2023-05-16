@@ -1,4 +1,7 @@
 <nb-card>
+  <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
   <nb-card-header>List OTT
     <a type="button" class="btn btn-primary btn-sm btn-floating "
       style="float: right; margin: 5px;
@@ -42,6 +45,14 @@
         </div>
       </div>
       <div class="formm-group row">
+        <div class="col-sm-3">
+          <label>Vendor</label>
+          <select [(ngModel)]="ott_vendor" class="form-control">
+            <option value="" selected>Select Vendor</option>
+            <option value="1">M2MIT</option>
+            <option value="2">PLAYBOX</option>
+          </select>
+        </div>
         <div class="col-sm-3">
           <label>Status</label>
           <select [(ngModel)]="status" class="form-control">
@@ -87,6 +98,7 @@
         <th>OTT Plan Name</th>
         <th>OTT PlanCode</th>
         <th>GLTV Code</th>
+        <th>Vendor</th>
         <th>Tax Type</th>
         <th>Time Unit</th>
         <th>Amount</th>
@@ -104,6 +116,7 @@
         <td>{{item.ottplan_name}}</td>
         <td>{{item.ottplancode}}</td>
         <td>{{item.gltvplanid}}</td>
+        <td>{{item.ott_vendor == 1 ? 'M2MIT':'PLAYBOX'}}</td>
         <td>{{item.otttaxtype == 0? 'Inclusive':'Exclusive'}}</td>
         <td>{{item.dayormonth == 1 ? item.days +" "+ "Days": item.days +" "+ "Months"}}</td>
         <td><i class="fas fa-rupee-sign">&nbsp;{{item.ottamount}}</i></td>

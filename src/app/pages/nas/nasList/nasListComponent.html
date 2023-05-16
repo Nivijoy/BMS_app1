@@ -87,10 +87,10 @@
         <th *ngIf="role.getroleid()>777">ISP Name</th>
         <th *ngIf="role.getroleid()>=775">Circle</th>
         <th *ngIf="role.getroleid()<=666">Reseller Business Name</th>
-        <th>Status</th>
-        <th>Time</th>
-        <th>Start Time</th>
-        <th>End Time</th>
+        <th *ngIf="role.getroleid()>666">Status</th>
+        <th *ngIf="role.getroleid()>666">Time</th>
+        <th *ngIf="role.getroleid()>666">Start Time</th>
+        <th *ngIf="role.getroleid()>666">End Time</th>
         <th>NAS name</th>
         <th>Type</th>
         <th>IP address</th>
@@ -104,14 +104,14 @@
         <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
         <td *ngIf="role.getroleid()>=775">{{item.groupname}}</td>
         <td *ngIf="role.getroleid()<=666">{{item.company}}</td>
-        <td style="padding:3px;">
+        <td *ngIf="role.getroleid()>666" style="padding:3px;">
           <span *ngIf="item.ping==1 && item.mstatus==1" style="color: #1ac43c;" class="fa fa-arrow-up"></span>
           <span *ngIf="item.ping==0">--</span>
           <span *ngIf="item.ping==1 && item.mstatus==2" style="color: #df2727;" class="fa fa-arrow-down"></span>
         </td>
-        <td>{{item.ping==1 ? item.diff_time:'--'}}</td>
-        <td>{{item.ping==1 ?  (item.start_time | date: 'd MMM y h:mm:ss a'):'--'}}</td>
-        <td>{{item.ping==1 ? (item.end_time | date: 'd MMM y h:mm:ss a'):'--'}}</td>
+        <td *ngIf="role.getroleid()>666">{{item.ping==1 ? item.diff_time:'--'}}</td>
+        <td *ngIf="role.getroleid()>666">{{item.ping==1 ?  (item.start_time | date: 'd MMM y h:mm:ss a'):'--'}}</td>
+        <td *ngIf="role.getroleid()>666">{{item.ping==1 ? (item.end_time | date: 'd MMM y h:mm:ss a'):'--'}}</td>
         <td>{{item.shortname}}</td>
         <td>{{item.type == 0 ? 'Mikrotik':item.type == 1 ? 'StarOS':item.type == 2 ? 'ChilliSpot':item.type == 3 ?
           'Cisco':item.type == 4 ? 'pfSense':'Other'}}</td>

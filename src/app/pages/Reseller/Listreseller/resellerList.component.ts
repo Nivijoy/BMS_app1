@@ -207,6 +207,7 @@ export class ResellerListComponent implements OnInit {
   }
 
   async initiallist() {
+    
     this.loading = true;
     let result = await this.ser.listReseller(
       {

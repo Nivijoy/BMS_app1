@@ -3052,6 +3052,7 @@ export class AddResellerComponent implements OnInit {
       credit_flag: new FormControl(''),
       credit_limit: new FormControl(''),
       due_invoice: new FormControl(''),
+      expiry_type: new FormControl('1'),
       exp_mode: new FormControl('0'),
       exp_time: new FormControl(''),
       ereceipt: new FormControl(''),

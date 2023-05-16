@@ -4,7 +4,7 @@ import { DepositReportsComponent } from './DepositReports/depositreport.componen
 import { ResellerPaymentReportComponent } from './ResellerPaymentReport/resellerpaymentreport.component';
 import { DuesReportComponent } from './DuesReport/duesreport.component';
 import { CollectionReportComponent } from './CollectionReport/collectionreport.component';
- import { DepositPaymentReportComponent } from './depositpaymentreport/depositpayment_report.component';
+import { DepositPaymentReportComponent } from './depositpaymentreport/depositpayment_report.component';
 import { SubscriberReportComponent } from './subscriberReport/subscriberReport.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,7 +14,9 @@ import { OttInvoiceListComponent } from './ottinvoicelist/ottinvoice-list.compon
 import { ResellerRevenueShareComponent } from './reseller-revenue-share/reseller-revenue-share.component';
 import { RenewalReportComponent } from './renewal-report/renewal-report.component';
 import { TopupreportComponent } from './topupreport/topupreport.component';
- 
+import { TrafficReportComponent } from './traffic-report/traffic-report.component';
+
+
 
 const routes: Routes = [{
   path: '',
@@ -30,10 +32,11 @@ const routes: Routes = [{
     { path: 'subscriberReport', component: SubscriberReportComponent },
     { path: 'dailysubs-count', component: DailySubsCountComponent },
     { path: 'ottinvoicelist', component: OttInvoiceListComponent },
-    { path: 'reseller-revenue-share', component: ResellerRevenueShareComponent},
-    { path: 'renewalReport', component: RenewalReportComponent},
-    { path: 'topupreport', component: TopupreportComponent}
-   ],
+    { path: 'reseller-revenue-share', component: ResellerRevenueShareComponent },
+    { path: 'renewalReport', component: RenewalReportComponent },
+    { path: 'topupreport', component: TopupreportComponent },
+    { path: 'trafficreport', component: TrafficReportComponent }
+  ],
 
 }];
 
@@ -57,5 +60,6 @@ export const routedComponents = [
   DailySubsCountComponent,
   OttInvoiceListComponent,
   ResellerRevenueShareComponent,
-  TopupreportComponent
- ];
+  TopupreportComponent,
+  TrafficReportComponent
+];

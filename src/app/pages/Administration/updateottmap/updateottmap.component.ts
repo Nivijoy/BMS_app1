@@ -14,7 +14,7 @@ import { AddSuccessComponent } from '../success/add-success.component';
 })
 export class UpdateottmapComponent implements OnInit {
   submit: boolean = false; busdata; resell; UpdateOttMapForm; ottplans;
-  taxtype = []; days = []; ostatus = []; selectedRows;
+  taxtype = []; days = []; ostatus = []; selectedRows;vendor=[];
   config; settings;
   pager;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
@@ -43,6 +43,10 @@ export class UpdateottmapComponent implements OnInit {
       this.ostatus = [
         { value: '0', title: 'Disable' },
         { value: '1', title: 'Enable' },
+      ],
+      this.vendor = [
+        { value: '1', title: 'M2MIT' },
+        { value: '2', title: 'PLAYBOX' }
       ],
 
       this.settings = {
@@ -130,6 +134,20 @@ export class UpdateottmapComponent implements OnInit {
             },
             filter: true,
             editable: false,
+          },
+          ott_vendor: {
+            title: 'Vendor',
+            valuePrepareFunction: (ott_vendor: any) => {
+              return (ott_vendor == 1 ? 'M2MIT' : 'PLAYBOX');
+            },
+            editor: {
+              type: 'list',
+              config: {
+                selectText: 'Select',
+                list: this.vendor,
+              },
+            },
+            filter: true,
           },
           omstatus: {
             title: 'Status',

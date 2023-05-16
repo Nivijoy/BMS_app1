@@ -19,7 +19,7 @@ import { Subject, Observable } from 'rxjs';
 export class SubscriberPicComponent implements OnInit, OnDestroy {
   config; image; subspro_image: any; proid; picflag; idfront; idback; AddPicForm;
   hide_cam: boolean = false; hide_cam1: boolean = false; hide_cam2: boolean = false;
-  submit = false; uid;
+  submit = false; uid;docflag =0;
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = true;
@@ -54,6 +54,7 @@ export class SubscriberPicComponent implements OnInit, OnDestroy {
     this.proid = JSON.parse(localStorage.getItem('array'));
     this.picflag = JSON.parse(localStorage.getItem('flag'));
     this.uid = JSON.parse(localStorage.getItem('subid'));
+    this.docflag = JSON.parse(localStorage.getItem('doc')) || 0;
   }
 
   public camera(): void {
@@ -168,7 +169,7 @@ export class SubscriberPicComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this.router.navigate(['/pages/cust/viewcust'])
+  this.docflag == 1 ? this.router.navigate(['/pages/cust/listdocpending'])  :  this.router.navigate(['/pages/cust/viewcust'])
   }
 
   async addpic() {
@@ -255,8 +256,8 @@ export class SubscriberPicComponent implements OnInit, OnDestroy {
     };
     this.alert.popAsync(toast);
     if (result['status'] == 1) {
-      this.router.navigate(['/pages/cust/viewcust']);
-    }
+      this.docflag == 1 ? this.router.navigate(['/pages/cust/listdocpending'])  :  this.router.navigate(['/pages/cust/viewcust'])
+     }
   }
 
   dataURItoBlob(dataURI) {
@@ -287,5 +288,6 @@ export class SubscriberPicComponent implements OnInit, OnDestroy {
     localStorage.removeItem('array');
     localStorage.removeItem('flag');
     localStorage.removeItem('subid');
+    localStorage.removeItem('doc')
   }
 }

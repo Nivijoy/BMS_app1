@@ -174,6 +174,13 @@ export class EditPriceComponent implements OnInit {
     await this.packshow();
     await this.servicetype();
     await this.showottplan();
+    let svst_date = new Date(this.editdatas[0].startdate),
+    svend_date = new Date(this.editdatas[0].enddate);
+    svst_date.setTime(Math.floor((svst_date.getTime()) + (5 * 3600 * 1000 + 1800000)))
+    svend_date.setTime(Math.floor((svend_date.getTime()) + (5 * 3600 * 1000 + 1800000)))
+    this.editdatas[0].startdate = ((svst_date).toISOString()).slice(0, 16),
+    this.editdatas[0].enddate = ((svend_date).toISOString()).slice(0, 16);
+    console.log('Edit data',this.editdatas)
     let priceitems = this.editdatas
     for (var i = 0; i < priceitems.length; i++) {
       this.priceDetails.push(this.createMaterial(priceitems[i]['srvid'], priceitems[i]['service_type'], priceitems[i]['sub_plan'], priceitems[i]['amount'], priceitems[i]['type'],

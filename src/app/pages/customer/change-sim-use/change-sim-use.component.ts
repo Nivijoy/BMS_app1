@@ -8,15 +8,13 @@ import { Router } from '@angular/router';
 import { ngxLoadingAnimationTypes, NgxLoadingComponent } from 'ngx-loading';
 
 @Component({
-  selector: 'changevalidity',
-  templateUrl: './changevalidity.component.html',
-  styleUrls: ['./changevaliditystyle.scss'],
-
+  selector: 'ngx-change-sim-use',
+  templateUrl: './change-sim-use.component.html',
+  styleUrls: ['./change-sim-use.component.scss']
 })
+export class ChangeSimUseComponent implements OnInit {
 
-export class ChangeValidityComponent implements OnInit {
-  submit: boolean = false; ChangevalidityForm; hr = []; minsec = [];
-  ratio = []; pack; modalHeader; item; data; custvalidity = []; subpack;
+  submit: boolean = false; ChangeSimuseForm;  item;data;modalHeader;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes; servtype; custname;
   public primaryColour = '#dd0031';
@@ -42,29 +40,20 @@ export class ChangeValidityComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // console.log(this.item)
-    this.createForm();
-    await this.Service();
-  }
+     this.createForm();
+   }
 
-  async Service($event = '') {
-    this.pack = await this.serv.showServiceName({ u_id: this.item.cust_id, like: $event })
-    // console.log(res)
-  }
-
-  async changevaliditysubmit() {
+  
+  async changeSimusesubmit() {
     // this.loading = true;
-    if (this.ChangevalidityForm.invalid) {
+    if (this.ChangeSimuseForm.invalid) {
       this.submit = true;
       return;
     }
-    this.ChangevalidityForm.value['uid'] = this.item.cust_id;
-    this.custvalidity = [this.ChangevalidityForm.value]
-    // console.log(this.custvalidity)
-    let result = await this.custser.changeCustValidity({ custvalidity: this.custvalidity })
+    this.ChangeSimuseForm.value['uid'] = this.item.cust_id;
+  
+    let result = await this.custser.changeSimUse( this.ChangeSimuseForm.value)
     this.data = result
-    // console.log(result)
-    // this.loading = false;
     const toast: Toast = {
       type: result[0]['error_msg'] == 0 ? 'success' : 'warning',
       title: result[0]['error_msg'] == 0 ? 'Success' : 'Failure',
@@ -80,8 +69,8 @@ export class ChangeValidityComponent implements OnInit {
   }
 
   createForm() {
-    this.ChangevalidityForm = new FormGroup({
-      validity: new FormControl('', Validators.required),
+    this.ChangeSimuseForm = new FormGroup({
+      simultaneous_use: new FormControl('', Validators.required),
       reason: new FormControl('', Validators.required),
     });
   }

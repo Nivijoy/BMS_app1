@@ -388,7 +388,7 @@
 
         </tr>
         <tr style="background-color :  #01a7ee;color:white;position: sticky;top: 38px;">
-          <th style="border: 3px solid #aeb8b9;">Account </th>
+          <th style="border: 3px solid #aeb8b9;"  >Account</th>
           <th style="border: 3px solid #aeb8b9;">Connection </th>
           <th style="border: 3px solid #aeb8b9;"> Login ID</th>
           <th style="border: 3px solid #aeb8b9;"> Name</th>
@@ -397,7 +397,11 @@
           <th style="border: 3px solid #aeb8b9;">Assigned </th>
           <th style="border: 3px solid #aeb8b9;color: white;">Running </th>
           <th style="border: 3px solid #aeb8b9;">Start</th>
-          <th style="border: 3px solid #aeb8b9;">Online</th>
+          <th style="border: 3px solid #aeb8b9;cursor: pointer;" class="online-sort" (click)="onlineTimeSort()">Online <span *ngIf="show_icon" >
+            <i 
+            [ngClass]="{'ion-arrow-up-a' : reverse == true ? true: false , 'ion-arrow-down-a': reverse ==false? true: false}"
+             ></i>
+          </span></th>
           <th style="border: 3px solid #aeb8b9;color: white;">Last Log-Off</th>
           <th style="border: 3px solid #aeb8b9;">D/L </th>
           <th style="border: 3px solid #aeb8b9;">U/L </th>

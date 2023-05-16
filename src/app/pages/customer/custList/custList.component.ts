@@ -38,6 +38,8 @@ export class CustListComponent implements OnInit, OnDestroy {
   public loading = false;
   pager: any = {}; page: number = 1; pagedItems: any = []; start_exp = ''; end_exp = ''; sbranch; s_branch;
   today_date; yes_date; tom_date; dft_date; exp_status;
+  show_icon =false;
+  reverse =false;online_sort =0;
   constructor(
     private alert: ToasterService,
     private router: Router,
@@ -286,7 +288,8 @@ export class CustListComponent implements OnInit, OnDestroy {
       state_id: this.state_id,
       ip_mode: this.ip_mode,
       static_ip: this.static_ip,
-      public_ip: this.public_ip
+      public_ip: this.public_ip,
+      online_sort: this.online_sort
     })
     // console.log("cuslist------------", result);
     if (result) {
@@ -543,6 +546,17 @@ export class CustListComponent implements OnInit, OnDestroy {
       this.initiallist();
     })
   };
+
+  onlineTimeSort(){
+    console.log('Online Time Sort')
+    this.show_icon = true;
+    this.reverse = !this.reverse
+    console.log('reverse',this.reverse);
+    if(this.reverse) this.online_sort = 1
+    else this.online_sort = 2
+    this.initiallist()
+    
+  }
 
   ngOnDestroy(): void {
     localStorage.removeItem('dash_status');

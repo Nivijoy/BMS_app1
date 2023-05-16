@@ -43,7 +43,16 @@
           <label> End Date</label>
           <input type="date" class="form-control" [(ngModel)]="end_date" placeholder="Select End date" />
         </div>
+        <div class="col-sm-2">
+          <label>Reason</label>
+          <select [(ngModel)]="deposit_reason" name="deposit_reason" id="deposit_reason"
+            class="form-control no-range-feature-val video-codec-list">
+            <option value=0 selected="selected">ALL</option>
+            <option *ngFor="let item of reasondata" [ngValue]="item.id">{{ item.reason }}</option>
+          </select>
+        </div>
       </div>
+
       <button type="button" class="btn btn-md btn-success middle" (click)='initiallist();'
         style="margin: auto; display: block;">Search</button>
     </div>
@@ -88,6 +97,7 @@
           <th>Amount</th>
           <th>Balance</th>
           <th>Notes</th>
+          <th>Reason</th>
           <th>Date</th>
           <th>Performed By</th>
         </tr>
@@ -101,6 +111,7 @@
           <td>{{item.amt}}</td>
           <td>{{((item.before_balance_amt * 1 + item.amt * 1) |  number : '1.2-3')}}</td>
           <td>{{item.rnote==null ? '--':item.rnote}}</td>
+          <td>{{item.reason || '--'}}</td>
           <td>{{item.c_date | date :'d MMM y h:mm:ss a'}}</td>
           <td>{{item.cname}}</td>
         </tr>
