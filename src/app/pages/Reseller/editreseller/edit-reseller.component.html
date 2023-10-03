@@ -56,7 +56,7 @@
               <label>Reseller Type<span style="color:red;">*</span></label>
               <select name="Role" formControlName="Role"
                 [ngClass]="{'form-control' : true,'form-control-danger':EditReselForm.controls.Role.invalid&&submit}"
-                (change)="provalid();showResellerUnder();sharedefault();EditReselForm.controls.reseller_under.setValue('');getService()">
+                (change)="provalid();showResellerUnder();sharedefault();EditReselForm.controls.reseller_under.setValue('');getService();setShareReadOnly()">
                 <option value="" selected>Select Reseller Type</option>
                 <option *ngFor="let item of pro" [ngValue]="item.role">{{item.menu_name}}</option>
               </select>

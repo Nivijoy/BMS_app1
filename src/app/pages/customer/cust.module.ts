@@ -51,6 +51,7 @@ import { DataUsageComponent } from './data-usage/data-usage.component';
 import { TopuprenewalComponent } from './topuprenewal/topuprenewal.component';
 import { MessageComponent } from './message/message.component';
 import { ChangeSimUseComponent } from './change-sim-use/change-sim-use.component';
+import { RefreshScheduleComponent } from './refresh-schedule/refresh-schedule.component';
 
 // import { SubsServiceAssignComponent } from './subs-packmapping/subs-packmapping.component';
 export const MY_NATIVE_FORMATS = {
@@ -109,6 +110,7 @@ export const MY_NATIVE_FORMATS = {
     TopuprenewalComponent,
     MessageComponent,
     ChangeSimUseComponent,
+    RefreshScheduleComponent,
     // SubsServiceAssignComponent,
   ],
   entryComponents: [
@@ -141,7 +143,8 @@ export const MY_NATIVE_FORMATS = {
     TopuprenewalComponent,
     // SubsServiceAssignComponent,
     MessageComponent,
-    ChangeSimUseComponent
+    ChangeSimUseComponent,
+    RefreshScheduleComponent
   ],
   providers: [CustService, S_Service, SelectService, RoleService, BusinessService, AccountService,ConfirmationDialogService,
     GroupService, ResellerService, IppoolService, InventoryService, OperationService,NgxImageCompressService, ComplaintService,DatePipe,UserLogService,ReportService]

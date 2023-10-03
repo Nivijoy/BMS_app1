@@ -43,7 +43,7 @@ export class LiveGraphComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-
+     
   }
 
   clearSocket() {

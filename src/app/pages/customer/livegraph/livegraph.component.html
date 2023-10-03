@@ -1,15 +1,9 @@
-<ngx-loading [show]="loading"
+ <ngx-loading [show]="loading"
   [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
 </ngx-loading>
-<!-- <div class="modal-header" style="width: 100%;background: #01a7ee">
-  <span style=" font-weight: 600;">{{ modalHeader }}</span>
-  <button class="close" aria-label="Close" (click)="closeModal()">
-    <span style="font-weight: 600" aria-hidden="true">&times;</span>
-  </button>
-</div> -->
+
 <nb-card>
-  <!-- <nb-card-header>Customer State</nb-card-header> -->
-  <nb-card-header style=" padding: 0.15rem;">
+   <nb-card-header style=" padding: 0.15rem;">
     <div class="row" style="background-color:#01a7ee;margin-left:0px;width:100%">
       <div class="col-sm-8">
         <label style="margin-left: 9px; margin-top: 14px;padding-bottom: 7px; ">Live Graph</label>
@@ -23,7 +17,6 @@
         </select>
 
 
-        <!-- <small *ngIf="GraphForm.controls.gtime.invalid&&submit" class="form-text error">Time is Required!</small> -->
       </div>
     </div>
     <div style="width:100%;">
@@ -46,4 +39,27 @@
       </div>
     </div>
   </nb-card-header>
-</nb-card>
+  <div class="col-sm-4">
+    <button (click)="closeModal()" style="float: center" type="submit" class="btn btn-md btn-danger">Close</button> 
+   </div>
+</nb-card> 
+
+<!-- <div class="modal-header">
+  
+  <button class="close" aria-label="Close" (click)="closeModal()">
+     <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+ <nb-card>
+  <div style="width:100%">
+    <nb-card style="border:none">
+      <nb-card-body style="background-color:#b4a5a5;overflow: hidden;">
+        The page you are trying to access is unavailable right now.We apologize for the inconvenience.
+       </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-sm-4">
+    <button (click)="closeModal()" style="float: center" type="submit" class="btn btn-md btn-danger">Close</button> 
+   </div>
+ </nb-card> -->

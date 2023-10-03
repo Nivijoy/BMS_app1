@@ -124,11 +124,7 @@ export class AddStaticIPComponent implements OnInit {
   GenerateIppool() {
     let iprang = this.AddstaticIPForm.value['ip_add']
     const range = new Netmask(iprang)
-    console.log('Ip range', range);
-    
     const ipv4CIDR = getIPRange(iprang);
-    console.log('ipss',ipv4CIDR);
-    
     this.AddstaticIPForm.controls['FirstIp'].setValue(ipv4CIDR[2])
     this.AddstaticIPForm.controls['LastIp'].setValue(range.last)
     // console.log(range)

@@ -166,6 +166,9 @@ export class CustService {
   async changeScheduleTime(params) {
     return await this.http.post("/api/subs/changeScheduleTime", params).toPromise();
   }
+  async refreshSchedule(params) {
+    return await this.http.post("/api/subs/refreshSchedule", params).toPromise();
+  }
   async addlimit(params) {
     return await this.http.post("/api/subs/addlimit", params).toPromise();
   }

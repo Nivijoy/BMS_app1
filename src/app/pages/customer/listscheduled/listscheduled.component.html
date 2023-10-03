@@ -106,10 +106,11 @@
           <th>Scheduled By</th>
           <th>Scheduled Date</th>
           <th>Schedule Completed</th>
+          <th>Reason</th>
           <th>Status</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="!role.getmenurole(712) &&(item.schedule_status==1)" style="padding: 1px;" class=" last"
+          <td *ngIf="!role.getmenurole(712) &&(item.schedule_status==1 || item.schedule_status==5)" style="padding: 1px;" class=" last"
             data-title="'Action'">
             <div class="dropdown ghost-dropdown" ngbDropdown>
               <button style="width: 70px;font-size: 10px;margin: 3px;" class="btn btn-primary btn-icon" type="button"
@@ -121,10 +122,13 @@
                 <li *ngIf="!role.getmenurole(714) && (item.schedule_status == 1)" class="dropdown-item"
                   title="Change Schedule" (click)="change_sched(item.rsid)"><i
                     class="fa fa-exchange-alt"></i>&nbsp;ChangeTime</li>
+                    <li *ngIf="item.schedule_status == 5" class="dropdown-item"
+                    title="Refresf" (click)="refreshSchedule(item.rsid)"><i
+                      class="fa fa-refresh"></i>&nbsp;Refresh</li>
               </ul>
             </div>
           </td>
-          <td *ngIf="item.schedule_status!=1">
+          <td *ngIf="item.schedule_status!=1 && item.schedule_status!=5">
             <a [ngStyle]="{'color' :item.schedule_status!=3 ? 'green' : 'red' }"
               [ngClass]="{'ion-close-round':item.schedule_status==3? true:false,'ion-checkmark-round': item.schedule_status!=3 ? true:false  }"></a>
           </td>
@@ -155,6 +159,7 @@
           <td *ngIf="item.schedule_status!=3">{{item.schedule_date | date:'d MMM y h:mm:ss a'}}</td>
           <td *ngIf="item.schedule_status==3">{{item.lm_date | date:'d MMM y h:mm:ss a'}}</td>
           <td>{{item.schedule_completed_on ? (item.schedule_completed_on | date:'d MMM y h:mm:ss a') : '--'}}</td>
+          <td>{{item.comment1 || item.cancel_reason || '--'}}</td>
           <td>{{item.schedule_status==1 ? 'On Process':item.schedule_status==2 ? 'Schedule Completed':item.schedule_status==3 ? 'Cancel'
             :item.schedule_status ==4 ? 'Already Done': item.schedule_status ==5? 'Initialized' : '--'}}</td>
         </tr>

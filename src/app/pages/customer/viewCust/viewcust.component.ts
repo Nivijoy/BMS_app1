@@ -282,7 +282,8 @@ export class ViewCustComponent implements OnInit{
 
   async getlivegraph(proid) {
     // console.log("nas",result);
-    const activeModal = this.nasmodel.open(LiveGraphComponent, { size: 'lg', container: 'nb-layout', backdrop: 'static' });
+    const activeModal = this.nasmodel.open(LiveGraphComponent, { size: 'lg', container: 'nb-layout' });
+    // backdrop: 'static'
     activeModal.componentInstance.modalHeader = 'Live Graph';
     activeModal.componentInstance.item = { id: this.id, proid: proid }
     activeModal.result.then((data) => {

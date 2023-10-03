@@ -275,7 +275,8 @@ export class ResellerListComponent implements OnInit {
         param['PRIMARY NAS'] = temp[i]['nasip'];
         param['SERVICE TYPE'] = temp[i]['service_name'];
         param['MOBILE'] = temp[i]['mobile'];
-        param['EMAIL'] = temp[i]['email'];
+        param['EMAIL'] = temp[i]['email'].toLowerCase();
+        param['ADDRESS']=temp[i]['address'];
         param['BALANCE'] = temp[i]['balance_amt'];
         param['GST No'] = temp[i]['gst_no'];
         param['SUBSCRIBER LIMIT'] = temp[i]['sub_limit'] == 0 ? 'Unlimited' : temp[i]['sub_limit'];

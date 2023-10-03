@@ -259,7 +259,9 @@ export class CustOnlinePaylistComponent implements OnInit {
     let result;
     if (gwid == 1) result = await this.payser.paystatusCust({ opid: item })  //Federal
     else if (gwid == 2) result = await this.payser.pumstatusCust({ opid: item })   //PayUMoney
-    else result = await this.payser.paytmStatus({ opid: item }) //Paytm
+    else if (gwid == 3) result = await this.payser.paytmStatus({ opid: item }) //Paytm
+    else if (gwid == 5) result = await this.payser.easyBuzzTrnStausSub({ opid: item }) //easyBuzz
+    else result = await this.payser.payStarCustStatus({ opid: item })
     if (result) {
       this.paydata = result[0];
       this.loading = false

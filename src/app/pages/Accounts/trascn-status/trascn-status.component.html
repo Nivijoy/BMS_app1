@@ -4,8 +4,8 @@
       </div>
       <div class="col-md-6">
          <nb-card>
-            <nb-card-header *ngIf="status==0" style="background-color: green; text-align: center;">Transaction Status</nb-card-header>
-            <nb-card-header *ngIf="status!=0" style="background-color: red; text-align: center;">Transaction Status</nb-card-header>
+            <nb-card-header *ngIf="status==0" style="background-color: green; text-align: center;">Transaction Status-(Success)</nb-card-header>
+            <nb-card-header *ngIf="status!=0" style="background-color: red; text-align: center;">Transaction Status (Failed/Canceled)</nb-card-header>
             <nb-card-body>
                <toaster-container [toasterconfig]="config"></toaster-container>
                <div class="row">

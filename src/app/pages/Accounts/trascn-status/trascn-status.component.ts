@@ -44,7 +44,7 @@ export class TransactionStatusComponent implements OnInit {
       }
       if (data.length == 3) {
          this.msg = data[1].value
-         this.txnid = data[2].value
+         this.orderid = data[2].value
       }
    }
 

@@ -100,7 +100,7 @@ export class TopupComponent implements OnInit {
 
     //  } 
 
-  } p
+  } 
 
   async paysucess() {
     let sucres = await this.payser.paysuccess({});

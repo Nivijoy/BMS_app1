@@ -77,7 +77,7 @@ export class DocpopComponent implements OnInit {
           this.AddDocForm.value['addr_proof'] == 6 ? 'EB Bill' : this.AddDocForm.value['addr_proof'] == 7 ? 'Water Bill' : this.AddDocForm.value['addr_proof'] == 8 ? 'Home Tax': '--'
       let first = username + '-' + filename + 'first', second = username + '-' + filename + 'second';
       file.append('addr_proof', this.AddDocForm.value['addr_proof'])
-      file.append('file', this.add_proof_file[0], first,);
+      file.append('file', this.add_proof_file[0], first);
       if (this.add_proof_file.length == 2) {
         file.append('file', this.add_proof_file[1], second);
         file.append('proofType', String(2));

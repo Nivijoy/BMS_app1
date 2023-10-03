@@ -406,7 +406,7 @@ export class CustListComponent implements OnInit, OnDestroy {
           temp[i]['expiration'] = temp[i]['expiration'] == '0000-00-00 00:00:00' ? '' : this.datePipe.transform(temp[i]['expiration'], 'dd-MM-yyyy hh:mm:ss a', 'es-ES');
           param['EXPIRY DATE'] = temp[i]['expiration'];
           param['MOBILE'] = temp[i]['mobile'];
-          param['EMAIL'] = temp[i]['email'];
+          param['EMAIL'] = temp[i]['email'].toLowerCase();
           param['ADDRESS'] = temp[i]['address'];
           param['PINCODE'] = temp[i]['zip'] ? temp[i]['zip'] : '';
           param['BRANCH'] = temp[i]['branch'];

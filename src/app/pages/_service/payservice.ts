@@ -23,6 +23,10 @@ export class PaymentService {
     return await this.http.post("/api/pay/pumTrnStaus",params).toPromise();
   }
 
+  async payStarStatus(params){
+    return await this.http.post("/api/pay/payStarTrnStaus",params).toPromise();
+  }
+
   async paystatusCust(params){
     return await this.http.post("/api/pay/meTrnStausSub",params).toPromise();
   }
@@ -31,9 +35,18 @@ export class PaymentService {
     return await this.http.post("/api/pay/pumTrnStausSub",params).toPromise();
   }
 
-  
   async paytmStatus(params){
     return await this.http.post("/api/pay/paytmtranstatus",params).toPromise();
+  }
+    
+  async payStarCustStatus(params){
+    return await this.http.post("/api/pay/payStarTrnCustStatus",params).toPromise();
+  }
+  async easyBuzzTrnStaus(params){
+    return await this.http.post("/api/pay/easyBuzzTrnStaus",params).toPromise();
+  }
+  async easyBuzzTrnStausSub(params){
+    return await this.http.post("/api/pay/easyBuzzTrnStausSub",params).toPromise();
   }
 
   async checkAggregatorStatus(params){

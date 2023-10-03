@@ -183,6 +183,8 @@ export class OTTPlanComponent implements OnInit {
       this.editdatas = result;
       let ids = this.editdatas['ottplatform'].split(',')
       this.checkids = ids.map(x => Number(x));
+      console.log('chhhhh',this.checkids,typeof(this.checkids));
+      
     }
     this.createForm();
     // await this.GroupName();

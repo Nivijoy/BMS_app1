@@ -92,7 +92,7 @@ export class RenewCustComponent implements OnInit {
     // console.log('like',$event);
     let res = await this.serv.showServiceName({ rflag: 1, u_id: this.item.cust_id, cdate: this.item.cdate, like: $event })
     this.pack = res;
-    // console.log(res)
+    console.log('Packkkk',this.pack)
     this.sstatus = this.pack.filter(item => item.sstatus == 1).map(item => item.sstatus);
   }
 
@@ -110,13 +110,13 @@ export class RenewCustComponent implements OnInit {
   }
 
   ottValidation() {
-    let [mode] = this.pack.filter(x => x.srvid == this.RenewSubsForm.value['srv_id']).map(x => x.renewalmode)
+    let [mode] = this.pack.filter(x => x.srvid == this.RenewSubsForm.value['srv_id']).map(x => x.renewalmode);
     if (mode == 1) {
       this.RenewSubsForm.controls['ottplanid'].setValidators([Validators.required])
     } else {
       this.RenewSubsForm.controls['ottplanid'].clearValidators();
-      this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
     }
+    this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
 
   }
 

@@ -9,7 +9,7 @@ import * as JSXLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 import { DatePipe } from '@angular/common';
-
+import { RefreshScheduleComponent } from '../refresh-schedule/refresh-schedule.component';
 @Component({
   selector: 'listscheduled',
   styleUrls: ['./listscheduled.component.scss'],
@@ -176,6 +176,16 @@ export class ListScheduledCustComponent implements OnInit {
   cancel(rsid) {
     const activeModal = this.nasmodel.open(CancelScheduleCustComponent, { size: 'sm', container: 'nb-layout' });
     activeModal.componentInstance.modalHeader = 'Cancel Schedule';
+    activeModal.componentInstance.item = rsid
+    // console.log(item)
+    activeModal.result.then((data) => {
+      this.initiallist();
+    });
+  }
+
+  refreshSchedule(rsid){
+    const activeModal = this.nasmodel.open(RefreshScheduleComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Refresh Schedule';
     activeModal.componentInstance.item = rsid
     // console.log(item)
     activeModal.result.then((data) => {

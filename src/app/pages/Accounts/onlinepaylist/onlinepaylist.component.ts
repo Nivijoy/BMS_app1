@@ -251,8 +251,12 @@ export class OnlinePaylistComponent implements OnInit {
     if (gwid == 1) result = await this.payser.paystatus({ opid: item })   // Federal
     else if (gwid == 2) {
       result = await this.payser.pumstatus({ opid: item })  // payUMoney
-    } else {
+    } else if (gwid == 3) {
       result = await this.payser.paytmStatus({ opid: item })
+    }else if (gwid == 5) {
+      result = await this.payser.easyBuzzTrnStaus({ opid: item })
+    }else{
+      result = await this.payser.payStarStatus({ opid: item })
     }
     if (result) {
       console.log('Result', result)

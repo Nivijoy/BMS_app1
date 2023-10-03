@@ -84,12 +84,12 @@ export class EditResellerComponent implements OnInit {
   }
 
   prefixChange() {
-   
+
     if (this.value.prefix_enable == false) {
       this.ctrl.prefix.setValue('');
       this.ctrl.prefix.clearValidators();
       this.ctrl.prefix.updateValueAndValidity()
-    }else{
+    } else {
       this.ctrl.prefix.setValidators([Validators.required]);
       this.ctrl.prefix.updateValueAndValidity()
 
@@ -186,267 +186,44 @@ export class EditResellerComponent implements OnInit {
   }
 
   async sharedefault() {
-    await this.shareempty();
-    //SUB DISTRIBUTOR BULK UNDER SUB ISP BULK
-    if (this.value.Role == 661) {
-      let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
-      this.shareval = result[0];
-      if (this.value.serv_type == 2) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-      }
-      if (this.value.serv_type == 3) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 4) {
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 5) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 6) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 7) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 8) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-    }
-    // UNDER SUB ISP BULK
-    if (this.value.reseller_under == 1) {
-      let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
-      this.shareval = result[0];
-
-      //BULK RESELLER UNDER SUB ISP BULK
-      if (this.value.serv_type == 2 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-      }
-      if (this.value.serv_type == 3 && this.value.Role == 444) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 4 && this.value.Role == 444) {
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 5 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 6 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 7 && this.value.Role == 444) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 8 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-
-      //SUB DIST DEPOSIT UNDER SUB ISP BULK
-      if (this.value.serv_type == 1 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-      }
-      if (this.value.serv_type == 2 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-      }
-      if (this.value.serv_type == 3 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 4 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 5 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 6 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 7 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 8 && this.value.Role == 551) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-
-      //DEPOSIT RESELLER UNDER SUB ISP BULK
-      if (this.value.serv_type == 1 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-      }
-      if (this.value.serv_type == 2 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-      }
-      if (this.value.serv_type == 3 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 4 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 5 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-      }
-      if (this.value.serv_type == 6 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 7 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-      if (this.value.serv_type == 8 && this.value.Role == 333) {
-        this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-        this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-      }
-    }
-    //UNDER SUB ISP DEPOSIT
-    if (this.value.reseller_under == 2) {
-      let result = await this.resell.showResellerUnder({ resel_id: this.value.subdep_name });
-      this.shareval = result[0]
-
-      //DEPOSIT AND SUB DIST DEPOSIT UNDER SUB ISP DEPOSIT
-      if (this.value.Role == 333 || this.value.Role == 551) {
-        if (this.value.serv_type == 1) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-        }
+    console.log('share--',this.ispsharedefault);
+    if (!this.ispsharedefault) {
+      await this.shareempty();
+      //SUB DISTRIBUTOR BULK UNDER SUB ISP BULK
+      if (this.value.Role == 661) {
+        let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
+        this.shareval = result[0];
         if (this.value.serv_type == 2) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
         }
         if (this.value.serv_type == 3) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
         }
         if (this.value.serv_type == 4) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
           this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
         }
         if (this.value.serv_type == 5) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
         }
         if (this.value.serv_type == 6) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
           this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
         }
         if (this.value.serv_type == 7) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
           this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
           this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
         }
         if (this.value.serv_type == 8) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
@@ -455,74 +232,371 @@ export class EditResellerComponent implements OnInit {
           this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
         }
       }
-    }
-
-    //UNDER SUB DIST BULK AND SUB DIST DEPOSIT
-    if (this.value.reseller_under == 3 || this.value.reseller_under == 4) {
-      if (this.value.subdist_bulk != '') {
-        let result = await this.resell.showResellerUnder({ resel_id: this.value.subdist_bulk });
+      // UNDER SUB ISP BULK
+      if (this.value.reseller_under == 1) {
+        let result = await this.resell.showResellerUnder({ resel_id: this.value.subisp_bulk });
         this.shareval = result[0];
-      }
-      if (this.value.subdis_name != '') {
-        let result = await this.resell.showResellerUnder({ resel_id: this.value.subdis_name });
-        this.shareval = result[0];
-      }
-      //DEPOSIT UNDER SUB DISTBULK AND SUB DIST DEPOSIT
-      if (this.value.Role == 333) {
-        if (this.value.serv_type == 1) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
-        }
-        if (this.value.serv_type == 2) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
 
+        //BULK RESELLER UNDER SUB ISP BULK
+        if (this.value.serv_type == 2 && this.value.Role == 444) {
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+        }
+        if (this.value.serv_type == 3 && this.value.Role == 444) {
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 4 && this.value.Role == 444) {
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 5 && this.value.Role == 444) {
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 6 && this.value.Role == 444) {
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 7 && this.value.Role == 444) {
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 8 && this.value.Role == 444) {
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+
+        //SUB DIST DEPOSIT UNDER SUB ISP BULK
+        if (this.value.serv_type == 1 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+        }
+        if (this.value.serv_type == 2 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+        }
+        if (this.value.serv_type == 3 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 4 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 5 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 6 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 7 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 8 && this.value.Role == 551) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+
+        //DEPOSIT RESELLER UNDER SUB ISP BULK
+        if (this.value.serv_type == 1 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+        }
+        if (this.value.serv_type == 2 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+        }
+        if (this.value.serv_type == 3 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 4 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 5 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+        }
+        if (this.value.serv_type == 6 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 7 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+        if (this.value.serv_type == 8 && this.value.Role == 333) {
+          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+          this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+          this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+          this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+        }
+      }
+      //UNDER SUB ISP DEPOSIT
+      if (this.value.reseller_under == 2) {
+        let result = await this.resell.showResellerUnder({ resel_id: this.value.subdep_name });
+        this.shareval = result[0]
+
+        //DEPOSIT AND SUB DIST DEPOSIT UNDER SUB ISP DEPOSIT
+        if (this.value.Role == 333 || this.value.Role == 551) {
+          if (this.value.serv_type == 1) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+          }
+          if (this.value.serv_type == 2) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+          }
+          if (this.value.serv_type == 3) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          }
+          if (this.value.serv_type == 4) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+          }
+          if (this.value.serv_type == 5) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+          }
+          if (this.value.serv_type == 6) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+          }
+          if (this.value.serv_type == 7) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+          }
+          if (this.value.serv_type == 8) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+          }
+        }
+      }
+
+      //UNDER SUB DIST BULK AND SUB DIST DEPOSIT
+      if (this.value.reseller_under == 3 || this.value.reseller_under == 4) {
+        if (this.value.subdist_bulk != '') {
+          let result = await this.resell.showResellerUnder({ resel_id: this.value.subdist_bulk });
+          this.shareval = result[0];
+        }
+        if (this.value.subdis_name != '') {
+          let result = await this.resell.showResellerUnder({ resel_id: this.value.subdis_name });
+          this.shareval = result[0];
+        }
+        //DEPOSIT UNDER SUB DISTBULK AND SUB DIST DEPOSIT
+        if (this.value.Role == 333) {
+          if (this.value.serv_type == 1) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
+          }
+          if (this.value.serv_type == 2) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
+
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
+
+          }
+          if (this.value.serv_type == 3) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
+
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
+
+          }
+          if (this.value.serv_type == 4) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
+
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+            this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
+
+          }
+          if (this.value.serv_type == 5) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
+
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share'])
+
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
+
+          }
+          if (this.value.serv_type == 6) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
+
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
+
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+            this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
+
+          }
+          if (this.value.serv_type == 7) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
+
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
+
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+            this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
+
+          }
+          if (this.value.serv_type == 8) {
+            this.ctrl.isp_share.setValue(this.shareval['isp_share']);
+            this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
+            this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
+
+            this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
+            this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
+            this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
+
+            this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
+            this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
+            this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
+
+            this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
+            this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
+            this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
+
+          }
+        }
+        //BULK RESELLER UNDER SUB DIST BULK
+        if (this.value.serv_type == 2 && this.value.Role == 444) {
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
 
         }
-        if (this.value.serv_type == 3) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
-
+        if (this.value.serv_type == 3 && this.value.Role == 444) {
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
           this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
 
         }
-        if (this.value.serv_type == 4) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share'])
-
+        if (this.value.serv_type == 4 && this.value.Role == 444) {
           this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
           this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
           this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
 
         }
-        if (this.value.serv_type == 5) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
-
+        if (this.value.serv_type == 5 && this.value.Role == 444) {
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-          this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share'])
+          this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
 
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
           this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
 
         }
-        if (this.value.serv_type == 6) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
-
+        if (this.value.serv_type == 6 && this.value.Role == 444) {
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
@@ -532,11 +606,7 @@ export class EditResellerComponent implements OnInit {
           this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
 
         }
-        if (this.value.serv_type == 7) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
-
+        if (this.value.serv_type == 7 && this.value.Role == 444) {
           this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
           this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
           this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
@@ -546,11 +616,7 @@ export class EditResellerComponent implements OnInit {
           this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
 
         }
-        if (this.value.serv_type == 8) {
-          this.ctrl.isp_share.setValue(this.shareval['isp_share']);
-          this.ctrl.subisp_share.setValue(this.shareval['sub_isp_share']);
-          this.ctrl.subdis_share.setValue(this.shareval['sub_dist_share']);
-
+        if (this.value.serv_type == 8 && this.value.Role == 444) {
           this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
           this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
           this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
@@ -564,69 +630,6 @@ export class EditResellerComponent implements OnInit {
           this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
 
         }
-      }
-      //BULK RESELLER UNDER SUB DIST BULK
-      if (this.value.serv_type == 2 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
-
-      }
-      if (this.value.serv_type == 3 && this.value.Role == 444) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
-
-      }
-      if (this.value.serv_type == 4 && this.value.Role == 444) {
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-        this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
-
-      }
-      if (this.value.serv_type == 5 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
-
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
-
-      }
-      if (this.value.serv_type == 6 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
-
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-        this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
-
-      }
-      if (this.value.serv_type == 7 && this.value.Role == 444) {
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
-
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-        this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
-
-      }
-      if (this.value.serv_type == 8 && this.value.Role == 444) {
-        this.ctrl.VOisp_share.setValue(this.shareval['Visp_share']);
-        this.ctrl.VOsubisp_share.setValue(this.shareval['Vsub_isp_share']);
-        this.ctrl.VOsubdis_share.setValue(this.shareval['Vsub_dist_share']);
-
-        this.ctrl.OTTisp_share.setValue(this.shareval['Oisp_share']);
-        this.ctrl.OTTsubisp_share.setValue(this.shareval['Osub_isp_share']);
-        this.ctrl.OTTsubdis_share.setValue(this.shareval['Osub_dist_share']);
-
-        this.ctrl.ADDisp_share.setValue(this.shareval['AONisp_share']);
-        this.ctrl.ADDsubisp_share.setValue(this.shareval['AONsub_isp_share']);
-        this.ctrl.ADDsubdis_share.setValue(this.shareval['AONsub_dist_share']);
-
       }
     }
   }
@@ -2065,6 +2068,7 @@ export class EditResellerComponent implements OnInit {
     };
     if (this.EditReselForm.invalid) {
       this.submit = true;
+      window.alert('Please Fill All Mandatory Fields')
       return;
     }
     this.value.id = this.id
@@ -2126,6 +2130,7 @@ export class EditResellerComponent implements OnInit {
     await this.business();
     await this.stateshow();
     this.editvalid();
+    this.setShareReadOnly();
     if (this.role.getroleid() <= 777) {
       this.ctrl['bus_id'].setValue(this.role.getispid());
       await this.GroupName();
@@ -2180,6 +2185,12 @@ export class EditResellerComponent implements OnInit {
       const result = await this.service.showServiceName({ bus_id: this.value.bus_id, show_service: 1, like: $event, resel_id: this.id });
       this.assign_service = result;
     }
+  }
+
+  setShareReadOnly() {
+    if ([666, 555, 661, 551].includes(this.EditReselForm.value.Role)) {
+      this.ispsharedefault = false
+    } else this.ispsharedefault = true
   }
 
   createForm() {
@@ -2311,7 +2322,7 @@ export class EditResellerComponent implements OnInit {
       credit_flag: new FormControl(this.editdatas ? this.editdatas['credit_flag'] : ''),
       credit_limit: new FormControl(this.editdatas ? this.editdatas['credit_limit'] : ''),
       due_invoice: new FormControl(this.editdatas ? this.editdatas['check_due_invoices'] : ''),
-      expiry_type: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expiry_type']) :'1'),
+      expiry_type: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expiry_type']) : '1'),
       exp_mode: new FormControl(this.editdatas ? JSON.stringify(this.editdatas['expmode']) : ''),
       exp_time: new FormControl(this.editdatas ? this.editdatas['exptime'] : ''),
       ereceipt: new FormControl(this.editdatas ? this.editdatas['ereceipt'] : ''),
