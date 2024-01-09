@@ -25,7 +25,8 @@ export class RenewalReportComponent implements OnInit {
   submit: boolean = false; addNas; data; search; bus_name = ''; bus; group1; sername = ''; sub_plan = '';
   profile; resel_type = ''; res1; res_name = ''; invoice_num = ''; paymentForm; tot; Download; inv_type = 1; pack; count; cust_name = '';
   group_name = ''; subplandata; custname; dtype = ''; inv_status = ''; from_date = ''; to_date = ''; from_edate = ''; to_edate = '';
-  pay_status = ''; start_date = ''; end_date = ''; invnum;
+  pay_status = ''; start_date :any = ''; end_date = ''; invnum;
+  minDate = '';maxDate='';
   invamnt; totinvamnt; taxamount; sbranch; s_branch;
   index = -1; invdetails; share; servtype; serv_type;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
@@ -33,6 +34,8 @@ export class RenewalReportComponent implements OnInit {
   public secondaryColour = '#006ddd';
   public loading = false;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;
+  myDateValue: Date;
+  // bsConfig: Partial<BsDatepickerConfig>;
   constructor(
     private alert: ToasterService,
     private router: Router,
@@ -50,6 +53,17 @@ export class RenewalReportComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.myDateValue = new Date();
+    let year=2022
+//     console.log('startdatee',this.start_date);
+//     this.start_date.setYear(year)
+// this.start_date=this.start_date.toISOString().slice(0,10);
+   
+    // this.start_date.setYear(2012).toISOString().slice(0,10);
+    console.log('startdatee',this.start_date);
+    this.minDate=`${year}-01-01`;
+    this.maxDate=`${year}-12-31`
+
     localStorage.removeItem('array');
     await this.showBusName();
     if (this.role.getroleid() <= 777) {

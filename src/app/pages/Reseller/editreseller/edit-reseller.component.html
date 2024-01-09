@@ -384,7 +384,7 @@
                         <div class="form-group row">
                           <div class="col-sm-3">
                             <label style="white-space: nowrap;">ISP Share <span style="color:red;">*</span></label>
-                            <input [readonly]="ispsharedefault" type="number" formControlName="isp_share"
+                            <input  type="number" formControlName="isp_share"
                               placeholder="ISP Share"
                               [ngClass]="{'form-control':true,'form-control-danger':EditReselForm.controls.isp_share.invalid&&submit}">
                             <small *ngIf="EditReselForm.controls.isp_share.invalid&&submit" class="form-text error">ISP
@@ -394,7 +394,7 @@
                           <div class="col-sm-3" *ngIf="EditReselForm.value['Role']=='551'||EditReselForm.value['Role']=='555'||(EditReselForm.value['Role']=='333'&& EditReselForm.value['reseller_under']!='0')||
                             (EditReselForm.value['Role']=='444' && EditReselForm.value['reseller_under']=='1')">
                             <label style="white-space: nowrap;">Sub ISP Share <span style="color:red;">*</span></label>
-                            <input [readonly]="ispsharedefault" type="number" formControlName="subisp_share"
+                            <input  type="number" formControlName="subisp_share"
                               placeholder="Sub ISP Share"
                               [ngClass]="{'form-control':true,'form-control-danger':EditReselForm.controls.subisp_share.invalid&&submit}">
                             <small *ngIf="EditReselForm.controls.subisp_share.invalid&&submit"
@@ -405,7 +405,7 @@
                             *ngIf="EditReselForm.value['Role']=='551'||(EditReselForm.value['Role']=='444' && EditReselForm.value['reseller_under']=='3')||
                             (EditReselForm.value['Role']=='333'&&EditReselForm.value['reseller_under']=='4'||EditReselForm.value['reseller_under']=='3')">
                             <label style="white-space: nowrap;">Sub Dist Share<span style="color:red;">*</span></label>
-                            <input  [readonly]="ispsharedefault"  type="number" formControlName="subdis_share" placeholder="Sub Distributor share"
+                            <input    type="number" formControlName="subdis_share" placeholder="Sub Distributor share"
                               [ngClass]="{'form-control':true,'form-control-danger':EditReselForm.controls.subdis_share.invalid&&submit}">
                             <small *ngIf="EditReselForm.controls.subdis_share.invalid&&submit"
                               class="form-text error">Sub
@@ -414,7 +414,7 @@
                           <div class="col-sm-3"
                             *ngIf="EditReselForm.value['Role']=='333'||EditReselForm.value['Role']=='444'">
                             <label style="white-space: nowrap;">Resell Share <span style="color:red;">*</span></label>
-                            <input  [readonly]="ispsharedefault"  type="number" formControlName="resel_share" placeholder="Resell Share"
+                            <input    type="number" formControlName="resel_share" placeholder="Resell Share"
                               [ngClass]="{'form-control':true,'form-control-danger':EditReselForm.controls.resel_share.invalid&&submit}">
                             <small *ngIf="EditReselForm.controls.resel_share.invalid&&submit"
                               class="form-text error">Reseller

@@ -277,6 +277,7 @@
                <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Pack Price</th>
                <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2">Tax Amount </th> -->
                <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2" *ngIf="role.getroleid()>111">Deducted Amount</th>
+               <th style="border: 3px solid #aeb8b9;color: white;" rowspan="2" *ngIf="role.getroleid()>111">Reseller Balance</th>
                <th style="border: 3px solid #aeb8b9;color: white;" colspan="4" *ngIf="role.getroleid()>=775">Share
                   Amount</th>
                <!-- <th *ngIf="role.getroleid()>=775">ISP Amount</th>
@@ -427,6 +428,7 @@
                      " Days" : item.time_unit + " Month"}}</td>
                <td style="text-align: center;">{{item.additional_days}}</td>
                <td style="text-align: center;" *ngIf="role.getroleid()>111"><i class="fas fa-rupee-sign">&nbsp;{{item.allispamt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i class="fas fa-rupee-sign">&nbsp;{{item.r_after_balance || '0'}}</i></td>
                <td *ngIf="role.getroleid()>=775"><i class="fas fa-rupee-sign">&nbsp;{{item.all_ispamt}}</i></td>
                <td *ngIf="role.getroleid()>=775"><i class="fas fa-rupee-sign">&nbsp;{{item.allsubispamt}}</i></td>
                <td *ngIf="role.getroleid()>=775"><i class="fas fa-rupee-sign">&nbsp;{{item.allsubdistamt}}</i></td>
