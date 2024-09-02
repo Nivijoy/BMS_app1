@@ -39,5 +39,8 @@ export class ReportService {
    async trafficReport(params){
       return await this.http.post("/api/reports/trafficReport",params).toPromise();
    }
+   async serviceCountReport(params){
+      return await this.http.post("/api/reports/serviceCountReport",params).toPromise();
+   }
    
 }

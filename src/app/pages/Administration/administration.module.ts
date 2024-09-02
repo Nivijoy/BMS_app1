@@ -40,6 +40,7 @@ import { InvoiceMailLogComponent } from './invoice-mail-log/invoice-mail-log.com
 import { GstinvoiceMailLogComponent } from './gstinvoice-mail-log/gstinvoice-mail-log.component';
 import { MailLogComponent } from './mail-log/mail-log.component';
 import { UpdateShareComponent } from './update-share/update-share.component';
+import { UpsertStateComponent } from '../Administration/upsert-state/upsert-state.component';
 
 
 
@@ -82,12 +83,14 @@ import { UpdateShareComponent } from './update-share/update-share.component';
     GstinvoiceMailLogComponent,
     MailLogComponent,
     UpdateShareComponent,
+    UpsertStateComponent,
   ],
   entryComponents: [
     ChangepasswordComponent,
     AddStaticIPComponent,
     AddOTTComponent,
     AddsmscreditsComponent,
+    UpsertStateComponent
    ],
   providers: [CompanyService, GroupService, AdminuserService, NasService, S_Service,
     RoleService, BusinessService, ResellerService, UserLogService, ReportService, NgbActiveModal],

@@ -203,6 +203,7 @@ export class ResellerListComponent implements OnInit {
       await this.showProfileReseller();
       await this.showProfileReseller();
     }
+    this.page=1;
     await this.initiallist();
   }
 
@@ -340,6 +341,7 @@ export class ResellerListComponent implements OnInit {
   password(item) {
     const activeModal = this.nasmodel.open(PasswordComponent, { size: 'sm', container: 'nb-layout' });
     activeModal.componentInstance.item = { id: item },
+    activeModal.componentInstance.id = 0,
       activeModal.componentInstance.modalHeader = 'Change Password';
   }
 

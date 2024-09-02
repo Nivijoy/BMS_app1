@@ -22,7 +22,7 @@
               && ((data.limitdl == 1 && data.lcdllimit ==0) || (data.limitul == 1 && data.lcuplimit ==0) || (data.limitcomb ==1 && data.lclimitcomb == 0)) )"
                   class="btn btn-xs btn-outline-primary " (click)='topup(id,data.reseller_id)'><b>Topup</b></button>
             </div>
-            <div style="padding: 2px;" *ngIf="(data.expiry_status==1 && role.getroleid()>=775)">
+            <div style="padding: 2px;" *ngIf="(data.expiry_status==1 && role.getroleid()>=666)">
                <button class="btn btn-xs btn-outline-primary " (click)="cancelinv(data.inv_id,1)"><b>Cancel
                      Invoice</b></button>
             </div>
@@ -403,7 +403,7 @@
                                     <td><b>{{data.sub_plan || '--'}}</b></td>
                                  </tr>
                                  <tr>
-                                    <th>m,;
+                                    <th>
                                        Balance Download Limit
                                     </th>
                                     <td [ngStyle]="{ 'color' : data.lcdllimit==0 ? 'red' : 'black' }">
@@ -694,7 +694,7 @@
                                        <li [hidden]="item.inv_status==3||item.pay_status==2" class="dropdown-item"
                                           title="View" (click)="pay(item.invid,id,item.topay,item.inv_type)"><i
                                              style="font-size: 20px;" class="fa fa-credit-card "></i>&nbsp;Pay</li>
-                                       <li *ngIf="item.pay_status==2 && item.inv_status == 1  && role.getroleid()>=775" class="dropdown-item"
+                                       <li *ngIf="item.pay_status==2 && item.inv_status == 1  && role.getroleid()>=666" class="dropdown-item"
                                           title="View" (click)="changePayStatus(item.invid,id,item.inv_type)"><i
                                              style="font-size: 20px;" class="fa fa-retweet "></i>&nbsp;Paid to Unpaid</li>
 
@@ -831,7 +831,7 @@
                                     <li [hidden]="item.inv_status==3||item.pay_status==2" class="dropdown-item"
                                        title="View" (click)="pay(item.invid,id,item.topay)"><i style="font-size: 20px;"
                                           class="fa fa-credit-card "></i>&nbsp;Pay</li>
-                                          <li *ngIf="item.pay_status==2 && item.inv_status == 1 && role.getroleid()>=775" class="dropdown-item"
+                                          <li *ngIf="item.pay_status==2 && item.inv_status == 1 && role.getroleid()>=666" class="dropdown-item"
                                           title="View" (click)="changePayStatus(item.invid,id,item.inv_type)"><i
                                              style="font-size: 20px;" class="fa fa-retweet "></i>&nbsp;Paid to Unpaid</li>
                                     <li class="dropdown-item" title="View" (click)="view_invoice(item.invid,4)"><i

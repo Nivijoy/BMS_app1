@@ -1,0 +1,33 @@
+<div class="modal-header" style="background-color :  #01a7ee">
+  <span>{{data.id?'Update':'Add'}}State</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="modal-body">
+
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <label>State <span style="color:red;">*</span></label>
+        <input type="text" formControlName="name" placeholder="State Name"
+          [ngClass]="{'form-control':true,'form-control-danger':ctrl.name.invalid&&ctrl.name.touched}">
+        <small *ngIf="ctrl.name.invalid&&ctrl.name.touched" class="form-text error">State Name
+          Required!</small>
+      </div>
+      <div class="col-sm-3">
+        <label>GST No</label>
+        <input type="text" formControlName="gstno" placeholder="Password"
+          [ngClass]="{'form-control':true,'form-control-danger':ctrl.gstno.invalid&&ctrl.gstno.touched}">
+        <small *ngIf="ctrl.gstno.invalid&&submit" class="form-text error">GST
+          Required!</small>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-success">{{data.id ? 'Update': 'Add'}} </button>
+    <button type="submit" class="btn btn-md btn-danger" (click)="closeModal()">Back </button>
+  </div>
+</form>

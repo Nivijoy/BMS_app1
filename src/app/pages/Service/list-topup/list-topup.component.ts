@@ -99,6 +99,7 @@ export class ListTopupComponent implements OnInit {
       await this.showGroupName();
       await this.showResellerName();
     }
+    this.page=1;
     await this.initiallist();
   }
 

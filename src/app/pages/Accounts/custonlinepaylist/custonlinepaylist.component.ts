@@ -148,7 +148,7 @@ export class CustOnlinePaylistComponent implements OnInit {
     this.profile = '';
     this.res1 = '';
     this.cust_name = '';
-
+    this.page=1;
     await this.initiallist();
     await this.showBusName();
     await this.showProfileReseller();

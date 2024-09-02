@@ -105,7 +105,7 @@ export class AddreceiptComponent implements OnInit {
       groupid: new FormControl(''),
       Role: new FormControl(this.item ? this.item.role : ''),
       reseller: new FormControl(this.item ? this.item.reseller_id : ''),
-      initial: new FormControl('BLSS/2021/R/', Validators.required),
+      initial: new FormControl(this.item ? this.item.initial : 'BLSS/2021/R/', Validators.required),
       st_num: new FormControl(this.item ? this.item.start_num : '', Validators.required),
       end_num: new FormControl(this.item ? this.item.end_num : '', Validators.required),
       rstatus: new FormControl(this.item ? this.item.rstatus : ''),

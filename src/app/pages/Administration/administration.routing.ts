@@ -47,7 +47,7 @@ import { GstinvoiceMailLogComponent } from './gstinvoice-mail-log/gstinvoice-mai
 import { MailLogComponent } from './mail-log/mail-log.component';
 import { UpdateShareComponent } from './update-share/update-share.component';
 import { ShareLogComponent } from './share-log/share-log.component';
-
+import { ListRenewPublicipComponent } from './list-renew-publicip/list-renew-publicip.component';
 
 const routes: Routes = [{
   path: '',
@@ -100,7 +100,8 @@ const routes: Routes = [{
     { path: 'gst-mail-log', component: GstinvoiceMailLogComponent },
     { path: 'user-mail-log', component: MailLogComponent },
     { path: 'update-share', component: UpdateShareComponent },
-    { path: 'share-log', component: ShareLogComponent }
+    { path: 'share-log', component: ShareLogComponent },
+    {path:'list-renew-ip',component:ListRenewPublicipComponent}
   ],
 }];
 
@@ -154,7 +155,8 @@ export const routedComponents = [
   SmstemplatesComponent,
   EmailTemplatesComponent,
   SmstemplateIspComponent,
-  ShareLogComponent
+  ShareLogComponent,
+  ListRenewPublicipComponent
 
 
 ];

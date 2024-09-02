@@ -118,6 +118,7 @@ export class ResellerRevenueShareComponent implements OnInit {
     this.bus_name = ''; this.group_name = ''; this.resel_type = ''; this.res_name = ''; this.cust_name = ''; this.invoice_num = '';
     this.inv_type = ''; this.inv_status = ''; this.start_date = ''; this.end_date = '';
     this.group1 = ''; this.profile = ''; this.res1 = ''; this.invnum = ''; this.custname = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();

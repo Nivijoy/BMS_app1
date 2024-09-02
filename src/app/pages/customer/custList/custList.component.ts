@@ -241,7 +241,7 @@ export class CustListComponent implements OnInit, OnDestroy {
     this.exp_track = '';
     this.group1 = ''; this.profile = ''; this.res1 = ''; this.servtype = ''; this.nam1 = ''; this.custname = ''; this.gst = '';
     this.start_exp = ''; this.end_exp = ''; this.s_branch = ''; this.state_id = ''; this.ip_mode = ''; this.static_ip = ''; this.public_ip = '';
-
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();

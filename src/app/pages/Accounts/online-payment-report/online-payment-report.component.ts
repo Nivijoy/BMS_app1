@@ -145,6 +145,7 @@ export class OnlinePaymentReportComponent implements OnInit {
     this.profile = '';
     this.res1 = '';
     this.opstatus = '';
+    this.page=1;
     await this.initiallist();
     await this.showBusName();
     await this.showProfileReseller();

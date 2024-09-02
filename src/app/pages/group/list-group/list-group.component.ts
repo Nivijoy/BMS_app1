@@ -49,7 +49,7 @@ export class ListGroupComponent implements OnInit {
 
   async refresh(){
     this.bus_name='';
-    this.group_name='';
+    this.group_name='';  this.page=1;
     await this.initiallist();
   }
 

@@ -92,6 +92,7 @@ export class NasListComponent implements OnInit {
       await this.showGroupNas();
       await this.nasipaddr();
     }
+    this.page=1;
     await this.initiallist()
   }
   async initiallist() {

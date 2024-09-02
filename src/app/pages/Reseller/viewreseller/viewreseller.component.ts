@@ -117,6 +117,7 @@ export class ViewResellerComponent implements OnInit {
   Add_password(resid) {
     const activeModal = this.nasmodel.open(PasswordComponent, { size: 'sm', container: 'nb-layout' });
     activeModal.componentInstance.item = { resid:resid }
+    activeModal.componentInstance.id = 0
     activeModal.componentInstance.modalHeader = 'Change Password';
     activeModal.result.then((data) => {
       this.view();

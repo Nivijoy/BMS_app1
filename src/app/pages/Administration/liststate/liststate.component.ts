@@ -6,6 +6,7 @@ import { RoleService, PagerService, SelectService } from '../../_service/indexSe
 import * as JSXLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { UpsertStateComponent } from '../upsert-state/upsert-state.component';
 
 @Component({
   selector: 'liststate',
@@ -21,6 +22,7 @@ export class ListStateComponent implements OnInit {
     public role: RoleService,
     public pageservice: PagerService,
     private ser: SelectService,
+    private model: NgbModal,
 
   ) { }
 
@@ -49,6 +51,7 @@ export class ListStateComponent implements OnInit {
 
   async Srefresh(){
     this.state='';
+    this.page=1;
     await this.initiallist()
   }
 
@@ -105,6 +108,7 @@ export class ListStateComponent implements OnInit {
 
   async Drefresh(){
     this.district='';
+    this.Dpage=1;
     await this.disctrict();
 
   }
@@ -157,5 +161,14 @@ export class ListStateComponent implements OnInit {
       JSXLSX.utils.book_append_sheet(wb, worksheet, 'Sheet1');
       JSXLSX.writeFile(wb, 'District List' + EXCEL_EXTENSION);
     }
+  }
+
+  upsertState(data={}){
+    const activeModal = this.model.open(UpsertStateComponent, { size: 'lg', backdrop: 'static', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = data? 'Update State':'Add State'
+    activeModal.componentInstance.data=data;
+    activeModal.result.then((data) => {
+      this.initiallist();
+    });
   }
 }

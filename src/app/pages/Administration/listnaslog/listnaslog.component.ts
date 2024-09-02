@@ -60,6 +60,7 @@ export class ListNasLogComponent implements OnInit {
   async refresh(){
     this.bus_name='';
     this.nas_name='';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -46,7 +46,11 @@ export class LoginComponent implements OnInit {
         this.LoginForm.value['os_version'] = this.deviceInfo.os_version;
         this.LoginForm.value['userAgent'] = this.deviceInfo.userAgent;
         this.LoginForm.value['devicetype'] = this.mobile == true ? 'mobile' : this.tablet == true ? 'tablet' : this.desktop == true ? 'desktop' : 'N/A';
+        console.log('dsssscallig');
+        
         this.service.login(this.LoginForm.value).subscribe(result => {
+            console.log('dsssscallig',result);
+
             const toast: Toast = {
                 type: result[0][0]['status'] == 1 ? 'success' : 'warning',
                 title: result[0][0]['status'] == 1 ? 'Success' : 'Failure',

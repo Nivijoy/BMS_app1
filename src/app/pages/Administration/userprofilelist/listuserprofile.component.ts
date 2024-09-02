@@ -99,6 +99,7 @@ export class UserProfileListComponent implements OnInit {
       await this.department();
       await this.showloginid();
     }
+    this.page=1;
     await this.initiallist();
   }
 

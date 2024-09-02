@@ -166,7 +166,7 @@ export class DepositpaylistComponent implements OnInit {
     this.depReason = 0;
     this.showtype = 0;
     this.dep_type='';
-
+    this.page=1;
     await this.initiallist();
     await this.showBusName();
     await this.showGroupName();

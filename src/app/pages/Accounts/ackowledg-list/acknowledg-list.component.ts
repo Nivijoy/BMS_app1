@@ -69,6 +69,7 @@ export class ListInvoiceAckComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.cust_name = ''; this.subs_gst = ''; this.invoice_num = ''; this.start_date = ''; this.end_date = ''; this.ackStatus = '';
+    this.page=1;
     await this.initiallist()
   }
 

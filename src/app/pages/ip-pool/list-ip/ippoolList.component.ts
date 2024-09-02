@@ -91,6 +91,7 @@ export class ListIpPoolComponent implements OnInit {
     this.group1 = '';
     this.nas1 = '';
     this.ippool1 = '';
+    this.page=1;
     await this.initiallist();
   }
 

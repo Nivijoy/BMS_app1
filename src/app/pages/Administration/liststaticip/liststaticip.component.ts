@@ -3,6 +3,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddStaticIPComponent } from '../add-staticip/addstaticip.component';
 // import { editNasComponent } from '../Edit-nas/edit-nas.component'
 import { ResellerService, BusinessService, RoleService, PagerService, IppoolService } from '../../_service/indexService';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { AddSuccessComponent } from './../success/add-success.component';
+import * as JSXLSX from 'xlsx';
+const EXCEL_EXTENSION = '.xlsx';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'liststaticip',
   styleUrls: ['./liststaticip.component.scss'],
@@ -12,6 +18,10 @@ export class ListStaticIPComponent implements OnInit {
   data; totalpage = 10; pages = [1, 2, 3, 4, 5]; count; bus; bus_name; search; pro; res_name = '';
   resel_type = ''; stat_ip='';res1; start_date = ''; end_date = '';ipdata;
   pager: any = {}; page: number = 1; pagedItems: any = []; limit: number = 25;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public primaryColour = '#dd0031';
+  public secondaryColour = '#006ddd';
+  public loading = false;
 
   constructor(
     private nasmodel: NgbModal,
@@ -20,6 +30,7 @@ export class ListStaticIPComponent implements OnInit {
     public role: RoleService,
     public pageservice: PagerService,
     private poolser: IppoolService,
+    private datePipe:DatePipe
 
   ) { }
 
@@ -98,6 +109,7 @@ export class ListStaticIPComponent implements OnInit {
       await this.showResellerName();
       await this.showip();
     }
+    this.page=1;
     await this.initiallist();
   }
 
@@ -157,4 +169,69 @@ export class ListStaticIPComponent implements OnInit {
       this.initiallist();
     });
   }
+
+  async renew(pipid:number){
+    if (window.confirm("Are you sure want to continue ?")) {
+      console.log('contiue');
+      this.loading=true;
+      const resp=await this.poolser.renewPublicIp(pipid);
+      this.loading = false;
+      if (resp) {
+        this.result_pop(resp);
+
+      } 
+  
+    }
+  }
+
+  result_pop(item) {
+    const activemodal = this.nasmodel.open(AddSuccessComponent, { size: 'lg', container: 'nb-layout' });
+    activemodal.componentInstance.modalHeader = 'Result';
+    activemodal.componentInstance.item = item;
+    activemodal.result.then((data) => {
+      this.initiallist()
+    });
+  }
+
+  async download(){
+    let res = await this.poolser.listStaticIp({
+      index: (this.page - 1) * this.limit,
+      limit: this.limit,
+      bus_id: this.bus_name,
+      role: this.resel_type,
+      resel_id: this.res_name,
+      ip_add:this.stat_ip,
+      start_date:this.start_date,
+      end_date:this.end_date,
+    });
+    if(res){
+      let tempdata = [], temp: any = res[0];
+      for (var i = 0; i < temp.length; i++) {
+        let param = {};
+        if (this.role.getroleid() > 777) {
+          param['ISP NAME'] = temp[i]['busname'];
+        }
+       param['RESELLER_TYPE'] = temp[i]['menu_name']
+        param['RESELLER COMPANY'] = temp[i]['company'];
+        param['IP ADDRESS'] = temp[i]['ipaddress'];
+        param['NO.OF IP'] = temp[i]['num_ip'];
+        param['TIME UNIT TYPE'] = temp[i]['unit_type'] == 1 ? temp[i]['units'] + " " + 'Month' : temp[i]['unit_type'] + " " + 'Year';
+        param['TAX TYPE'] = temp[i]['tax_type'] == 1 ? 'Inclusive' : 'Exclusive';
+        param['PRICE'] = temp[i]['amt'];
+        param['TAX'] = temp[i]['tax_amt'];
+        param['TOTAL'] = temp[i]['amt'] + temp[i]['tax_amt'];
+        param['START DATE']= temp[i]['start_date'] != null ? this.datePipe.transform(temp[i]['start_date'], 'dd-MM-yyyy', 'es-ES') : '-';
+        param['EXPIRATION']= temp[i]['expiration'] != null ? this.datePipe.transform(temp[i]['expiration'], 'dd-MM-yyyy', 'es-ES') : '-';
+        param['DAYS LEFT'] = temp[i]['daysremain'];
+        param['STATE'] = temp[i]['stname'];
+        tempdata[i] = param
+      }
+      const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(tempdata);
+      const wb: JSXLSX.WorkBook = JSXLSX.utils.book_new();
+      JSXLSX.utils.book_append_sheet(wb, worksheet, 'Sheet1');
+      JSXLSX.writeFile(wb, 'IP_RENEWAL_List' + EXCEL_EXTENSION);
+    }
+  }
+
+  
 }

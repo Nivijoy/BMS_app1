@@ -1,21 +1,28 @@
 <nb-card>
   <nb-card-header> List PublicIP
-    <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;
-    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;"
-      (click)="search=!search;"><i class="fa fa-search"></i></a>
-      <a type="button" class="btn btn-primary btn-sm btn-floating " style="float: right; margin: 5px;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
-        (click)="refresh()"><i class="fa fa-sync"></i></a>
+    <ngx-loading [show]="loading"
+      [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+    </ngx-loading>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i
+        class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
   </nb-card-header>
   <nb-card-body>
     <toaster-container></toaster-container>
-    <button *ngIf="(!role.getmenurole(52)&&role.getroleid()>=775)" class="btn btn-sm btn-success" (click)="Add_staticip();" >Add</button>
+    <button *ngIf="(!role.getmenurole(52)&&role.getroleid()>=775)" class="btn btn-sm btn-success"
+      (click)="Add_staticip();">Add</button>
     <hr style="border: 0px;">
     <div class="modal-body" autocomplete="off" [hidden]='!search'>
       <div class="form-group row">
         <div class="col-sm-3" *ngIf="role.getroleid()>777">
           <label>ISP Name</label>
           <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
-            (changed)="profile();showResellerName();showip();changeclear(1)" placeholder='Select Business' id="bus_name" [item]="bus">
+            (changed)="profile();showResellerName();showip();changeclear(1)" placeholder='Select Business' id="bus_name"
+            [item]="bus">
           </auto-completen>
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
@@ -26,30 +33,38 @@
         </div>
         <div class="col-sm-3" *ngIf="role.getroleid()>=775">
           <label>Reseller</label>
-          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company" (changed)="showip();changeclear(3)"
-          (keyUp)="showResellerName($event)"  placeholder='Select Reseller' id="mid" [item]="res1">
+          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
+            (changed)="showip();changeclear(3)" (keyUp)="showResellerName($event)" placeholder='Select Reseller'
+            id="mid" [item]="res1">
           </auto-completen>
         </div>
         <div class="col-sm-3">
           <label>Static IP</label>
           <auto-completen [(ngModel)]="stat_ip" addclass="form-control" optValues="ipaddr" (changed)="changeclear(4)"
-          (keyUp)="showip($event)"  placeholder='Select StaticIP' optId="piplid" [item]="ipdata">
+            (keyUp)="showip($event)" placeholder='Select StaticIP' optId="piplid" [item]="ipdata">
           </auto-completen>
         </div>
       </div>
       <div class="form-group row">
         <div class="col-sm-3">
-          <label>Start Date</label>
+          <label>Expiry Start Date</label>
           <input type="date" [(ngModel)]="start_date" (change)="end_date=''" class="form-control">
         </div>
         <div class="col-sm-3">
-          <label>End Date</label>
-          <input type="date" [(ngModel)]="end_date"  class="form-control">
+          <label>Expiry End Date</label>
+          <input type="date" [(ngModel)]="end_date" class="form-control">
         </div>
       </div>
-         <button type="button" class="btn btn-md btn-success middle" (click)='page=1;initiallist();' style="margin: auto; display: block;">Search</button>
-       </div>
-       <label   > <h5>Total Count: {{count}}</h5></label>
+      <button type="button" class="btn btn-md btn-success middle" (click)='page=1;initiallist();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Total Count: {{count}}</div>
+      <div class="col-md-6 end">
+        <!-- <button style = "position:relative;left:400px;top:2px;" class="btn btn-xs btn-outline-primary" (click)="logoff()"><b>Log Off All</b></button> -->
+        <i (click)="download()"  class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+      </div>
+    </div>
     <hr style="border: 0px;">
     <table class="table table-hover table-striped">
       <tr style="background-color :  #01a7ee;color:white;font-size: medium;">
@@ -62,12 +77,37 @@
         <th>Duration</th>
         <th>Tax Type</th>
         <th>Amount</th>
+        <th>Tax</th>
+        <th>Total Amount</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Days Left</th>
+        <th>State</th>
       </tr>
       <tr *ngFor="let item of pagedItems">
-        <td *ngIf="!role.getmenurole(53)"><a (click)="Edit_static(item.pipid)" class="lightedit" style="cursor: pointer;border: 2px solid #01a7ee;padding: 3px 8px 3px 5px;
-          border-radius: 10px;font-size:11px;"><i class="nb-edit"></i>Edit</a></td>
+        <!-- <td *ngIf="!role.getmenurole(53)">
+        <a (click)="Edit_static(item.pipid)" class="lightedit" 
+        style="cursor: pointer;border: 2px solid #01a7ee;padding: 3px 8px 3px 5px;
+          border-radius: 10px;font-size:11px;"><i class="nb-edit"></i>Edit</a>
+          </td> -->
+        <td *ngIf="!role.getmenurole(53)" style=" padding: 1px;" class=" last" data-title="'Action'">
+          <div class="dropdown ghost-dropdown" ngbDropdown>
+            <button style="width: 70px;border: 2px solid #73a1ff;font-size: 10px;margin:3px;"
+              class="btn btn-primary btn-icon" type="button" ngbDropdownToggle>Action&nbsp;
+            </button>
+            <ul style="width: 75px;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
+              <li *ngIf="!role.getmenurole(53)" style="padding-top: 0px;padding-bottom: 2px;" class="dropdown-item"
+                title="Edit" (click)="Edit_static(item.pipid)">
+                <i style="font-size: 20px;" class="nb-edit"></i>&nbsp;Edit
+              </li>
+              <li *ngIf="item.isrenew==1 && role.getroleid()>=775" style="padding-top: 0px;padding-bottom: 2px;"
+                class="dropdown-item" title="Edit" (click)="renew(item.pipid)">
+                <i style="font-size: 20px;" class="fa fa-sync"></i>&nbsp;Renew
+              </li>
+
+            </ul>
+          </div>
+        </td>
         <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
         <td>{{item.menu_name}}</td>
         <td>{{item.company}}</td>
@@ -75,15 +115,19 @@
         <td>{{item.num_ip}}</td>
         <td>{{item.unit_type==1 ? item.units+" "+'Month': item.units+" "+'Year'}}</td>
         <td>{{item.tax_type==1 ? 'Including Tax':'Excluding Tax'}}</td>
-        <td>{{'Rs.'+" "+item.amount}}</td>
+        <td>{{item.amt | currency:'INR':'symbol':'0.2-3'}}</td>
+        <td>{{item.tax_amt | currency:'INR':'symbol':'0.2-3'}}</td>
+        <td>{{(item.amt + item.tax_amt)| currency:'INR':'symbol':'0.2-3'}}</td>
         <td>{{item.start_date | date:'d MMM y h:mm:ss a'}}</td>
         <td>{{item.expiration | date:'d MMM y h:mm:ss a'}}</td>
+        <td>{{item.daysremain}}</td>
+        <td>{{item.stname}}</td>
       </tr>
       <tr>
         <td colspan="11" *ngIf="pagedItems==''">NO DATA FOUND</td>
       </tr>
     </table>
-     <div class="pagination">
+    <div class="pagination">
       <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
         <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
         <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>

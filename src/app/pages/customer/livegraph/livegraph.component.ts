@@ -35,7 +35,7 @@ export class LiveGraphComponent implements OnInit, OnDestroy {
     private activeModal: NgbActiveModal,
     private alert: ToasterService,
     private cust: CustService,
-    private socket: Socket
+    // private socket: Socket
   ) { }
 
   closeModal() {
@@ -46,143 +46,143 @@ export class LiveGraphComponent implements OnInit, OnDestroy {
      
   }
 
-  clearSocket() {
-    if (this.s_id) {
-      this.socket.emit('stop')
-    }
-  }
+  // clearSocket() {
+  //   if (this.s_id) {
+  //     this.socket.emit('stop')
+  //   }
+  // }
 
-  async getGraph() {
-    this.clearSocket();
-    this.s_id = Math.floor(100000 + Math.random() * 900000)
-    this.getLiveGraph();
+  // async getGraph() {
+  //   this.clearSocket();
+  //   this.s_id = Math.floor(100000 + Math.random() * 900000)
+  //   this.getLiveGraph();
 
-  }
+  // }
 
-  getLiveGraph() {
-    // const socket = io("http://localhost:3000");
-    this.canvas = this.mychart.nativeElement;
-    this.ctx = this.canvas.getContext('2d');
-    let myChart: Chart = new Chart(this.ctx, {
-      type: 'line',
+  // getLiveGraph() {
+  //   // const socket = io("http://localhost:3000");
+  //   this.canvas = this.mychart.nativeElement;
+  //   this.ctx = this.canvas.getContext('2d');
+  //   let myChart: Chart = new Chart(this.ctx, {
+  //     type: 'line',
 
-      data: {
-        datasets: [{
-          label: 'Upload',
-          backgroundColor: "rgba(255, 99, 132,0.4)",
-          borderColor: "rgb(255, 99, 132)",
-          fill: false,
-          display: true,
-          data: [],
-        },
+  //     data: {
+  //       datasets: [{
+  //         label: 'Upload',
+  //         backgroundColor: "rgba(255, 99, 132,0.4)",
+  //         borderColor: "rgb(255, 99, 132)",
+  //         fill: false,
+  //         display: true,
+  //         data: [],
+  //       },
 
-        {
-          label: 'Download',
-          backgroundColor: "rgba(3, 169, 252,0.4)",
-          borderColor: "rgb(3, 169, 252)",
-          fill: false,
-          data: [],
-        }]
-      },
-      options: {
-        responsive: true,
-        legend: {
-          display: true,
-          labels: {
-            fontColor: 'white',
-          }
-        },
-        title: {
-          display: true,
-          fontColor: 'white',
-          text: 'LIVE GRAPH'
-        },
-        tooltips: {
-          callbacks: {
-            label: function (tooltipItem, data) {
+  //       {
+  //         label: 'Download',
+  //         backgroundColor: "rgba(3, 169, 252,0.4)",
+  //         borderColor: "rgb(3, 169, 252)",
+  //         fill: false,
+  //         data: [],
+  //       }]
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       legend: {
+  //         display: true,
+  //         labels: {
+  //           fontColor: 'white',
+  //         }
+  //       },
+  //       title: {
+  //         display: true,
+  //         fontColor: 'white',
+  //         text: 'LIVE GRAPH'
+  //       },
+  //       tooltips: {
+  //         callbacks: {
+  //           label: function (tooltipItem, data) {
                
-              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+  //             var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-              if (label) {
-                label += ': ';
-              }
-              label += tooltipItem.yLabel + ' MB';
-              return label;
-            },
-            title: function (tooltipItem) {
-              // console.log(tooltipItem.xLabel, tooltipItem[0].xLabel);
-              const t = new Date(tooltipItem[0].xLabel)
-              return 'Time ' + [t.getHours(), t.getMinutes(), t.getSeconds()].join(':')
+  //             if (label) {
+  //               label += ': ';
+  //             }
+  //             label += tooltipItem.yLabel + ' MB';
+  //             return label;
+  //           },
+  //           title: function (tooltipItem) {
+  //             const t = new Date(tooltipItem[0].xLabel)
+  //             return 'Time ' + [t.getHours(), t.getMinutes(), t.getSeconds()].join(':')
 
-            }
-          }
-        },
-        scales: {
-          xAxes: [{
-            type: 'linear',
-            position: 'bottom',
-            ticks: {
-              fontColor: 'white',
-              // beginAtZero: true,
-              userCallback: function (tick) {
-                tick = new Date(tick)
-                return [tick.getHours(), tick.getMinutes(), tick.getSeconds()].join(':');
+  //           }
+  //         }
+  //       },
+  //       scales: {
+  //         xAxes: [{
+  //           type: 'linear',
+  //           position: 'bottom',
+  //           ticks: {
+  //             fontColor: 'white',
+  //             // beginAtZero: true,
+  //             userCallback: function (tick) {
+  //               tick = new Date(tick)
+  //               return [tick.getHours(), tick.getMinutes(), tick.getSeconds()].join(':');
 
-              }
-            },
-            gridLines: {
-              color: '#5a5c5c',
+  //             }
+  //           },
+  //           gridLines: {
+  //             color: '#5a5c5c',
 
-            },
-            scaleLabel: {
-              labelString: 'Time',
-              display: true,
-              fontColor: 'white',
-            }
-          }],
-          yAxes: [{
-            type: 'linear',
-            ticks: {
-              fontColor: 'white',
-              beginAtZero: true,
-              userCallback: function (tick) {
-                return (tick) + ' MB';
+  //           },
+  //           scaleLabel: {
+  //             labelString: 'Time',
+  //             display: true,
+  //             fontColor: 'white',
+  //           }
+  //         }],
+  //         yAxes: [{
+  //           type: 'linear',
+  //           ticks: {
+  //             fontColor: 'white',
+  //             beginAtZero: true,
+  //             userCallback: function (tick) {
+  //               return (tick) + ' MB';
 
-              }
-            },
-            gridLines: {
-              color: '#5a5c5c',
-            },
-            scaleLabel: {
-              labelString: 'Bits Per Second',
-              display: true,
-              fontColor: 'white'
-            }
-          }]
-        }
-      }
-    });
-    this.startSocket(myChart)
-  }
+  //             }
+  //           },
+  //           gridLines: {
+  //             color: '#5a5c5c',
+  //           },
+  //           scaleLabel: {
+  //             labelString: 'Bits Per Second',
+  //             display: true,
+  //             fontColor: 'white'
+  //           }
+  //         }]
+  //       }
+  //     }
+  //   });
+  //   this.startSocket(myChart)
+  // }
 
-  startSocket(myChart) {
-    this.socket.emit('start', { sessionID: this.s_id, duration: this.gtime, uid: this.item['id'] });
-    // console.log(this.s_id);
-    this.socket.on(router_data_flow, (data) => {
-      // console.log(data);
-      this.ul=data.rx;
-      this.dl=data.tx;
-      const t = new Date();
-      myChart.data.datasets[0].data.push({ x: t, y: data.rx })
-      myChart.data.datasets[1].data.push({ x: t, y: data.tx })
-      myChart.update();
-    });
-  }
+  // startSocket(myChart) {
+  //   this.socket.emit('start', { sessionID: this.s_id, duration: this.gtime, uid: this.item['id'] });
+  //   this.socket.on(router_data_flow, (data) => {
+  //    this.ul=data.rx;
+  //     this.dl=data.tx;
+  //     const t = new Date();
+  //     myChart.data.datasets[0].data.push({ x: t, y: data.rx })
+  //     myChart.data.datasets[1].data.push({ x: t, y: data.tx })
+  //     myChart.update();
+  //   });
+  // }
 
 
   ngOnDestroy() {
-    this.clearSocket();
+    // this.clearSocket();
   }
+
+
+  
 
   // createForm(){
   //   this.GraphForm = new FormGroup({

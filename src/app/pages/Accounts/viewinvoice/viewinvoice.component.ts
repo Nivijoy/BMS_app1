@@ -39,8 +39,9 @@ export class ViewInvoiceComponent implements OnInit {
     //   doc.addImage(imgData, 5, 15, 200, imgHeight)
     //   doc.save("image1.pdf")
     // });
+    const pdfTable =this.pdfTable.nativeElement.innerHTML;
 
-    const pdfTable = document.getElementById('pdfTable');
+    // const pdfTable = document.getElementById('pdfTable');
     // html2canvas(pdfTable).then((canvas) => {
 
     //     var imgData = canvas.toDataURL('image/png')
@@ -83,9 +84,9 @@ export class ViewInvoiceComponent implements OnInit {
         margin: [0.25, 0.25, 0.25, 0.25],
         filename: `${nowdate.toString().slice(0, 10)}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 2, letterRendering: true },
 
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
       };
 
       // New Promise-based usage:

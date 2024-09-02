@@ -75,6 +75,7 @@ export class MailLogComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.resel_name = ''; this.user_name = ''; this.start_date = ''; this.end_date = '';
+    this.page=1;
     this.list();
   }
 

@@ -14,7 +14,7 @@ import { AddSuccessComponent } from '../success/add-success.component';
 })
 export class UpdateottmapComponent implements OnInit {
   submit: boolean = false; busdata; resell; UpdateOttMapForm; ottplans;
-  taxtype = []; days = []; ostatus = []; selectedRows;vendor=[];
+  taxtype = []; days = []; ostatus = []; selectedRows; vendor = [];
   config; settings;
   pager;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
@@ -46,7 +46,9 @@ export class UpdateottmapComponent implements OnInit {
       ],
       this.vendor = [
         { value: '1', title: 'M2MIT' },
-        { value: '2', title: 'PLAYBOX' }
+        { value: '2', title: 'PLAYBOX' },
+        { value: '3', title: 'OTTPLAY' }
+
       ],
 
       this.settings = {
@@ -138,7 +140,7 @@ export class UpdateottmapComponent implements OnInit {
           ott_vendor: {
             title: 'Vendor',
             valuePrepareFunction: (ott_vendor: any) => {
-              return (ott_vendor == 1 ? 'M2MIT' : 'PLAYBOX');
+              return (ott_vendor == 1 ? 'M2MIT' : ott_vendor == 2 ? 'PLAYBOX' : 'OTTPLAY');
             },
             editor: {
               type: 'list',
@@ -174,7 +176,7 @@ export class UpdateottmapComponent implements OnInit {
     if (this.role.getroleid() <= 777) {
       this.UpdateOttMapForm.get('isp_id').setValue(this.role.getispid())
       await this.showReseller();
-     }
+    }
   }
 
 
@@ -206,7 +208,7 @@ export class UpdateottmapComponent implements OnInit {
   async showOttPlan() {
     if (this.role.getroleid() <= 777) {
       this.UpdateOttMapForm.get('isp_id').setValue(this.role.getispid())
-      }
+    }
     this.ottplans = await this.admin.showOttMap({ bus_id: this.UpdateOttMapForm.value['isp_id'], resel_id: this.UpdateOttMapForm.value['manid'] });
     console.log('OttPlans-----', this.ottplans);
     this.source.load(this.ottplans)
@@ -222,9 +224,9 @@ export class UpdateottmapComponent implements OnInit {
         invalid.push(name)
       }
     };
-    console.log('value',this.UpdateOttMapForm.value)
+    console.log('value', this.UpdateOttMapForm.value)
     if (this.UpdateOttMapForm.invalid || !this.selectedRows) {
-      console.log('Invalid',invalid)
+      console.log('Invalid', invalid)
 
       window.alert('Please fill the fields or Select Plan');
       return

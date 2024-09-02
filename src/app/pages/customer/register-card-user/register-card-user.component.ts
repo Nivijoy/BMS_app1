@@ -84,6 +84,7 @@ export class RegisterCardUserComponent implements OnInit {
   async refresh() {
     this.bus_name = ''; this.resel_name = ''; this.mobile = ''; this.email = '';
     this.otp_status = ''; this.acct_status = '';
+    this.page=1;
     this.list();
   }
 

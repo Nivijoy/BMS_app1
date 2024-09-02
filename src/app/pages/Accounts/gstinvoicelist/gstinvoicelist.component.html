@@ -36,8 +36,8 @@
             <div class="col-sm-2" *ngIf="(role.getroleid()>=775) || (role.getroleid() >444)">
                <label>Reseller Name</label>
                <auto-completen [(ngModel)]="res_name" (keyUp)="showResellerName($event)" addclass="form-control"
-                  optValues="company" (changed)="showUser();showService();changeclear(4);"
-                  placeholder='Select Reseller' id="mid" [item]="res1">
+                  optValues="company" (changed)="showUser();showService();changeclear(4);" placeholder='Select Reseller'
+                  id="mid" [item]="res1">
                </auto-completen>
             </div>
             <div class="col-sm-2" [hidden]="role.getroleid()==111">
@@ -381,6 +381,8 @@
                               class="far fa-eye "></i>&nbsp;View</li>
                         <li *ngIf="!role.getmenurole(1033)" class="dropdown-item" (click)="inv_receipt(item.invid)"><i
                               style="font-size: 20px;" class="fa fa-receipt "></i>&nbsp;Receipt</li>
+                        <li *ngIf="!role.getmenurole(1078)" class="dropdown-item" (click)="updateBillNo(item.invid)"><i
+                              style="font-size: 20px;"  class="fas fa-money-bill-alt"></i>&nbsp;Bill No</li>
                      </ul>
                   </div>
                </td>
@@ -390,8 +392,10 @@
                      {{item.invid}}
                   </a></td>
                <td style="text-align: center;">{{item.rollid}}</td>
-               <td *ngIf="role.getroleid()>444">{{item.role==444 ? 'Bulk Reseller':item.role==333 ? 'Deposit Reseller':item.role==666?'Sub ISP Bulk'
-                  :item.role==555 ? 'Sub ISP Deposit':item.role==551 ? 'Sub Distributor Deposit':item.role==661 ? 'Sub Distributor Bulk':'Hotel'}}</td>
+               <td *ngIf="role.getroleid()>444">{{item.role==444 ? 'Bulk Reseller':item.role==333 ? 'Deposit
+                  Reseller':item.role==666?'Sub ISP Bulk'
+                  :item.role==555 ? 'Sub ISP Deposit':item.role==551 ? 'Sub Distributor Deposit':item.role==661 ? 'Sub
+                  Distributor Bulk':'Hotel'}}</td>
                <td *ngIf="role.getroleid()>444">{{item.company}}</td>
                <td>{{item.user_name}}</td>
                <td style="text-transform: none!important;">{{item.userid}}</td>
@@ -406,7 +410,7 @@
                <td style="text-align: center;"><i class="fas fa-rupee-sign">&nbsp;{{item.tax_amount}}</i></td>
                <td style="text-align: center;">{{item.unit_type ==0? item.time_unit +
                   " Days" : item.time_unit + " Month"}}</td>
-            <td style="text-align: center;">{{item.additional_days}}</td>
+               <td style="text-align: center;">{{item.additional_days}}</td>
                <td style="text-align: center;">{{item.supplier_gst_number}}</td>
                <td style="text-align: center;">{{item.recipient_gst_number}}</td>
                <td>{{item.inv_type==1 ? 'Invoice':'GST Invoice'}}</td>
@@ -419,41 +423,41 @@
                <td style="font-weight:bold;color:#181818">{{item.cum_resellerper | number : '1.0-2' }}&nbsp;<b>%</b>
                </td> -->
                <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.isp_per | number : '1.0-2'
-               }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.sub_isp_per | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.sub_dist_per | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.reseller_per | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.isp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.sub_isp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.sub_dist_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.resel_amt}}</i></td>
+                  }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.sub_isp_per | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.sub_dist_per | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.reseller_per | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.isp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.sub_isp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.sub_dist_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.resel_amt}}</i></td>
 
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Visp_share | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vsub_isp_share | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vsub_dist_share | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vreseller_share | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.Visp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.Vsub_isp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.Vsub_dist_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.Vreseller_amt}}</i></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Visp_share | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vsub_isp_share | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vsub_dist_share | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Vreseller_share | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.Visp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.Vsub_isp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.Vsub_dist_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.Vreseller_amt}}</i></td>
 
 
-            <!-- <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Oisp_share | number :
+               <!-- <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Oisp_share | number :
                '1.0-2' }}&nbsp;<b>%</b></td>
             <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.Osub_isp_share | number :
                '1.0-2' }}&nbsp;<b>%</b></td>
@@ -470,28 +474,29 @@
             <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
                   class="fas fa-rupee-sign">&nbsp;{{item.Oreseller_amt}}</i></td> -->
 
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONisp_share | number :
-               '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONsub_isp_share | number
-               : '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONsub_dist_share | number
-               : '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONreseller_share | number
-               : '1.0-2' }}&nbsp;<b>%</b></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.AONisp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.AONsub_isp_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.AONsub_dist_amt}}</i></td>
-            <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
-                  class="fas fa-rupee-sign">&nbsp;{{item.AONreseller_amt}}</i></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONisp_share | number :
+                  '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONsub_isp_share | number
+                  : '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONsub_dist_share | number
+                  : '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="font-weight:bold;color:#181818" *ngIf="role.getroleid()>111">{{item.AONreseller_share | number
+                  : '1.0-2' }}&nbsp;<b>%</b></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.AONisp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.AONsub_isp_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.AONsub_dist_amt}}</i></td>
+               <td style="text-align: center;" *ngIf="role.getroleid()>111"><i
+                     class="fas fa-rupee-sign">&nbsp;{{item.AONreseller_amt}}</i></td>
 
 
                <td><i class="fas fa-rupee-sign">&nbsp;{{item.sub_payed_amt}}</i></td>
                <td>{{item.pay_status==2 ? 'Paid': 'Unpaid'}}</td>
                <td>{{item.pay_status==2 ? (item.paydate | date:'d MMM y h:mm:ss a'):'--'}}</td>
-               <td>{{item.pay_through ==1? 'Manual' : item.pay_through==2? 'Scheduled' : item.pay_through == 3? 'Through Gateway By Subscriber' : 'Scheduled By Subscriber' }}</td>
+               <td>{{item.pay_through ==1? 'Manual' : item.pay_through==2? 'Scheduled' : item.pay_through == 3? 'Through
+                  Gateway By Subscriber' : 'Scheduled By Subscriber' }}</td>
 
             </tr>
          </table>

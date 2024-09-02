@@ -36,6 +36,7 @@ export class ListOTTComponent implements OnInit {
   }
 
   async refresh(){
+    this.page=1;
     await this.initiallist();
   }
 

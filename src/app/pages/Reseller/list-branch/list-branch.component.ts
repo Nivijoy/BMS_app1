@@ -87,6 +87,7 @@ export class ListBranchComponent implements OnInit {
       await this.showReseller();
       await this.showbranch();
     }
+    this.page=1;
     await this.initiallist();
   }
 

@@ -46,8 +46,9 @@ export class RenewCustComponent implements OnInit {
     this.createForm();
     this.loading = true;
     await this.Service();
-    await this.previouspack();
     await this.showReseller();
+    await this.previouspack();
+
     // console.log("cdate",this.item.cdate)
     this.expdate = new Date(this.item.edate)
     this.expdate.setTime(Math.floor((this.expdate.getTime()) + (5 * 3600 * 1000 + 1800000)))
@@ -75,7 +76,10 @@ export class RenewCustComponent implements OnInit {
     this.reselData = await this.resrv.showResellerName({ cust_id: this.item['cust_id'] });
     [this.reselData] = this.reselData;
     console.log('Reseller Data', this.reselData)
-    if ([3, 5, 7, 8].includes(this.reselData['service_type'])) await this.showottplan()
+    if ([3, 5, 7, 8].includes(this.reselData.service_type)) {
+      await this.showottplan()
+    }
+
   }
 
   async previouspack() {
@@ -92,12 +96,12 @@ export class RenewCustComponent implements OnInit {
     // console.log('like',$event);
     let res = await this.serv.showServiceName({ rflag: 1, u_id: this.item.cust_id, cdate: this.item.cdate, like: $event })
     this.pack = res;
-    console.log('Packkkk',this.pack)
+    console.log('Packkkk', this.pack)
     this.sstatus = this.pack.filter(item => item.sstatus == 1).map(item => item.sstatus);
   }
 
   async subplanshow($event = '') {
-    this.RenewSubsForm.get('sub_plan_id').setValue('')
+    if (!$event) this.RenewSubsForm.get('sub_plan_id').setValue('')
     let result = await this.serv.showSubPlan({ rflag: 1, srvid: this.RenewSubsForm.value['srv_id'], cdate: this.item.cdate, u_id: this.item.cust_id, like: $event })
     this.subpack = result;
     // console.log(result)
@@ -110,13 +114,13 @@ export class RenewCustComponent implements OnInit {
   }
 
   ottValidation() {
-    let [mode] = this.pack.filter(x => x.srvid == this.RenewSubsForm.value['srv_id']).map(x => x.renewalmode);
-    if (mode == 1) {
-      this.RenewSubsForm.controls['ottplanid'].setValidators([Validators.required])
-    } else {
-      this.RenewSubsForm.controls['ottplanid'].clearValidators();
-    }
-    this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
+    //   let [mode] = this.pack.filter(x => x.srvid == this.RenewSubsForm.value['srv_id']).map(x => x.renewalmode);
+    //   if (mode == 1) {
+    //     this.RenewSubsForm.controls['ottplanid'].setValidators([Validators.required])
+    //   } else {
+    //     this.RenewSubsForm.controls['ottplanid'].clearValidators();
+    //   }
+    //   this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
 
   }
 
@@ -156,14 +160,14 @@ export class RenewCustComponent implements OnInit {
     }
   }
 
-  payValidation(){
-    if(this.RenewSubsForm.value['pay_status'] == 2) {
+  payValidation() {
+    if (this.RenewSubsForm.value['pay_status'] == 2) {
       this.RenewSubsForm.controls['paytype'].setValidators([Validators.required])
       this.RenewSubsForm.controls['pay_date'].setValidators([Validators.required])
       this.RenewSubsForm.controls['pay_amt'].setValidators([Validators.required])
-    }else{
+    } else {
       this.RenewSubsForm.controls['paytype'].clearValidators();
-      this.RenewSubsForm.controls['paytype'].updateValueAndValidity(); 
+      this.RenewSubsForm.controls['paytype'].updateValueAndValidity();
       this.RenewSubsForm.controls['pay_date'].clearValidators();
       this.RenewSubsForm.controls['pay_date'].updateValueAndValidity();
       this.RenewSubsForm.controls['pay_amt'].clearValidators();
@@ -212,15 +216,22 @@ export class RenewCustComponent implements OnInit {
   async packcal() {
     // console.log(this.RenewSubsForm.value['sub_plan_id'])
     this.packc = this.subpack.filter(item => item.id == this.RenewSubsForm.value['sub_plan_id'])
-    console.log('itemsssssss',this.item)
-    if(this.item.expmode == 1){
-      this.packc[0].days = new Date(this.packc[0].days).setHours(23,59,59,999)
+    console.log('itemsssssss', this.item)
+    if (this.item.expmode == 1) {
+      this.packc[0].days = new Date(this.packc[0].days).setHours(23, 59, 59, 999)
     }
-    if(this.item.expmode == 2){
+    if (this.item.expmode == 2) {
       const time = this.item.exptime.split(':')
-      this.packc[0].days = new Date(this.packc[0].days).setHours(time[0],time[1],59,999)
+      this.packc[0].days = new Date(this.packc[0].days).setHours(time[0], time[1], 59, 999)
     }
     console.log('pack value', this.packc)
+    if ([3, 5, 7, 8].includes(this.packc[0]['service_type'])) {
+      await this.showottplan()
+      this.RenewSubsForm.controls['ottplanid'].setValidators([Validators.required])
+    } else {
+      this.RenewSubsForm.controls['ottplanid'].clearValidators();
+    }
+    this.RenewSubsForm.controls['ottplanid'].updateValueAndValidity();
     await this.paidamount();
 
   }
@@ -255,12 +266,12 @@ export class RenewCustComponent implements OnInit {
         if (days != 0) this.sched_date.setDate(this.sched_date.getDate() + days);
         this.sched_date.setMonth(this.sched_date.getMonth() + this.packc[0]['time_unit'])
       }
-      if(this.item.expmode == 1){
-        this.sched_date = new Date(this.sched_date).setHours(23,59,59,999)
+      if (this.item.expmode == 1) {
+        this.sched_date = new Date(this.sched_date).setHours(23, 59, 59, 999)
       }
-      if(this.item.expmode == 2){
+      if (this.item.expmode == 2) {
         const time = this.item.exptime.split(':')
-        this.sched_date = new Date(this.sched_date).setHours(time[0],time[1],59,999)
+        this.sched_date = new Date(this.sched_date).setHours(time[0], time[1], 59, 999)
       }
 
     }
@@ -311,7 +322,7 @@ export class RenewCustComponent implements OnInit {
       schedule_date: new FormControl(''),
       comment: new FormControl(''),
       pay_amt: new FormControl(''),
-      paytype:new FormControl(''),
+      paytype: new FormControl(''),
       ottplanid: new FormControl(''),
 
     });

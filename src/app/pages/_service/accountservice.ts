@@ -120,5 +120,8 @@ export class AccountService {
   async listOnlinePaymentReport(params) {
     return await this.http.post("/api/account/listOnlinePaymentReport", params).toPromise();
   }
+  async updateGstBillNo(body) {
+    return await this.http.post("/api/account/updateGstBillNo", body).toPromise();
+  }
 
 }

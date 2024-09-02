@@ -6,7 +6,7 @@ import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LocalDataSource } from 'ngx-smart-table';
 import { AddSuccessComponent } from '../success/add-success.component';
- 
+
 @Component({
   selector: 'ngx-ott-map',
   templateUrl: './ott-map.component.html',
@@ -14,7 +14,7 @@ import { AddSuccessComponent } from '../success/add-success.component';
 })
 export class OttMapComponent implements OnInit {
   submit: boolean = false; busdata; resell; AddOttMapForm; ottplans;
-  taxtype = []; days = []; ostatus = []; selectedRows;vendor=[];
+  taxtype = []; days = []; ostatus = []; selectedRows; vendor = [];
   config; settings;
   pager;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
@@ -46,7 +46,9 @@ export class OttMapComponent implements OnInit {
       ],
       this.vendor = [
         { value: '1', title: 'M2MIT' },
-        { value: '2', title: 'PLAYBOX' }
+        { value: '2', title: 'PLAYBOX' },
+        { value: '3', title: 'OTTPLAY' }
+
       ],
 
       this.settings = {
@@ -127,7 +129,7 @@ export class OttMapComponent implements OnInit {
           ott_vendor: {
             title: 'Vendor',
             valuePrepareFunction: (ott_vendor: any) => {
-              return (ott_vendor == 1 ? 'M2MIT' : 'PLAYBOX');
+              return (ott_vendor == 1 ? 'M2MIT' : ott_vendor == 2 ? 'PLAYBOX' : 'OTTPLAY');
             },
             editor: {
               type: 'list',

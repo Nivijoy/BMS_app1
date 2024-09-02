@@ -99,12 +99,7 @@
                                  <td>Mobile No</td>
                                  <td>:{{data?data.mobile:''}}</td>
                               </tr>
-                              <tr>
-                                 <td>Customer GST No</td>
-                                 <td>
-                                    :&nbsp;&nbsp;{{data?data.recipient_gst_number==null?'--':data.recipient_gst_number:''}}
-                                 </td>
-                              </tr>
+                            
                               <tr>
                                  <td>Service Type</td>
                                  <td>:{{data ? data.service_name:''}}</td>
@@ -130,6 +125,12 @@
                               <tr>
                                  <td>Username</td>
                                  <td>:{{data?data.userid:''}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Customer GST No</td>
+                                 <td>
+                                    :&nbsp;&nbsp;{{data?data.recipient_gst_number==null?'--':data.recipient_gst_number:''}}
+                                 </td>
                               </tr>
                               <tr>
                                  <td>Invoice No</td>
@@ -225,7 +226,7 @@
                            <tbody>
                               <tr>
                                  PAN NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.pan_no : '--'}}
-                                 <br>GST NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.bgstno :
+                                 <br>GST NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.supplier_gst_number :
                                  '--'}}
                                  <br>HSN/SAC No:{{data ? data.hsn : '--'}}
                               </tr>
@@ -340,12 +341,7 @@
                                  <td>Mobile No</td>
                                  <td>:{{data?data.mobile:''}}</td>
                               </tr>
-                              <tr>
-                                 <td>Customer GST No</td>
-                                 <td>
-                                    :&nbsp;&nbsp;{{data?data.recipient_gst_number==null?'--':data.recipient_gst_number:''}}
-                                 </td>
-                              </tr>
+                             
                               <tr>
                                  <td>Service Type</td>
                                  <td>:{{data?data.service_name:''}}</td>
@@ -370,6 +366,12 @@
                               <tr>
                                  <td>Username</td>
                                  <td>:{{data?data.userid:''}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Customer GST No</td>
+                                 <td>
+                                    :&nbsp;&nbsp;{{data?data.recipient_gst_number==null?'--':data.recipient_gst_number:''}}
+                                 </td>
                               </tr>
                               <tr>
                                  <td>Invoice No</td>
@@ -466,7 +468,7 @@
                            <tbody>
                               <tr>
                                  PAN NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.pan_no : '--'}}
-                                 <br>GST NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.bgstno :
+                                 <br>GST NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{data ? data.supplier_gst_number :
                                  '--'}}
                                  <br>HSN/SAC No:{{data ? data.hsn : '--'}}
                               </tr>

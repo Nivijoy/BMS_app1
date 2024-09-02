@@ -336,6 +336,8 @@ export class AddprofileComponent implements OnInit {
           children: [
             { id: 811, name: 'List GST Invoice' },
             { id: 814, name: 'View GST Invoice' },
+            { id: 1078, name: 'Update GST Billno' },
+
           ],
         },
         { id: 812, name: 'List Balance' },

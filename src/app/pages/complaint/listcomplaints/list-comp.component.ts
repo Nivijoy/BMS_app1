@@ -68,6 +68,7 @@ export class ListCompComponent implements OnInit {
     this.resel_type='';
     this.res_name='';
     this.cust_name='';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -71,6 +71,7 @@ export class ShareLogComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.resel_name = '';
+    this.page=1;
     this.list();
   }
 

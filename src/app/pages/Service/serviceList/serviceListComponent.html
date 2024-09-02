@@ -237,7 +237,7 @@
       </table>
     </div>
     <br>
-    <div class="pagination">
+    <div class="pagination" #paginator>
       <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
         <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
         <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>

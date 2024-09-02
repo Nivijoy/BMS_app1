@@ -73,6 +73,7 @@ export class ListOTTPlanComponent implements OnInit {
     this.status='';
     this.days='';
     this.ott_vendor ='';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -76,6 +76,7 @@ export class ListNASmappingComponent implements OnInit {
     this.group_name = '';
     this.resel_flag = '';
     this.res_name = ''; this.group1 = ''; this.res1 = '';
+    this.page=1;
     await this.initiallist();
   }
 

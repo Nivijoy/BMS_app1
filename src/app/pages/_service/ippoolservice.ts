@@ -39,21 +39,28 @@ export class IppoolService {
     return await this.http.post("/api/Ippool/GenerateIppool", params).toPromise();
   }
   async showPoolName(params) {
-    return await this.http.post("/api/Ippool/showPoolName",params).toPromise();
+    return await this.http.post("/api/Ippool/showPoolName", params).toPromise();
   }
-  async addStaticIp(params){
-    return await this.http.post("/api/Ippool/addStaticIp",params).toPromise();
+  async addStaticIp(params) {
+    return await this.http.post("/api/Ippool/addStaticIp", params).toPromise();
   }
-  async listStaticIp(params){
-    return await this.http.post("/api/Ippool/listStaticIp",params).toPromise();
+  async listStaticIp(params) {
+    return await this.http.post("/api/Ippool/listStaticIp", params).toPromise();
   }
-  async getStaticIp(params){
-    return await this.http.post("/api/Ippool/getStaticIp",params).toPromise();
+  async getStaticIp(params) {
+    return await this.http.post("/api/Ippool/getStaticIp", params).toPromise();
   }
-  async editStaticIp(params){
-    return await this.http.post("/api/Ippool/editStaticIp",params).toPromise();
+  async editStaticIp(params) {
+    return await this.http.post("/api/Ippool/editStaticIp", params).toPromise();
   }
-  async showPublicIp(params){
-    return await this.http.post("/api/Ippool/showPublicIp",params).toPromise();
+  async showPublicIp(params) {
+    return await this.http.post("/api/Ippool/showPublicIp", params).toPromise();
+  }
+
+  renewPublicIp(pipid: number) {
+    return this.http.get("/api/Ippool/renewPublicIp/" + pipid + "").toPromise();
+  }
+  async listRenewPublicIp(params) {
+    return await this.http.post("/api/Ippool/listRenewPublicIp", params).toPromise();
   }
 }

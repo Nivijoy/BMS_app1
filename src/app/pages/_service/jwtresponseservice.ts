@@ -30,6 +30,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             const error = (err.error || {}).message || err.statusText || err;
+            console.log('wwwtt..',error);
+            
             if (err.error.status === 401) {
                 if (err.error.restore === true) {
                     //TODO: Token refreshing

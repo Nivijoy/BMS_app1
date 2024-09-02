@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddServiceComponent } from '../addService/addService.component';
 import { Router } from '@angular/router';
 import { NasService, SelectService, RoleService, CustService, S_Service, GroupService, BusinessService, ResellerService, PagerService } from '../../_service/indexService';
@@ -29,6 +29,7 @@ export class ServiceListComponent implements OnInit {
   public primaryColour = '#dd0031';
   public secondaryColour = '#006ddd';
   public loading = false;
+  @ViewChild('paginator') paginator;
   constructor(
     private ser: S_Service,
     private route: Router,
@@ -214,11 +215,12 @@ export class ServiceListComponent implements OnInit {
       await this.showResellerName();
       await this.showService();
     }
+    this.page = 1;
     await this.initiallist();
   }
 
   async initiallist() {
-    // console.log(this.bus_name)
+    console.log(this.page, this.paginator)
     this.loading = true;
     let result = await this.ser.listService({
       index: (this.page - 1) * this.limit,

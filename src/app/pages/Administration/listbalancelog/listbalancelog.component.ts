@@ -65,6 +65,7 @@ export class ListBalanceLogComponent implements OnInit {
     this.resel_type = '';
     this.res_name = ''; this.pro = ''; this.res1 = '';this.start_date='';this.end_date='';
     this.deposit_reason = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();

@@ -112,6 +112,7 @@ export class ListPriceComponent implements OnInit {
       await this.showResellerName();
       await this.showService();
     }
+    this.page=1;
     await this.initiallist();
   }
 

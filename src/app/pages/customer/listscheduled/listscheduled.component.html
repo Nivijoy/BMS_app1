@@ -106,7 +106,8 @@
           <th>Scheduled By</th>
           <th>Scheduled Date</th>
           <th>Schedule Completed</th>
-          <th>Reason</th>
+          <th>Cancel Reason</th>
+          <th>Failed Reason</th>
           <th>Status</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
@@ -160,6 +161,7 @@
           <td *ngIf="item.schedule_status==3">{{item.lm_date | date:'d MMM y h:mm:ss a'}}</td>
           <td>{{item.schedule_completed_on ? (item.schedule_completed_on | date:'d MMM y h:mm:ss a') : '--'}}</td>
           <td>{{item.comment1 || item.cancel_reason || '--'}}</td>
+          <td>{{item.comment2 ||'--'}}</td>
           <td>{{item.schedule_status==1 ? 'On Process':item.schedule_status==2 ? 'Schedule Completed':item.schedule_status==3 ? 'Cancel'
             :item.schedule_status ==4 ? 'Already Done': item.schedule_status ==5? 'Initialized' : '--'}}</td>
         </tr>

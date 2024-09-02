@@ -16,6 +16,7 @@ import { ServiceShareComponent } from '../serviceshare/service-share.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import * as JSXLSX from 'xlsx';
+import { UpdateBillnoComponent } from '../update-billno/update-billno.component';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
@@ -151,6 +152,7 @@ export class GstInvoicelistComponent implements OnInit {
     this.sub_plan = ''; this.inv_type = ''; this.inv_status = '';
     this.pay_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = ''; this.group1 = '';
     this.profile = ''; this.res1 = ''; this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();
@@ -415,6 +417,13 @@ export class GstInvoicelistComponent implements OnInit {
     activeModal.componentInstance.modalHeader = 'Receipt';
     activeModal.componentInstance.data = { invdata: invdata };
     activeModal.result.then((data) => {
+    })
+  }
+  updateBillNo(invid){
+    const activeModal = this.nasmodel.open(UpdateBillnoComponent, { size: 'sm', container: 'nb-layout' });
+    activeModal.componentInstance.invid =invid;
+    activeModal.result.then((data) => {
+      this.initiallist()
     })
   }
 

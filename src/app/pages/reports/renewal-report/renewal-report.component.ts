@@ -54,7 +54,7 @@ export class RenewalReportComponent implements OnInit {
 
   async ngOnInit() {
     this.myDateValue = new Date();
-    let year=2022
+    let year=2024
 //     console.log('startdatee',this.start_date);
 //     this.start_date.setYear(year)
 // this.start_date=this.start_date.toISOString().slice(0,10);
@@ -175,6 +175,7 @@ export class RenewalReportComponent implements OnInit {
     this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = '';
     this.serv_type = ''; this.group1 = ''; this.profile = ''; this.res1 = '';
     this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = ''; this.s_branch = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();

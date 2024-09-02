@@ -84,6 +84,7 @@ export class ListReceiptComponent implements OnInit {
     this.end_num = '';
     this.pro = '';
     this.res1 = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();

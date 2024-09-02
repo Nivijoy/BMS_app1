@@ -171,16 +171,16 @@ export class SubsRenewalComponent implements OnInit {
       this.packcal()
     }
   }
-  ottValidation() {
-    let [mode] = this.pack.filter(x => x.srvid == this.SubsRenewForm.value['srvid']).map(x => x.renewalmode)
-    if (mode == 1) {
-      this.SubsRenewForm.controls['ottplanid'].setValidators([Validators.required])
-    } else {
-      this.SubsRenewForm.controls['ottplanid'].clearValidators();
-      this.SubsRenewForm.controls['ottplanid'].updateValueAndValidity();
-    }
+   ottValidation() {
+  //   let [mode] = this.pack.filter(x => x.srvid == this.SubsRenewForm.value['srvid']).map(x => x.renewalmode)
+  //   if (mode == 1) {
+  //     this.SubsRenewForm.controls['ottplanid'].setValidators([Validators.required])
+  //   } else {
+  //     this.SubsRenewForm.controls['ottplanid'].clearValidators();
+  //     this.SubsRenewForm.controls['ottplanid'].updateValueAndValidity();
+  //   }
 
-  }
+   }
 
   async Renewsubs() {
     // console.log(this.SubsRenewForm.value)
@@ -232,6 +232,13 @@ export class SubsRenewalComponent implements OnInit {
       this.packc[0].days = new Date(this.packc[0].days).setHours(time[0],time[1],59,999)
     }
     console.log('asd', this.packc)
+    if ([3, 5, 7, 8].includes(this.packc[0]['service_type'])) {
+      await this.showottplan()
+      this.SubsRenewForm.controls['ottplanid'].setValidators([Validators.required])
+    } else {
+      this.SubsRenewForm.controls['ottplanid'].clearValidators();
+    }
+    this.SubsRenewForm.controls['ottplanid'].updateValueAndValidity();
     await this.paidamount();
 
   }

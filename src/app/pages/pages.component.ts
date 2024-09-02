@@ -160,6 +160,11 @@ export class PagesComponent {
           link: '/pages/administration/liststaticip',
           hidden: (!this.role.find(x => x == 51))
         },
+        // {
+        //   title: 'Renew PublicIP',
+        //   link: '/pages/administration/list-renew-ip',
+        //   hidden: this.roleid < 775
+        // },
         {
           title: 'SMS-Gateway',
           hidden: (this.roleid == 111 || !(this.role.find(x => x == 21) || this.role.find(x => x == 22))),
@@ -751,6 +756,11 @@ export class PagesComponent {
           title: 'Online Payment Report',
           link: '/pages/Accounts/list-online-report',
           hidden: this.roleid < 775
+        },
+        {
+          title: 'Service Count Report',
+          link: '/pages/reports/servicerpt',
+          hidden:this.roleid < 775
         },
       ],
     },

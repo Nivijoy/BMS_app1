@@ -41,6 +41,7 @@ export class ListBandwidthLogComponent implements OnInit {
 
   async refresh(){
     this.user_name = '';
+    this.page=1;
     await this.initiallist();
   }
 

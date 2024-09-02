@@ -61,6 +61,7 @@ export class ListVoiceNumComponent implements OnInit {
     this.voice_num = '';
     this.status = '';
     this.cust_name = '';
+    this.page=1;
     await this.initiallist();
   }
 

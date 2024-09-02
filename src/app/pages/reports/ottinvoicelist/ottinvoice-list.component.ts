@@ -95,6 +95,7 @@ export class OttInvoiceListComponent implements OnInit {
     this.bus_name='';
     this.resel_type='';
     this.res_name='';
+    this.page=1;
     await this.initiallist();
   }
  

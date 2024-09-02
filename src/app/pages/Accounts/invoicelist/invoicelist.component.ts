@@ -162,6 +162,7 @@ export class InvoicelistComponent implements OnInit {
     this.inv_status = ''; this.pay_status = ''; this.start_date = ''; this.end_date = '';
     this.serv_type = ''; this.group1 = ''; this.profile = ''; this.res1 = '';
     this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';
+    this.page=1;
     await this.initiallist();
     await this.showGroupName();
     await this.showProfileReseller();

@@ -15,6 +15,7 @@ import { ResellerRevenueShareComponent } from './reseller-revenue-share/reseller
 import { RenewalReportComponent } from './renewal-report/renewal-report.component';
 import { TopupreportComponent } from './topupreport/topupreport.component';
 import { TrafficReportComponent } from './traffic-report/traffic-report.component';
+import { ServiceCountRptComponent } from './service-count-rpt/service-count-rpt.component';
 
 
 
@@ -35,7 +36,9 @@ const routes: Routes = [{
     { path: 'reseller-revenue-share', component: ResellerRevenueShareComponent },
     { path: 'renewalReport', component: RenewalReportComponent },
     { path: 'topupreport', component: TopupreportComponent },
-    { path: 'trafficreport', component: TrafficReportComponent }
+    { path: 'trafficreport', component: TrafficReportComponent },
+    { path: 'servicerpt', component: ServiceCountRptComponent }
+
   ],
 
 }];
@@ -61,5 +64,7 @@ export const routedComponents = [
   OttInvoiceListComponent,
   ResellerRevenueShareComponent,
   TopupreportComponent,
-  TrafficReportComponent
+  TrafficReportComponent,
+  ServiceCountRptComponent,
+
 ];

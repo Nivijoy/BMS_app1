@@ -162,6 +162,7 @@ export class CollectionReportComponent implements OnInit {
     this.sub_plan = ''; this.inv_type = ''; this.inv_status = ''; this.start_date = ''; this.end_date = ''; this.serv_type = '';
     this.group1 = ''; this.profile = ''; this.res1 = ''; this.invnum = ''; this.pack = ''; this.subplandata = ''; this.custname = ''; this.servtype = '';
     this.pay_start_date = ''; this.pay_end_date = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.showProfileReseller();

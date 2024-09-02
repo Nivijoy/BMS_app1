@@ -74,6 +74,7 @@ export class OpenClosebalanceListComponent implements OnInit {
     this.resel_type='';
     this.res_name='';
     this.start_date = '';this.end_date ='';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -111,6 +111,7 @@ export class OttLogComponent implements OnInit {
   async refresh() {
     this.bus_name = ''; this.group_name = ''; this.res_name = ''; this.invoice_num = ''; this.cust_name = '';
     this.ottplan_code = ''; this.ottplan_name = '';this.ottstatus = '';this.start_date='';this.end_date='';
+    this.page=1;
     await this.initiallist();
   }
 

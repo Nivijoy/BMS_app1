@@ -51,6 +51,7 @@
             <option value="" selected>Select Vendor</option>
             <option value="1">M2MIT</option>
             <option value="2">PLAYBOX</option>
+            <option value="3">OTTPLAY</option>
           </select>
         </div>
         <div class="col-sm-3">
@@ -116,7 +117,7 @@
         <td>{{item.ottplan_name}}</td>
         <td>{{item.ottplancode}}</td>
         <td>{{item.gltvplanid}}</td>
-        <td>{{item.ott_vendor == 1 ? 'M2MIT':'PLAYBOX'}}</td>
+        <td>{{item.ott_vendor == 1 ? 'M2MIT':item.ott_vendor == 2 ? 'PLAYBOX': 'OTTPLAY'}}</td>
         <td>{{item.otttaxtype == 0? 'Inclusive':'Exclusive'}}</td>
         <td>{{item.dayormonth == 1 ? item.days +" "+ "Days": item.days +" "+ "Months"}}</td>
         <td><i class="fas fa-rupee-sign">&nbsp;{{item.ottamount}}</i></td>

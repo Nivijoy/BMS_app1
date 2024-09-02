@@ -159,7 +159,7 @@ export class ListCardUserComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.resel_name = ''; this.group_name = '';
-    this.cust_name = ''
+    this.cust_name = '';  this.page=1;
     this.list();
   }
 

@@ -77,6 +77,7 @@ export class ListScheduledCustComponent implements OnInit {
     this.status = '';
     this.start_date = '';
     this.end_date = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();

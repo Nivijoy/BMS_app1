@@ -113,6 +113,7 @@ export class ListSubsDocPendingomponent implements OnInit {
       await this.showProfileReseller();
       await this.showReseller();
     }
+    this.page=1;
     await this.initiallist();
   }
 

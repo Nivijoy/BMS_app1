@@ -79,6 +79,7 @@ export class ListReseloutstandComponent implements OnInit {
     this.res_name='';
     this.st_date='';
     this.en_date='';
+    this.page=1;
     await this.initiallist();
   }
  

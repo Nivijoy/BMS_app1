@@ -100,6 +100,7 @@ export class ListAgreementExpomponent implements OnInit {
     if(this.role.getroleid()<=777){
       await this.showGroupName();
     }
+    this.page=1;
     await this.initiallist();
   }
 

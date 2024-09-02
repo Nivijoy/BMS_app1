@@ -77,6 +77,7 @@ export class ResellerOttPlanComponent implements OnInit {
     this.ottplan_name = '';
     this.resel_name = '';
     this.ott_vendor='';
+    this.page=1;
     await this.initiallist();
   }
 
@@ -156,7 +157,7 @@ export class ResellerOttPlanComponent implements OnInit {
         if (this.role.getroleid() > 444) param['RESELLER NAME'] = temp[i]['company'];
         param['OTTPLANNAME'] = temp[i]['ottplan_name'];
         param['OTTPLANCODE'] = temp[i]['ottplancode'];
-        param['VENDOR'] = temp[i]['ott_vendor'] == 1 ? 'M2MIT': 'PLAYBOX';
+        param['VENDOR'] = temp[i]['ott_vendor'] == 1 ? 'M2MIT':temp[i]['ott_vendor'] == 2 ?'PLAYBOX':'OTTPLAY';
         param['TAXTYPE'] = temp[i]['taxtype'] == 0 ? 'Inclusive' : 'Exclusive';
         param['TIMEUNIT'] = temp[i]['dayormonth'] == 1 ? temp[i]['days'] + "Days" : temp[i]['days'] + "Months";
         param['AMOUNT'] = temp[i]['ottamt'];

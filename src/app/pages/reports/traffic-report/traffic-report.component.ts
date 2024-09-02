@@ -73,6 +73,7 @@ export class TrafficReportComponent implements OnInit {
   async refresh() {
     this.res_name = ''; this.cust_name = '';
     this.start_date='';this.end_date = '';
+    this.page=1;
     await this.list();
   }
 

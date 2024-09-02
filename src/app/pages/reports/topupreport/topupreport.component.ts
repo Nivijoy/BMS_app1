@@ -83,6 +83,7 @@ export class TopupreportComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.res_name = ''; this.cust_name = '';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -61,6 +61,8 @@ export class CafFormComponent implements OnInit {
   }
 
   async getcaftc() {
+    console.log('isp_id---',this.isp_id);
+    
     let resp = await this.business.getbusinessedit({ id: this.isp_id });
     console.log('Response', resp)
     this.caftc = resp['tcs']
@@ -69,7 +71,7 @@ export class CafFormComponent implements OnInit {
   async cafdetails() {
     this.loading = true;
     let result = await this.custser.ViewSubscriber({ id: this.id });
-    // console.log("view",result)
+    console.log("view",result)
     if (result) {
       this.data = result;
       this.bus_address = this.data['bus_address'].replace(/<br>/g, '');
@@ -78,7 +80,7 @@ export class CafFormComponent implements OnInit {
   }
 
   async getprofilepic() {
-    console.log("hit")
+    console.log("hit",this.id,this.status)
     var subsusername = this.id
 
 
@@ -96,11 +98,17 @@ export class CafFormComponent implements OnInit {
     }
     if (this.status == 1 || this.status == 2) {
       let result = await this.custser.getProfilePhoto({ custid: subsusername, caf_flag: 1 });
+      console.log('res---',result);
+      
       this.pro_pic = result;
       for (const key in result) {
         if (Object.prototype.hasOwnProperty.call(result, key)) {
           const element = result[key];
+          console.log('ddddddddddddd');
+          
           this.pro_pic[key] = 'data:image/png;base64,' + element
+          console.log('ddddddddddddd');
+
         }
       }
     }

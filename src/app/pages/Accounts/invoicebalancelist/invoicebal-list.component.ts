@@ -88,6 +88,7 @@ export class InvoicebalanceListComponent implements OnInit {
     this.bus_name = '';
     this.resel_type = '';
     this.res_name = ''; this.pro = ''; this.res1 = '';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();

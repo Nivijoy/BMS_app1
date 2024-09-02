@@ -29,6 +29,7 @@ import { ChangedateComponent } from './changedate/changedate.component';
 import { WalletShareComponent } from './wallet-share/wallet-share.component';
 import { ListWalletShareComponent } from './list-wallet-share/list-wallet-share.component';
 import { OnlinePaymentReportComponent } from './online-payment-report/online-payment-report.component';
+import { UpdateBillnoComponent } from '../Accounts/update-billno/update-billno.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { OnlinePaymentReportComponent } from './online-payment-report/online-pay
     WalletShareComponent,
     ListWalletShareComponent,
     OnlinePaymentReportComponent,
+    UpdateBillnoComponent,
   ],
   entryComponents: [
     AddSuccessComponent,
@@ -79,6 +81,7 @@ import { OnlinePaymentReportComponent } from './online-payment-report/online-pay
     ViewQrCodeComponent,
     DepositProofComponent,
     ChangedateComponent,
+    UpdateBillnoComponent
   ],
   providers: [BusinessService, GroupService, ResellerService,PaymentService,
     AccountService, RoleService,DatePipe,ConfirmationDialogService,NgbActiveModal]

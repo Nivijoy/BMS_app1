@@ -96,6 +96,7 @@ export class GstinvoiceMailLogComponent implements OnInit {
 
   async refresh() {
     this.bus_name = ''; this.group_name = ''; this.res_name = ''; this.invoice_num = ''; this.cust_name = '';this.start_date='';this.end_date='';
+    this.page=1;
     await this.initiallist();
   }
 

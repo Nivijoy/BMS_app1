@@ -11,7 +11,7 @@
   <nb-card-body>
     <toaster-container></toaster-container>
     <button class="btn btn-sm btn-success" (click)="Add_caf();"
-      *ngIf="!role.getmenurole(805) && role.getroleid()>=775">Add</button>
+      *ngIf="!role.getmenurole(805)">Add</button>
     <hr style="border: 0px;">
     <div class="modal-body" autocomplete="off" [hidden]='!search'>
       <div class="form-group row">

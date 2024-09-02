@@ -32,4 +32,10 @@ export class SelectService {
   async listState(params){
     return await this.http.post("/api/select/listState",params).toPromise();
   }
+  async addState(body){
+    return await this.http.post("/api/select/addState",body).toPromise();
+  }
+  async updateState(body){
+    return await this.http.put("/api/select/updateState/"+body.id+"",body).toPromise();
+  }
 }

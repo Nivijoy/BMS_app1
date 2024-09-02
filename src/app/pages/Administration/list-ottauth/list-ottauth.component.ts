@@ -68,6 +68,7 @@ export class ListOTTAuthComponent implements OnInit {
     this.ott_name='';
     this.group1='';
     this.ottdata='';
+    this.page=1;
     await this.initiallist();
   }
 

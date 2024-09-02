@@ -5,6 +5,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { AddSuccessComponent } from './success/add-success.component';
 import { AutoCompleteNModule } from '../auto-complete-module/auto-completen-module';
 import { GroupService,BusinessService, SelectService ,IppoolService,NasService } from '../_service/indexService';
+import { RenewIpComponent } from './renew-ip/renew-ip.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -15,11 +16,13 @@ import { GroupService,BusinessService, SelectService ,IppoolService,NasService }
   declarations: [
    routedComponents,
    AddSuccessComponent,
+   RenewIpComponent,
     
   
   ],
    entryComponents : [
-    AddSuccessComponent
+    AddSuccessComponent,   RenewIpComponent,
+
   ],
   providers:[IppoolService,BusinessService,GroupService,NasService,SelectService]
 })

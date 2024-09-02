@@ -83,7 +83,7 @@ export class DataUsageComponent implements OnInit {
 
   async refresh() {
     this.resel_name = ''; this.user_name = ''; this.role_id = ''; this.tname = ''; this.bus_name = '';
-    this.start_date = ''; this.end_date = '';
+    this.start_date = ''; this.end_date = '';  this.page=1;
     await this.list();
   }
 

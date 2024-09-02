@@ -77,6 +77,7 @@ export class ListCafNumComponent implements OnInit {
     this.res_name='';
     this.start_num='';
     this.end_num='';
+    this.page=1;
     await this.initiallist();
     if (this.role.getroleid() == 666 || this.role.getroleid() == 555) {
       await this.profile();

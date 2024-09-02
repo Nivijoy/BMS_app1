@@ -53,6 +53,7 @@ export class DailySubsCountComponent implements OnInit {
 
   async refresh() {
     this.bus_name = '';
+    this.page=1;
     await this.initiallist();
   }
 

@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <span>Update Bill No</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="modal-body">
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <label>Bill NO <span style="color:red;">*</span></label>
+        <input type="text" name="billno" formControlName="billno" placeholder="BillNo"
+          [ngClass]="{'form-control' : true,'form-control-danger':form.controls.billno.invalid&&submit}" />
+        <small *ngIf="form.controls.billno.invalid&&form.controls.billno.touched" class="form-text error">BillNO
+          is required! </small>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-md btn-primary">Update</button>
+  </div>
+</form>

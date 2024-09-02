@@ -1,0 +1,123 @@
+<nb-card>
+  <nb-card-header> List PublicIP
+    <ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.wanderingCubes, primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px'}">
+  </ngx-loading>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;
+    background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer; padding-right: 3px;color:white;" (click)="search=!search;"><i
+        class="fa fa-search"></i></a>
+    <a type="button" class="btn btn-primary btn-sm btn-floating "
+      style="float: right; margin: 5px;background-color: #01a7ee;padding-top: 5px;padding-bottom: 5px;padding-left: 3px; cursor: pointer ;padding-right: 3px;color:white;"
+      (click)="refresh()"><i class="fa fa-sync"></i></a>
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container></toaster-container>
+   
+    <hr style="border: 0px;">
+    <div class="modal-body" autocomplete="off" [hidden]='!search'>
+      <div class="form-group row">
+        <div class="col-sm-3" *ngIf="role.getroleid()>777">
+          <label>ISP Name</label>
+          <auto-completen [(ngModel)]="bus_name" addclass="form-control" optValues="busname"
+            (changed)="profile();showResellerName();showip();changeclear(1)" placeholder='Select Business' id="bus_name"
+            [item]="bus">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3" *ngIf="role.getroleid()>=775">
+          <label>Reseller Type</label>
+          <auto-completen [(ngModel)]="resel_type" addclass="form-control" optValues="menu_name"
+            (changed)="showResellerName();changeclear(2)" placeholder='Select Reseller Type' optId="role" [item]="pro">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3" *ngIf="role.getroleid()>=775">
+          <label>Reseller</label>
+          <auto-completen [(ngModel)]="res_name" addclass="form-control" optValues="company"
+            (changed)="showip();changeclear(3)" (keyUp)="showResellerName($event)" placeholder='Select Reseller'
+            id="mid" [item]="res1">
+          </auto-completen>
+        </div>
+        <div class="col-sm-3">
+          <label>Static IP</label>
+          <auto-completen [(ngModel)]="stat_ip" addclass="form-control" optValues="ipaddr" (changed)="changeclear(4)"
+            (keyUp)="showip($event)" placeholder='Select StaticIP' optId="piplid" [item]="ipdata">
+          </auto-completen>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label>Expiry Start Date</label>
+          <input type="date" [(ngModel)]="start_date" (change)="end_date=''" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label>Expiry End Date</label>
+          <input type="date" [(ngModel)]="end_date" class="form-control">
+        </div>
+      </div>
+      <button type="button" class="btn btn-md btn-success middle" (click)='page=1;initiallist();'
+        style="margin: auto; display: block;">Search</button>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Total Count: {{count}}</div>
+      <div class="col-md-6 end">
+        <!-- <button style = "position:relative;left:400px;top:2px;" class="btn btn-xs btn-outline-primary" (click)="logoff()"><b>Log Off All</b></button> -->
+        <i (click)="download()"  class="green right fas fa-file-excel fa-2x" aria-hidden="true"></i>
+      </div>
+    </div>
+    <hr style="border: 0px;">
+    <table class="table table-hover table-striped">
+      <tr style="background-color :  #01a7ee;color:white;font-size: medium;">
+        <th *ngIf="role.getroleid()>777">ISP Name</th>
+        <th>Reseller Type</th>
+        <th>Reseller company</th>
+        <th>Customer Profileid</th>
+        <th>Customer Name</th>
+        <th>IP</th>
+        <th>Number of IP</th>
+        <th>Duration</th>
+        <th>Tax Type</th>
+        <th>Amount</th>
+        <th>Tax</th>
+        <th>Total Amount</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Days Left</th>
+        <th>State</th>
+      </tr>
+      <tr *ngFor="let item of pagedItems">
+        
+        <td *ngIf="role.getroleid()>777">{{item.busname}}</td>
+        <td>{{item.menu_name}}</td>
+        <td>{{item.company}}</td>
+        <td style="text-transform: none !important;text-align: left;">{{item.cust_profile_id}}</td>
+        <td>{{item.custname}}</td>
+        <td>{{item.ipaddr}}</td>
+        <td>{{item.num_ip}}</td>
+        <td>{{item.unit_type==1 ? item.units+" "+'Month': item.units+" "+'Year'}}</td>
+        <td>{{item.tax_type==1 ? 'Including Tax':'Excluding Tax'}}</td>
+        <td>{{item.amt | currency:'INR':'symbol':'0.2-3'}}</td>
+        <td>{{item.tax_amt | currency:'INR':'symbol':'0.2-3'}}</td>
+        <td>{{(item.amt + item.tax_amt)| currency:'INR':'symbol':'0.2-3'}}</td>
+        <td>{{item.start_date | date:'d MMM y h:mm:ss a'}}</td>
+        <td>{{item.expiration | date:'d MMM y h:mm:ss a'}}</td>
+        <td>{{item.daysremain}}</td>
+        <td>{{item.stname}}</td>
+      
+      </tr>
+      <tr>
+        <td colspan="11" *ngIf="pagedItems==''">NO DATA FOUND</td>
+      </tr>
+    </table>
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page)">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+  </nb-card-body>
+</nb-card>
